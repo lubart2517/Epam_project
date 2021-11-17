@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+<h4>We can see book's written by some author <a href="{% url 'books_by_author' %}">Author</a></h4>
+<h4>Or given to specific user <a href="{% url 'books_by_user' %}">User</a></h4>
+<h4>And find book by id <a href="{% url 'book_detail' %}">Detail</a></h4>
+<h4>Or find unordered books <a href="{% url 'book_unordered' %}">Unordered</a></h4>
+{% ifequal user.role 1 %}
+<h4>You can add <a href="{% url 'add_book' %}">New book</a></h4>
+{% endifequal %}
+
+
+<h1>Here we can see the list of all books for any user</h1>
+
+<form action="{% url 'book_home' %}" method="get">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Sort&Filter">
+</form>
+
+{% for book in page_obj %}
+	<li>
+	<a href="{% url 'book_detail_with_id' book.id %}">{{ book.name }}</a>
+	{{ book.description }} Count = {{ book.count }}</li>
+{% endfor %}
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+{% endblock %}
+
