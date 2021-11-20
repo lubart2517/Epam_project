@@ -1,10 +1,14 @@
 from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime
+from flask_marshmallow import Marshmallow
+from library import app
+# sqlalchemy instance
+db = SQLAlchemy(app)
+ma = Marshmallow(app)
 
 
 class Book(db.Model):
     """
-        This class represents an Author. \n
+        This class represents an Book. \n
         Attributes:
         -----------
         param name: Describes name of the book
@@ -17,10 +21,10 @@ class Book(db.Model):
         type authors: list->Author
     """
 
-    name = models.CharField(blank=True, max_length=128)
-    description = models.TextField(blank=True)
-    count = models.IntegerField(default=10)
-    authors = models.ManyToManyField(Author, related_name='books')
+    name = db.Column(db.String(128))
+    description = db.Column(db.Text())
+    count = db.Column(db.Integer, default=10)
+    authors = db.relationship('Author', backref='book', lazy=True)
 
     def __str__(self):
         """
