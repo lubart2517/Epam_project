@@ -2,3 +2,7 @@ Flask~=2.0.2
 urllib3~=1.26.7
 requests
 flask_sqlalchemy
+flask_login
+flask-wtf
+psycopg2
+flask-migrate
