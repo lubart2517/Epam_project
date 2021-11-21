@@ -1,9 +1,5 @@
-from flask_sqlalchemy import SQLAlchemy
-from flask_marshmallow import Marshmallow
-from library import app
-# sqlalchemy instance
-db = SQLAlchemy(app)
-ma = Marshmallow(app)
+from library import db
+import uuid
 
 
 class Book(db.Model):
@@ -18,175 +14,55 @@ class Book(db.Model):
         param count: Describes count of the book
         type count: int default=10
         param authors: list of Authors
-        type authors: list->Author
+        type authors: list[Author] or None
     """
+    #: Name of the database table storing books
+    __tablename__ = 'Book'
 
+    #: Database id of the book
+    id = db.Column(db.Integer, primary_key=True)
+
+    #: Name of the book
     name = db.Column(db.String(128))
-    description = db.Column(db.Text())
-    count = db.Column(db.Integer, default=10)
-    authors = db.relationship('Author', backref='book', lazy=True)
 
-    def __str__(self):
-        """
-        Magic method is redefined to show all information about Book.
-        :return: book id, book name, book description, book count, book authors
-        """
-        return str(self.to_dict())[1:-1]
+    #: Description of the book
+    description = db.Column(db.Text())
+
+    #: Initial amount  of the book in the library
+    count = db.Column(db.Integer, default=10)
+
+    #: UUID of the book
+    uuid = db.Column(db.String(36), unique=True)
+
+    #: Authors of the book
+    authors = db.relationship(
+        'Author',
+        backref=db.backref('Book', lazy=True),
+        lazy=True
+    )
+
+    def __init__(self, name, description, count, authors=None):
+        #: Name of the author
+        self.name = name
+
+        #: Description of the book
+        self.description = description
+
+        #: Initial amount  of the book in the library
+        self.count = count
+
+        #: UUID of the book
+        self.uuid = str(uuid.uuid4())
+
+        if authors is None:
+            authors = []
+            #: Authors of the book
+        self.authors = authors
 
     def __repr__(self):
         """
         This magic method is redefined to show class and id of Book object.
         :return: class, id
         """
-        return f'{self.__class__.__name__}(id={self.id})'
+        return f'Book({self.name}, {self.description})'
 
-    @staticmethod
-    def get_by_id(book_id):
-        """
-        :param book_id: SERIAL: the id of a Book to be found in the DB
-        :return: book object or None if a book with such ID does not exist
-        """
-        try:
-            user = Book.objects.get(id=book_id)
-            return user
-        except Book.DoesNotExist:
-            pass
-            # LOGGER.error("User does not exist")
-
-    @staticmethod
-    def delete_by_id(book_id):
-        """
-        :param book_id: an id of a book to be deleted
-        :type book_id: int
-        :return: True if object existed in the db and was removed or False if it didn't exist
-        """
-
-        try:
-            book = Book.objects.get(id=book_id)
-            book.delete()
-            return True
-        except Book.DoesNotExist:
-            # LOGGER.error("User does not exist")
-            pass
-        return False
-
-    @staticmethod
-    def create(name, description, count=10, authors=None):
-        """
-        param name: Describes name of the book
-        type name: str max_length=128
-        param description: Describes description of the book
-        type description: str
-        param count: Describes count of the book
-        type count: int default=10
-        param authors: list of Authors
-        type authors: list->Author
-        :return: a new book object which is also written into the DB
-        """
-        book = Book(name=name, description=description, count=count)
-        try:
-            book.save()
-            if authors is not None:
-                for author in authors:
-                    book.authors.add(author)
-            book.save()
-            return book
-        except (IntegrityError, AttributeError, DataError):
-            # LOGGER.error("Wrong attributes or relational integrity error")
-            pass
-
-    def to_dict(self):
-        """
-        :return: book id, book name, book description, book count, book authors
-        :Example:
-        | {
-        |   'id': 8,
-        |   'name': 'django book',
-        |   'description': 'bla bla bla',
-        |   'count': 10',
-        |   'authors': []
-        | }
-        """
-
-        return {
-            'id': self.id,
-            'name': self.name,
-            'description': self.description,
-            'count': self.count,
-            'authors': [author.id for author in self.authors.all()]
-        }
-
-    def update(self, name=None, description=None, count=None):
-        """
-        Updates book in the database with the specified parameters.\n
-        param name: Describes name of the book
-        type name: str max_length=128
-        param description: Describes description of the book
-        type description: str
-        param count: Describes count of the book
-        type count: int default=10
-        :return: None
-        """
-
-        if name:
-            self.name = name
-        if description:
-            self.description = description
-        if count:
-            self.count = count
-        self.save()
-
-    def add_authors(self, authors):
-        """
-        Add  authors to  book in the database with the specified parameters.\n
-        param authors: list authors
-        :return: None
-        """
-
-        for author in authors:
-            self.authors.add(author)
-        self.save()
-
-    def get_authors(self):
-        """
-        Add  authors to  book in the database with the specified parameters.\n
-        param authors: list authors
-        :return: None
-        """
-
-        return self.authors.all()
-
-    def remove_authors(self, authors):
-        """
-        Remove authors to  book in the database with the specified parameters.\n
-        param authors: list authors
-        :return: None
-        """
-        for author in authors:
-            self.authors.remove(author)
-        self.save()
-
-    @staticmethod
-    def get_all():
-        """
-        returns data for json request with QuerySet of all books
-        """
-        all_users = Book.objects.all()
-        return list(all_users)
-
-    @staticmethod
-    def get_by_author(author_id):
-        """
-        returns data for json request with QuerySet of all books
-        """
-        author = Author.get_by_id(author_id)
-        all_books = Book.objects.filter(authors__name=author.name,
-    authors__surname=author.surname,authors__patronymic=author.patronymic )
-        return list(all_books)
-
-    def get_absolute_url(self):
-        return reverse('book_detail_with_id', args=(self.id,))
-
-    def decrease_count(self):
-        self.count -= 1
-        self.save()

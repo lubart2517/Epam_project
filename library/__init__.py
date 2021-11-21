@@ -2,6 +2,7 @@ from flask import Flask
 import os
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from flask_login import LoginManager
 
 # write your code here
 api_key = '5972f433a1e0715a50a114b14cf611a6'
@@ -12,8 +13,10 @@ MIGRATION_DIR = os.path.join('library', 'migrations')
 
 
 db = SQLAlchemy(app)
+login_manager = LoginManager(app)
+login_manager.login_view = 'login'
 migrate = Migrate(app, db, directory=MIGRATION_DIR)
-from .models import author_models
+from .models import author_models, book_models, user_models, order_models
 
 
 

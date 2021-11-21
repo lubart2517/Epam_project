@@ -1,7 +1,6 @@
-from flask_sqlalchemy import SQLAlchemy
-from flask_marshmallow import Marshmallow
 from library import db
-# sqlalchemy instance
+import uuid
+
 
 class Author(db.Model):
     """
@@ -10,16 +9,46 @@ class Author(db.Model):
         -----------
         param name: Describes name of the author
         type name: str max_length=20
-        param surname: Describes last name of the author
-        type surname: str max_length=20
-        param patronymic: Describes middle name of the author
-        type patronymic: str max_length=20
+        param last_name: Describes last name of the author
+        type last_name: str max_length=20
+        param middle_name: Describes middle name of the author
+        type middle_name: str max_length=20
 
     """
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(128))
-    surname = db.Column(db.String(128))
-    patronymic = db.Column(db.String(128))
+    #: Name of the database table storing authors
+    __tablename__ = 'Author'
 
-    def __init__(self, **kwargs):
-        super(Author, self).__init__(**kwargs)
+
+    #: Database id of the author
+    id = db.Column(db.Integer, primary_key=True)
+
+    # Name of the author
+    name = db.Column(db.String(20))
+
+    # Last name of the author
+    last_name = db.Column(db.String(20))
+
+    # Middle name of the author
+    middle_name = db.Column(db.String(20))
+
+    #: UUID of the author
+    uuid = db.Column(db.String(36), unique=True)
+
+    def __init__(self, name, last_name, middle_name):
+        #: Name of the author
+        self.name = name
+
+        # Last name of the author
+        self.last_name = last_name
+
+        #: UUID of the author
+        self.uuid = str(uuid.uuid4())
+
+        # Middle name of the author
+        self.middle_name = middle_name
+
+    def __repr__(self):
+        """
+        Returns string representation of author
+        """
+        return f'Author({self.name}, {self.last_name})'

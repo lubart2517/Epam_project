@@ -8,3 +8,6 @@ psycopg2
 flask-migrate
 flask_marshmallow
 marshmallow-sqlalchemy
+werkzeug
+wtforms
+sqlalchemy_utils

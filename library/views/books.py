@@ -1,6 +1,6 @@
 from flask import render_template
 from library import app
-
+from flask_login import login_required
 
 @app.route('/books/')
 def books_index():
@@ -26,6 +26,7 @@ def books_detail():
     return render_template('books_detail.html', books=books)
 
 
+@login_required
 @app.route('/books/unordered/')
 def books_unordered():
     books = [{'name': 'lol', 'count': '2'}]
