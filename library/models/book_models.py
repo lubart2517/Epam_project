@@ -1,6 +1,12 @@
 from library import db
 import uuid
 
+book_authors = db.Table(
+    'book_authors',
+    db.Column('book_id', db.Integer(), db.ForeignKey('Book.id')),
+    db.Column('author_id', db.Integer(), db.ForeignKey('Author.id'))
+)
+
 
 class Book(db.Model):
     """
@@ -35,11 +41,7 @@ class Book(db.Model):
     uuid = db.Column(db.String(36), unique=True)
 
     #: Authors of the book
-    authors = db.relationship(
-        'Author',
-        backref=db.backref('Book', lazy=True),
-        lazy=True
-    )
+    authors = db.relationship('Author', secondary=book_authors, backref=db.backref('Book', lazy='dynamic'))
 
     def __init__(self, name, description, count, authors=None):
         #: Name of the author

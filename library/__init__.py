@@ -16,6 +16,9 @@ db = SQLAlchemy(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 migrate = Migrate(app, db, directory=MIGRATION_DIR)
+
+from .views import init_views
+init_views()
 from .models import author_models, book_models, user_models, order_models
 
 

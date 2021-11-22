@@ -34,7 +34,7 @@ class User(db.Model, UserMixin):
     role = db.Column(db.Integer(), default=0)
 
     # field for storing hash of user password
-    password_hash = db.Column(db.String(100), nullable=False)
+    password_hash = db.Column(db.Text(), nullable=False)
 
     # date of user profile creation
     created_on = db.Column(db.DateTime(), default=datetime.datetime.now())
