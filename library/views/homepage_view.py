@@ -18,8 +18,8 @@ class HomepageView(FlaskView):
     @route('/', endpoint='homepage')
     def homepage(self):
         """
-        Returns rendered `index.html` template for url route `/` and endpoint
+        Returns rendered `start.html` template for url route `/` and endpoint
         `homepage`
         """
-        books = [{'name': 'lol', 'count': '2'}]
-        return render_template('index.html', books=books)
+        title = 'Welcome to the library'
+        return render_template('start.html', title=title)

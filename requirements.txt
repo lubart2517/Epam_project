@@ -11,3 +11,7 @@ marshmallow-sqlalchemy
 werkzeug
 wtforms
 sqlalchemy_utils
+flask_classful
+python-dotenv
+flask-bootstrap
+email_validator

@@ -1,4 +1,4 @@
-from library import db, login_manager
+from library import db
 import datetime
 from werkzeug.security import generate_password_hash,  check_password_hash
 from flask_login import UserMixin
@@ -19,10 +19,13 @@ class User(db.Model, UserMixin):
 
     __tablename__ = 'users'
     # user id
-    id = db.Column(db.Integer(), primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
 
     # user real name
-    name = db.Column(db.String(20))
+    first_name = db.Column(db.String(20))
+
+    # user real name
+    last_name = db.Column(db.String(20))
 
     # user nickname
     username = db.Column(db.String(20), nullable=False, unique=True)
@@ -52,10 +55,13 @@ class User(db.Model, UserMixin):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
-    def __init__(self, name, username, email, password):
+    def __init__(self, first_name, last_name, username, email, password):
 
         # user real name
-        self.name = name
+        self.first_name = first_name
+
+        # user real name
+        self.last_name = last_name
 
         # user nickname
         self.username = username
@@ -65,7 +71,3 @@ class User(db.Model, UserMixin):
 
         # field for storing hash of user password
         self.password_hash = generate_password_hash(password)
-
-    @login_manager.user_loader
-    def load_user(user_id):
-        return db.session.query(User).get(user_id)

@@ -25,7 +25,7 @@ class BookIndexView(FlaskView):
         Returns rendered `books_index.html` template for url route `/books` and endpoint
         `index`
         """
-        books = db.session.query(Book).first()
+        books = db.session.query(Book).all()
         return render_template('books_index.html', books=books)
 """
 @app.route('/books/')
