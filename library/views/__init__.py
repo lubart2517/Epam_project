@@ -11,7 +11,7 @@ from library import app
 from . import books_view
 from . import auth_views
 from . import homepage_view
-from ..auth.forms import RegistrationForm
+from . import admin_views
 
 
 def init_views():
@@ -22,4 +22,3 @@ def init_views():
     books_view.BookIndexView.register(app)
     #auth_views.register.register(app)
     # department_view.DepartmentView.register(app)
-    homepage_view.HomepageView.register(app)

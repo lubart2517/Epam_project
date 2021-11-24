@@ -1,8 +1,10 @@
+'''This script loads data from csv files to database without using sqlalchemy'''
 import psycopg2
 import csv
 from dotenv import load_dotenv
 import os
 
+# loads environement variables with correct parameters for database connecting
 load_dotenv()
 user = os.environ.get('POSTGRES_USER')
 password = os.environ.get('POSTGRES_PASSWORD')
@@ -11,7 +13,6 @@ database = os.environ.get('POSTGRES_DATABASE')
 
 conn = psycopg2.connect(f"host=localhost dbname={database} user={user} password={password}")
 cur = conn.cursor()
-print(user, password, server, database)
 #  load Authors into db
 
 with open('authors.csv', 'r') as f:

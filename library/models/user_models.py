@@ -55,6 +55,10 @@ class User(db.Model, UserMixin):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
+    @staticmethod
+    def get(id):
+        return db.session.query(User).filter_by(id=id).first()
+
     def __init__(self, first_name, last_name, username, email, password):
 
         # user real name

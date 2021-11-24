@@ -18,7 +18,6 @@ class Author(db.Model):
     #: Name of the database table storing authors
     __tablename__ = 'Author'
 
-
     #: Database id of the author
     id = db.Column(db.Integer, primary_key=True)
 
