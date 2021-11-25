@@ -50,4 +50,4 @@ class Author(db.Model):
         """
         Returns string representation of author
         """
-        return f'Author({self.name}, {self.last_name})'
+        return f'{self.name} {self.last_name}'

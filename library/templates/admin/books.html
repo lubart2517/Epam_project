@@ -32,7 +32,10 @@
                     <td> {{ book.count }} </td>
                   <td>
                     {% if book.authors %}
-                      {{ book.authors }}
+                      {% for author in book.authors %}
+                        {{ author.name }}
+                        {{ author.last_name }}
+                      {% endfor %}
                     {% endif %}
                   </td>
                   <td>
