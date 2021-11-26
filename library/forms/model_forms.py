@@ -27,3 +27,16 @@ class BookFormAddAuthor(FlaskForm):
         super().__init__(*args, **kwargs)
         if author_choices:
             self.author.choices = author_choices
+
+
+class BookFormDeleteAuthor(FlaskForm):
+    """
+    Form for admin to add Author to the book
+    """
+    author = SelectField('Author', choices=[], validators=[DataRequired()])
+    submit = SubmitField('DeleteAuthor')
+
+    def __init__(self, author_choices: list = None, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if author_choices:
+            self.author.choices = author_choices

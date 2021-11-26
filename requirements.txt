@@ -15,3 +15,4 @@ flask_classful
 python-dotenv
 flask-bootstrap
 email_validator
+flask-paginate

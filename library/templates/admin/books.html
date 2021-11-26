@@ -13,6 +13,8 @@
         {% if books %}
           <hr class="intro-divider">
           <div class="center">
+            {{ pagination.info }}
+            {{ pagination.links }}
             <table class="table table-striped table-bordered">
               <thead>
                 <tr>
@@ -27,6 +29,7 @@
               <tbody>
               {% for book in books %}
                 <tr>
+                  <td>{{ loop.index + pagination.skip }}</td>
                   <td> {{ book.name }} </td>
                   <td> {{ book.description }} </td>
                     <td> {{ book.count }} </td>
@@ -52,6 +55,7 @@
               {% endfor %}
               </tbody>
             </table>
+            {{ pagination.links }}
           </div>
           <div style="text-align: center">
         {% else %}

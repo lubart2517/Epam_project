@@ -1,11 +1,11 @@
-from flask import abort, flash, redirect, render_template, url_for
+from flask import abort, flash, redirect, render_template, url_for, request
 from flask_login import current_user, login_required
-
-from ..forms.model_forms import BookForm, BookFormAddAuthor
+from flask_paginate import Pagination, get_page_parameter, get_page_args
+from ..forms.model_forms import BookForm, BookFormAddAuthor, BookFormDeleteAuthor
 from library import app, db
-from ..models.book_models import Book
 from ..service.book_service import BookService
 from ..service.author_service import AuthorService
+
 
 def check_admin():
     """
@@ -24,11 +24,13 @@ def admin_books():
     List all books
     """
     check_admin()
-
+    page, per_page, offset = get_page_args()
     books = BookService.get_books()
-
+    i = (page - 1) * per_page
+    books_for_render = books[i:i+per_page]
+    pagination = Pagination(page=page, total=len(books), record_name='books', offset=offset)
     return render_template('admin/books.html',
-                           books=books, title="Books")
+                           books=books_for_render, pagination=pagination, title="Books")
 
 
 @app.route('/admin/book/add', methods=['GET', 'POST'], endpoint='admin_add_book')
@@ -62,7 +64,9 @@ def add_book():
 @login_required
 def edit_book(id):
     """
-    Edit a book
+    Edit a book with given id
+    Admin can change bokk name, count, description and add or delte authors from book authors
+     :param id: ID of the book
     """
     check_admin()
 
@@ -70,30 +74,40 @@ def edit_book(id):
     form = BookForm(obj=book)
     del form.author
     add_author_form = BookFormAddAuthor(author_choices=BookService.get_free_authors(id))
+    delete_author_form = BookFormDeleteAuthor(author_choices=BookService.get_authors(id))
 
+    #  if admin adds author
     if add_author_form.validate_on_submit():
         BookService.add_author(id, add_author_form.author.data)
         flash('You have successfully added author to the book.')
-        # redirect to the departments page
+        # redirect to the books page
         return redirect(url_for('admin_books'))
+
+    #  if admin deletes author
+    if delete_author_form.validate_on_submit():
+        BookService.delete_author(id, delete_author_form.author.data)
+        flash('You have successfully deleted author from the book.')
+        # redirect to the books page
+        return redirect(url_for('admin_books'))
+
+    #  if admin changes book name, description or count
     if form.validate_on_submit():
-        book.name = form.name.data
-        book.description = form.description.data
-        book.count = form.count.data
+        BookService.update(id, form.name.data, form.description.data, form.count.data)
         db.session.commit()
         flash('You have successfully edited the book.')
 
-        # redirect to the departments page
+        # redirect to the books page
         return redirect(url_for('admin_books'))
 
     else:
         form.description.data = book.description
         form.name.data = book.name
         form.count.data = book.count
-        add_author_form.author.data = AuthorService.get_first()
+        add_author_form.author.data = BookService.get_free_authors(id)[0]
+        delete_author_form.author.data = BookService.get_authors(id)[0]
         return render_template('admin/book_edit.html', action="Edit",
                                add_book=add_book, form=form,add_author_form=add_author_form,
-                               book=book, title="Edit Book")
+                               book=book, title="Edit Book", delete_author_form=delete_author_form)
 
 
 @app.route('/admin/book/delete/<int:id>', methods=['GET', 'POST'], endpoint='admin_delete_book')
@@ -101,6 +115,7 @@ def edit_book(id):
 def delete_book(id):
     """
     Delete a book from the database
+    :param id: ID of the book
     """
     check_admin()
 

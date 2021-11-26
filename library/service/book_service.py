@@ -3,9 +3,6 @@ Book service used to make database queries, this module defines the
 following classes:
 - `BookService`, book service
 """
-# pylint: disable=cyclic-import
-
-from sqlalchemy.orm import lazyload
 
 from library import db
 from ..models.book_models import Book
@@ -23,7 +20,7 @@ class BookService:
         :return: list of all books
         """
 
-        return db.session.query(Book).all()
+        return Book.query.all()
 
     @staticmethod
     def get_book_by_uuid(uuid):
@@ -58,11 +55,10 @@ class BookService:
     @staticmethod
     def get_book_by_name(name):
         """
-        Fetches the book with given name and organisation  from database,
+        Fetches the book with given name   from database,
         raises ValueError if such book is not found
         :param name: name of the book to be fetched
-        :param organisation: organisation of the book to be fetched
-        :return: book with given name and organisation
+        :return: book with given name
         """
         return db.session.query(Book).filter_by(
             name=name).first()
@@ -96,7 +92,6 @@ class BookService:
         db.session.commit()
         return book
 
-
     @classmethod
     def update_book_from_json(cls, schema, uuid, book_json):
         """
@@ -122,48 +117,82 @@ class BookService:
     @classmethod
     def delete_book(cls, id):
         """
-        Deletes the book with given UUID from database, raises
+        Deletes the book with given ID from database, raises
         ValueError if such book is not found
-        :param uuid: UUID of the book to be deleted
-        :raise ValueError: in case of book with given UUID being absent
+        :param id: ID of the book to be deleted
+        :raise ValueError: in case of book with given ID being absent
         in the database
         :return: None
         """
         book = cls.get_book_by_id(id)
-        if book is None:
-            raise ValueError('Invalid book id')
         db.session.delete(book)
         db.session.commit()
 
     @classmethod
     def add_author(cls, id, author):
         """
-        Deletes the book with given UUID from database, raises
-        ValueError if such book is not found
-        :param uuid: UUID of the book to be deleted
-        :raise ValueError: in case of book with given UUID being absent
+        Add author to the list of book authors
+        :param id: ID of the book
+        :param author: Author's name and lastname
+        :raise ValueError: in case of book with given ID being absent
         in the database
         :return: None
         """
         book = cls.get_book_by_id(id)
-        if book is None:
-            raise ValueError('Invalid book id')
         author = db.session.query(Author).filter_by(name=author.split()[0], last_name=author.split()[1]).first()
         book.authors.append(author)
         db.session.commit()
 
     @classmethod
-    def get_free_authors(cls, id):
+    def delete_author(cls, id, author):
         """
-        Deletes the book with given UUID from database, raises
-        ValueError if such book is not found
-        :param uuid: UUID of the book to be deleted
-        :raise ValueError: in case of book with given UUID being absent
+        Delete author from the list of book authors
+        :param id: ID of the book
+        :param author: Author's name and lastname
+        :raise ValueError: in case of book with given ID being absent
         in the database
         :return: None
         """
         book = cls.get_book_by_id(id)
-        if book is None:
-            raise ValueError('Invalid book id')
-        free_authors = db.session.query(Author).filter(Author.id not in [x.id for x in book.authors])
+        author = db.session.query(Author).filter_by(name=author.split()[0], last_name=author.split()[1]).first()
+        book.authors.remove(author)
+        db.session.commit()
+
+    @classmethod
+    def get_free_authors(cls, id):
+        """
+        Return list of authors available for adding to the book authors
+        :param id: ID of the book
+        :raise ValueError: in case of book with given ID being absent
+        in the database
+        :return: None
+        """
+        book = cls.get_book_by_id(id)
+        free_authors = [x for x in db.session.query(Author) if x.id not in [y.id for y in book.authors]]
         return free_authors
+
+    @classmethod
+    def get_authors(cls, id):
+        """
+        Return list of authors of the book
+        :param id: ID of the book
+        :raise ValueError: in case of book with given ID being absent
+        in the database
+        :return: None
+        """
+        book = cls.get_book_by_id(id)
+        authors = [x for x in db.session.query(Author) if x.id in [y.id for y in book.authors]]
+        return authors
+
+    @classmethod
+    def update(cls, id, name, description, count):
+        """
+        Update book with given id
+        :return: None
+        """
+        book = cls.get_book_by_id(id)
+        book.name = name
+        book.description = description
+        book.count = count
+        db.session.commit()
+
