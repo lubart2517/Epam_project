@@ -66,5 +66,5 @@ class Book(db.Model):
         This magic method is redefined to show class and id of Book object.
         :return: class, id
         """
-        return f'Book({self.name}, {self.description})'
+        return f'{self.name}'
 

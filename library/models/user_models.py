@@ -47,7 +47,7 @@ class User(db.Model, UserMixin):
 
     # string representation of user model
     def __repr__(self):
-        return "<{}:{}>".format(self.id, self.username)
+        return "<{} {}>".format(self.id, self.username)
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)

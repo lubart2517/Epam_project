@@ -40,3 +40,13 @@ class BookFormDeleteAuthor(FlaskForm):
         super().__init__(*args, **kwargs)
         if author_choices:
             self.author.choices = author_choices
+
+
+class AuthorForm(FlaskForm):
+    """
+    Form for admin to add or edit a book
+    """
+    name = StringField('Name', validators=[DataRequired()])
+    middle_name = StringField('Middle name', validators=[DataRequired()])
+    last_name = StringField('Lastname', validators=[DataRequired()])
+    submit = SubmitField('Submit')
