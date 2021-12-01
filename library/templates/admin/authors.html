@@ -31,7 +31,11 @@
                 <tr>
                   <td>{{ loop.index + pagination.skip }}</td>
                   <td> {{ author.name }} </td>
+                  {% if author.middle_name %}
                   <td> {{ author.middle_name }} </td>
+                  {% else %}
+                  <td></td>
+                  {% endif %}
                     <td> {{ author.last_name }} </td>
                   <td>
                     <a href="{{ url_for('admin_edit_author', id=author.id) }}">

@@ -91,7 +91,7 @@ class AuthorService:
         if author is None:
             raise ValueError('Invalid author uuid')
         author = schema.load(
-            author_json, session=db.session, instance=author
+            data=author_json, session=db.session, instance=author
         )
         db.session.add(author)
         db.session.commit()
@@ -108,6 +108,20 @@ class AuthorService:
         :return: None
         """
         author = cls.get_author_by_id(id)
+        db.session.delete(author)
+        db.session.commit()
+
+    @classmethod
+    def delete_author_by_uuid(cls, uuid):
+        """
+        Deletes the author with given UUID from database, raises
+        ValueError if such author is not found
+        :param uuid: UUID of the author to be deleted
+        :raise ValueError: in case of author with given ID being absent
+        in the database
+        :return: None
+        """
+        author = cls.get_author_by_uuid(id)
         db.session.delete(author)
         db.session.commit()
 

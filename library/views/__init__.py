@@ -8,17 +8,6 @@ Modules:
 
 from library import app
 
-from . import books_view
 from . import auth_views
 from . import homepage_view
 from . import admin_views
-
-
-def init_views():
-    """
-    Register views
-    :return: None
-    """
-    books_view.BookIndexView.register(app)
-    #auth_views.register.register(app)
-    # department_view.DepartmentView.register(app)

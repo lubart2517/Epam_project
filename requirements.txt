@@ -8,6 +8,7 @@ psycopg2
 flask-migrate
 flask_marshmallow
 marshmallow-sqlalchemy
+marshmallow
 werkzeug
 wtforms
 sqlalchemy_utils
@@ -16,3 +17,4 @@ python-dotenv
 flask-bootstrap
 email_validator
 flask-paginate
+flask-restful
