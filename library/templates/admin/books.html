@@ -1,4 +1,5 @@
 {% import "bootstrap/utils.html" as utils %}
+{% import "bootstrap/wtf.html" as wtf %}
 {% extends "base.html" %}
 {% block title %}Books{% endblock %}
 {% block body %}
@@ -13,6 +14,7 @@
         {% if books %}
           <hr class="intro-divider">
           <div class="center">
+            {{ wtf.quick_form(form) }}
             {{ pagination.info }}
             {{ pagination.links }}
             <table class="table table-striped table-bordered">

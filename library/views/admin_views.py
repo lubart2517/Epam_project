@@ -2,6 +2,7 @@ from flask import abort, flash, redirect, render_template, url_for, request
 from flask_login import current_user, login_required
 from flask_paginate import Pagination, get_page_parameter, get_page_args
 from ..forms.model_forms import BookForm, BookFormAddAuthor, BookFormDeleteAuthor, AuthorForm
+from ..forms.query_forms import BooksQueryForm
 from library import app, db
 from ..service.book_service import BookService
 from ..service.author_service import AuthorService
@@ -25,13 +26,32 @@ def admin_books():
     List all books
     """
     check_admin()
+    form = BooksQueryForm()
     page, per_page, offset = get_page_args()
     books = BookService.get_books()
+    if form.validate_on_submit():
+
+        query_filter = request.form.get('filter')
+        if query_filter:
+            to_find = request.form.get('find')
+            if to_find:
+                books = BookService.filter(query_filter, to_find)
+        query_sort = request.form.get('sort')
+        if query_sort == '1':
+            books.sort(key=lambda x: x.name, reverse=False)
+        elif query_sort == '2':
+            books.sort(key=lambda x: x.name, reverse=True)
+        elif query_sort == '3':
+            books.sort(key=lambda x: x.count, reverse=False)
+        elif query_sort == '4':
+            books.sort(key=lambda x: x.count, reverse=True)
+    else:
+        books = BookService.get_books()
     i = (page - 1) * per_page
     books_for_render = books[i:i+per_page]
     pagination = Pagination(page=page, total=len(books), record_name='books', offset=offset)
     return render_template('admin/books.html',
-                           books=books_for_render, pagination=pagination, title="Books")
+                           books=books_for_render, pagination=pagination, form=form, title="Books")
 
 
 @app.route('/admin/book/add', methods=['GET', 'POST'], endpoint='admin_add_book')

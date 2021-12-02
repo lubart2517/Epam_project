@@ -196,3 +196,16 @@ class BookService:
         book.count = count
         db.session.commit()
 
+    @classmethod
+    def filter(cls, query_filter, to_find):
+        if query_filter == '1':
+            books = Book.query.filter(to_find in [x.id for x in Book.authors]).all()
+        elif query_filter == '2':
+            books = Book.query.filter(Book.count == int(to_find)).all()
+        elif query_filter == '3':
+            books = Book.query.filter(Book.name.contains(to_find)).all()
+        elif query_filter == '4':
+            books = Book.query.filter(Book.description.contains(to_find)).all()
+        else:
+            books = cls.get_books()
+        return books
