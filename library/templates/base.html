@@ -30,7 +30,9 @@
                         <li><a href="{{ url_for('admin_orders') }}">Orders</a></li>
                         <li><a href="{{ url_for('admin_authors') }}">Authors</a></li>
                       {% else %}
-                        <li><a href="{{ url_for('homepage') }}">Dashboard</a></li>
+                        <li><a href="{{ url_for('user_books') }}">Books</a></li>
+                        <li><a href="{{ url_for('user_orders') }}">Orders</a></li>
+                        <li><a href="{{ url_for('user_authors') }}">Authors</a></li>
                       {% endif %}
                       <li><a href="{{ url_for('logout') }}">Logout</a></li>
                       <li><a><i class="fa fa-user"></i>  Hi, {{ current_user.username }}!</a></li>

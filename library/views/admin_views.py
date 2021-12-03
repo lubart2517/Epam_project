@@ -30,21 +30,13 @@ def admin_books():
     page, per_page, offset = get_page_args()
     books = BookService.get_books()
     if form.validate_on_submit():
-
         query_filter = request.form.get('filter')
         if query_filter:
             to_find = request.form.get('find')
             if to_find:
                 books = BookService.filter(query_filter, to_find)
         query_sort = request.form.get('sort')
-        if query_sort == '1':
-            books.sort(key=lambda x: x.name, reverse=False)
-        elif query_sort == '2':
-            books.sort(key=lambda x: x.name, reverse=True)
-        elif query_sort == '3':
-            books.sort(key=lambda x: x.count, reverse=False)
-        elif query_sort == '4':
-            books.sort(key=lambda x: x.count, reverse=True)
+        books = BookService.sort(books, query_sort)
     else:
         books = BookService.get_books()
     i = (page - 1) * per_page
@@ -261,6 +253,7 @@ def close_order(id):
 
     # redirect to the books page
     return redirect(url_for('admin_orders'))
+
 
 @app.route('/admin/order/add', methods=['GET', 'POST'], endpoint='admin_add_order')
 @login_required

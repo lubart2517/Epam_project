@@ -45,7 +45,7 @@ class OrderService:
         :return: orders made by user wirh given user_id
         """
         return db.session.query(Order).filter_by(
-            user_id=user_id)
+            user_id=user_id).all()
 
     @staticmethod
     def get_orders_by_book(book_id):
@@ -56,7 +56,7 @@ class OrderService:
         :return: orders made by user with given book_id
         """
         return db.session.query(Order).filter_by(
-            book_id=book_id)
+            book_id=book_id).all()
 
     @staticmethod
     def get_open_orders():
@@ -65,7 +65,7 @@ class OrderService:
         :return: list of all opened orders
         """
         return db.session.query(Order).filter_by(
-            closed=True)
+            closed=True).all()
 
     @classmethod
     def close_order(cls, order_id):
@@ -87,7 +87,7 @@ class OrderService:
         :return: list of all opened orders by some user
         """
         return db.session.query(Order).filter_by(
-            closed=True, user_id=user_id)
+            closed=True, user_id=user_id).all()
 
     @staticmethod
     def add_order_from_json(schema, order_json):

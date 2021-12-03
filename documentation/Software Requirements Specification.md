@@ -6,12 +6,9 @@ Application should provide:
 • Storing book orders, users, books and authors in a database;
 • Display list of books;
 • Updating the list of orders (adding, editing, removing);
-• Display list of users;
-• Updating the list of users (adding, editing, removing);
 • Display list of authors;
 • Updating the list of authors (adding, editing, removing);
-• Display number of the orders for books and users;
-• Filtering by different criteria for orders and users;
+• Filtering by different criteria for books;
 1. Orders
 1.1 Display list of orders
 The mode is designed to view the list of orders, if it possible to display the number of orders for a specified
@@ -20,6 +17,7 @@ Main scenario:
 • User selects item “Orders”;
 • Application displays list of Orders.
 Pic. 1.1 View the Orders list.
+   
 The list displays the following columns:
 • User name;
 • Book title;
@@ -169,8 +167,6 @@ Pic. 3.3 Edit book.
 3.4 Removing the book (available only for librarians)
 Main scenario:
 • The user, while in the list of books mode, presses the "Delete" button in the selected book line;
-• Application displays confirmation dialog “Please confirm delete book?”;
-• The user confirms the removal of the book;
 • Record is deleted from database;
 • If error occurs, then error message displays;
 • If book record is successfully deleted, then list of books without deleted records is displaying.
@@ -183,18 +179,8 @@ Pic. 3.4 Delete book dialog.
 
 3.5 Add order
 Main scenario:
-• User clicks the “Order” button in the book detail view mode;
-• Application displays form to enter order data;
-• User enters order data and presses “Save” button;
-• If any data is entered incorrectly, incorrect data messages are displayed;
-• If entered data is valid, then record is adding to database;
-• If error occurs, then error message is displaying;
+• User clicks the “Order” button in the books list view mode;
+• record is adding to database;
 • If new order record is successfully added, then list of orders of the user with added record is displaying.
-Cancel operation scenario:
-• User clicks the “Add” button in the order list view mode;
-• Application displays form to enter order data;
-• User enters order data and presses “Cancel” button;
-• Data don’t save in data base, then list of orders of the user is displaying to user.
 Pic. 1.2 Add order.
-When adding a order, the following details are entered:
-• Ordering time – ordering time in days, minimal time is one day.
+![img.png](img.png)

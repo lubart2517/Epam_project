@@ -11,3 +11,4 @@ from library import app
 from . import auth_views
 from . import homepage_view
 from . import admin_views
+from . import user_views

@@ -198,8 +198,13 @@ class BookService:
 
     @classmethod
     def filter(cls, query_filter, to_find):
+        """
+        Sort books according to
+        filter parameter
+        :return: filtered query of books
+        """
         if query_filter == '1':
-            books = Book.query.filter(to_find in [x.id for x in Book.authors]).all()
+            books = Book.query.filter(Book.authors.any(id=int(to_find))).all()
         elif query_filter == '2':
             books = Book.query.filter(Book.count == int(to_find)).all()
         elif query_filter == '3':
@@ -209,3 +214,21 @@ class BookService:
         else:
             books = cls.get_books()
         return books
+
+    @staticmethod
+    def sort(books, query_sort):
+        """
+        Sort list with books according to
+        sort parameter
+        :return: sorted list of books
+        """
+        if query_sort == '1':
+            books.sort(key=lambda x: x.name, reverse=False)
+        elif query_sort == '2':
+            books.sort(key=lambda x: x.name, reverse=True)
+        elif query_sort == '3':
+            books.sort(key=lambda x: x.count, reverse=False)
+        elif query_sort == '4':
+            books.sort(key=lambda x: x.count, reverse=True)
+        return books
+
