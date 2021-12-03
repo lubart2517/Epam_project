@@ -1,7 +1,9 @@
 {% import "bootstrap/utils.html" as utils %}
 {% extends "base.html" %}
 {% block title %}Authors{% endblock %}
+
 {% block body %}
+<script src="{{ url_for('static', filename='js/confirm.js') }}"></script>
 <div class="content-section">
   <div class="outer">
     <div class="middle">
@@ -43,9 +45,10 @@
                     </a>
                   </td>
                   <td>
-                    <a href="{{ url_for('admin_delete_author', id=author.id) }}">
-                      <i class="fa fa-trash"></i> Delete
-                    </a>
+                    <button type="submit"
+                            class="ui button"
+                            onClick="confirmOperation('/admin/author/delete/',
+                            {{ author.id }}, 'Please confirm delete author')">DELETE</button>
                   </td>
                 </tr>
               {% endfor %}
@@ -69,4 +72,6 @@
   </div>
 </div>
 </div>
+
 {% endblock %}
+

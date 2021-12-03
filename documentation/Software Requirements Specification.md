@@ -5,7 +5,6 @@ orders. For library users app allows see info about books and authors and order 
 Application should provide:
 • Storing book orders, users, books and authors in a database;
 • Display list of books;
-• Updating the list of orders (adding, editing, removing);
 • Display list of authors;
 • Updating the list of authors (adding, editing, removing);
 • Filtering by different criteria for books;
@@ -17,16 +16,11 @@ Main scenario:
 • User selects item “Orders”;
 • Application displays list of Orders.
 Pic. 1.1 View the Orders list.
-   
+   ![img_5.png](img_5.png)
 The list displays the following columns:
-• User name;
-• Book title;
-• Add date – date of adding order;
-• Order time – rental time in days, minimal time is one day;
-Filtering by date:
-• In the order list view mode, the user sets a date filter and presses the refresh list button (to the
-right of the date entry field);
-• The application will display a form to view the list of orders with updated data.
+• User username;
+• Book name;
+• Add date – date of order creation;
 
 
 
@@ -38,66 +32,58 @@ Main scenario:
 • User selects item “Authors”;
 • Application displays list of authors.
 Pic. 2.1 View the authors list.
+   ![img_6.png](img_6.png)
 The list displays the following columns:
 • Author name – author name;
+• Author Middle name – author Middle name;
+• Author Last name – author Last name;
+
 
 2.2 Add author  (available only for librarians)
 Main scenario:
-• User clicks the “Add” button in the authors list view mode;
+• User clicks the “Add Author” button in the authors list view mode;
 • Application displays form to enter author data;
-• User enters author data and presses “Add author” button;
+• User enters author data and presses “Submit” button;
 • If any data is entered incorrectly, incorrect data messages are displayed;
 • If entered data is valid, then record is adding to database;
 • If error occurs, then error message is displaying;
 • If new author record is successfully added, then list of authors with added records is displaying.
-Cancel operation scenario:
-• User clicks the “Add” button in the authors list view mode;
-• Application displays form to enter author data;
-• User enters author data and presses “Cancel” button;
-• Data don’t save in data base, then list of authors records is displaying to user.
+![img_7.png](img_7.png)
 Pic. 2.2 Add author
 When adding an author, the following details are entered:
 • Author name – author name;
-• Author surname – author surname;
-• Author patronymic – author patronymic;
+• Author Middle name – author Middle name;
+• Author Last name – author Last name;
 Constraints for data validation:
 • Author name – author name;
-• Author surname – author surname;
-• Author patronymic – author patronymic;
+• Author Middle name – author Middle name;
+• Author Last name – author Last name;
 
 2.3 Edit author  (available only for librarians)
 Main scenario:
-• User clicks the “Edit” button in the books list view mode;
-• Application displays form to enter book data;
+• User clicks the “Edit” button in the authors list view mode;
+• Application displays form to enter author data;
 • User enters book data and presses “Save” button;
 • If any data is entered incorrectly, incorrect data messages are displayed;
 • If entered data is valid, then edited data is added to database;
 • If error occurs, then error message is displaying;
-• If book record is successfully edited, then list of books with added records is displaying.
-Cancel operation scenario:
-• User clicks the “Edit” button in the books list view mode;
-• Application displays form to enter book data;
-• User enters book data and presses “Cancel” button;
-• Data don’t save in data base, then list of books records is displaying to user.
-Pic. 3.3 Edit book.
+• If author record is successfully edited, then list of authors with added records is displaying.
+
+![img_8.png](img_8.png)
+Pic. 3.3 Edit author.
 2.4 Removing the author (available only for librarians)
 Main scenario:
 • The user, while in the list of authors mode, presses the "Delete" button in the selected author line;
-• Application displays confirmation dialog “Please confirm delete author?”;
-• The user confirms the removal of the author;
 • Record is deleted from database;
 • If error occurs, then error message displays;
-• If book record is successfully deleted, then list of authors without deleted records is displaying.
-Cancel operation scenario:
-• User is in display mode of authors list and press “Delete” button;
-• Application displays confirmation dialog “Please confirm delete author?”;
-• User press “Cancel” button;
-• List of authors without changes is displaying.
+• If author record is successfully deleted, then list of authors without deleted records is displaying.
+
+![img_10.png](img_10.png)
 Pic. 3.4 Delete author dialog.
-
-
-
-
+Cancel operation scenario: 
+• User is in display mode of authors list and press “Delete” button; 
+• Application displays confirmation dialog “Please confirm delete author?”; 
+• User press “Cancel” button; • List of authors without changes is displaying. 
 
 3. Books
 3.1 Display list of books
@@ -107,37 +93,34 @@ Main scenario:
 • Application displays list of books.
 Pic. 3.1 View the books list.
 The list displays the following columns:
-• Book title – book’s title;
+• Book name – book’s name;
 • Book description – book’s description;
 • Number of books in library.
 Filtering by author:
-• In the books list view mode, the user sets an author id  filter and presses the refresh list button (to the
-right of the find entry field);
-• The application will display a form to view the list of books with updated data.
+• In the books list view mode, the user sets an author id  filter and presses the refresh list button ;
+• The application will display  the list of books with updated data.
 Filtering by count:
-• In the books list view mode, the user sets a count  filter and presses the refresh list button (to the
-right of the find entry field);
-• The application will display a form to view the list of books with updated data.
+• In the books list view mode, the user sets a count  filter and presses the refresh list button (;
+• The application will display  the list of books with updated data.
 Filtering by name:
 • In the books list view mode, the user sets a name_contains
-filter and presses the refresh list button (to the right of the find entry field);
-• The application will display a form to view the list of books with updated data.
-
+filter and presses the refresh list button ;
+• The application will display  the list of books with updated data;
+• In the books list view mode, the user sets a description_contains
+filter and presses the refresh list button ;
+• The application will display  the list of books with updated data.
+![img_3.png](img_3.png)
 3.2 Add book (available only for librarians)
 Main scenario:
-• User clicks the “Add” button in the books list view mode;
+• User clicks the “Add book” button in the books list view mode;
 • Application displays form to enter book data;
-• User enters car data and presses “Add book” button;
+• User enters car data and presses “Submit” button;
 • If any data is entered incorrectly, incorrect data messages are displayed;
 • If entered data is valid, then record is adding to database;
 • If error occurs, then error message is displaying;
 • If new book record is successfully added, then list of books with added records is displaying.
-Cancel operation scenario:
-• User clicks the “Add” button in the books list view mode;
-• Application displays form to enter book data;
-• User enters book data and presses “Cancel” button;
-• Data don’t save in data base, then list of books records is displaying to user.
 Pic. 3.2 Add book
+![img_4.png](img_4.png)
 When adding a book, the following details are entered:
 • Book name – book name;
 • Book description – book description;
@@ -153,29 +136,26 @@ Constraints for data validation:
 Main scenario:
 • User clicks the “Edit” button in the books list view mode;
 • Application displays form to enter book data;
-• User enters book data and presses “Save” button;
+• User enters book data and presses “Submit” button;
 • If any data is entered incorrectly, incorrect data messages are displayed;
 • If entered data is valid, then edited data is added to database;
 • If error occurs, then error message is displaying;
 • If book record is successfully edited, then list of books with added records is displaying.
-Cancel operation scenario:
-• User clicks the “Edit” button in the books list view mode;
-• Application displays form to enter book data;
-• User enters book data and presses “Cancel” button;
-• Data don’t save in data base, then list of books records is displaying to user.
 Pic. 3.3 Edit book.
+![img_2.png](img_2.png)
+
 3.4 Removing the book (available only for librarians)
 Main scenario:
 • The user, while in the list of books mode, presses the "Delete" button in the selected book line;
 • Record is deleted from database;
-• If error occurs, then error message displays;
-• If book record is successfully deleted, then list of books without deleted records is displaying.
-Cancel operation scenario:
-• User is in display mode of books list and press “Delete” button;
-• Application displays confirmation dialog “Please confirm delete book?”;
-• User press “Cancel” button;
-• List of books without changes is displaying.
 Pic. 3.4 Delete book dialog.
+![img_1.png](img_1.png)
+
+Cancel operation scenario: 
+• User is in display mode of books list and press “Delete” button; 
+• Application displays confirmation dialog “Please confirm delete book”; 
+• User press “Cancel” button; 
+• List of authors without changes is displaying. 
 
 3.5 Add order
 Main scenario:
