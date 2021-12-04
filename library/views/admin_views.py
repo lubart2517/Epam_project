@@ -29,7 +29,7 @@ def admin_dashboard():
     return render_template('home/admin_dashboard.html', title="Dashboard")
 
 
-@admin.route('/books/', methods=['GET', 'POST'], endpoint='books')
+@admin.route('/admin/books/', methods=['GET', 'POST'], endpoint='books')
 @login_required
 def admin_books():
     """
@@ -56,7 +56,7 @@ def admin_books():
                            books=books_for_render, pagination=pagination, form=form, title="Books")
 
 
-@admin.route('/book/add', methods=['GET', 'POST'], endpoint='add_book')
+@admin.route('/admin/book/add', methods=['GET', 'POST'], endpoint='add_book')
 @login_required
 def add_book():
     """
@@ -83,7 +83,7 @@ def add_book():
                            title="Add Book")
 
 
-@admin.route('/book/edit/<int:id>', methods=['GET', 'POST'], endpoint='edit_book')
+@admin.route('/admin/book/edit/<int:id>', methods=['GET', 'POST'], endpoint='edit_book')
 @login_required
 def edit_book(id):
     """
@@ -133,7 +133,7 @@ def edit_book(id):
                                book=book, title="Edit Book", delete_author_form=delete_author_form)
 
 
-@admin.route('/book/delete/<int:id>', methods=['GET', 'POST'], endpoint='delete_book')
+@admin.route('/admin/book/delete/<int:id>', methods=['GET', 'POST'], endpoint='delete_book')
 @login_required
 def delete_book(id):
     """
@@ -149,7 +149,7 @@ def delete_book(id):
     return redirect(url_for('admin.books'))
 
 
-@admin.route('/authors/', methods=['GET', 'POST'], endpoint='authors')
+@admin.route('/admin/authors/', methods=['GET', 'POST'], endpoint='authors')
 @login_required
 def admin_authors():
     """
@@ -165,7 +165,7 @@ def admin_authors():
                            authors=authors_for_render, pagination=pagination, title="Authors")
 
 
-@admin.route('/author/add', methods=['GET', 'POST'], endpoint='add_author')
+@admin.route('/admin/author/add', methods=['GET', 'POST'], endpoint='add_author')
 @login_required
 def add_author():
     """
@@ -191,7 +191,7 @@ def add_author():
                            add=True, form=form)
 
 
-@admin.route('/author/edit/<int:id>', methods=['GET', 'POST'], endpoint='edit_author')
+@admin.route('/admin/author/edit/<int:id>', methods=['GET', 'POST'], endpoint='edit_author')
 @login_required
 def edit_author(id):
     """
@@ -217,7 +217,7 @@ def edit_author(id):
                            add=False, form=form)
 
 
-@admin.route('/author/delete/<int:id>', methods=['GET', 'POST'], endpoint='delete_author')
+@admin.route('/admin/author/delete/<int:id>', methods=['GET', 'POST'], endpoint='delete_author')
 @login_required
 def delete_author(id):
     """
@@ -233,7 +233,7 @@ def delete_author(id):
     return redirect(url_for('admin.authors'))
 
 
-@admin.route('/orders/', methods=['GET', 'POST'], endpoint='orders')
+@admin.route('/admin/orders/', methods=['GET', 'POST'], endpoint='orders')
 @login_required
 def admin_orders():
     """
@@ -249,7 +249,7 @@ def admin_orders():
                            orders=orders_for_render, pagination=pagination, title="Orders")
 
 
-@admin.route('/order/close/<int:id>', methods=['GET', 'POST'], endpoint='close_order')
+@admin.route('/admin/order/close/<int:id>', methods=['GET', 'POST'], endpoint='close_order')
 @login_required
 def close_order(id):
     """

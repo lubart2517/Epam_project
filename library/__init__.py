@@ -35,7 +35,7 @@ def create_app(config_name):
 
     app.register_blueprint(auth_blueprint)
 
-    from .views import auth as user_blueprint
+    from .views import user as user_blueprint
 
     app.register_blueprint(user_blueprint)
 

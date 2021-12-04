@@ -24,7 +24,7 @@
               <ul class="nav navbar-nav navbar-right">
                   <li><a href="{{ url_for('home.homepage') }}">Home</a></li>
                   {% if current_user.is_authenticated %}
-                      {% if current_user.role %}
+                      {% if current_user.role == 1 %}
                         <li><a href="{{ url_for('admin.dashboard') }}">Dashboard</a></li>
                         <li><a href="{{ url_for('admin.books') }}">Books</a></li>
                         <li><a href="{{ url_for('admin.orders') }}">Orders</a></li>

@@ -10,7 +10,7 @@ from . import user
 # Books Views
 
 
-@user.route('/books/', methods=['GET', 'POST'], endpoint='user_books')
+@user.route('/user/books/', methods=['GET', 'POST'], endpoint='books')
 @login_required
 def user_books():
     """
@@ -37,7 +37,7 @@ def user_books():
                            books=books_for_render, pagination=pagination, form=form, title="Books")
 
 
-@user.route('/authors/', methods=['GET', 'POST'], endpoint='user_authors')
+@user.route('/user/authors/', methods=['GET', 'POST'], endpoint='authors')
 @login_required
 def user_authors():
     """
@@ -52,7 +52,7 @@ def user_authors():
                            authors=authors_for_render, pagination=pagination, title="Authors")
 
 
-@user.route('/orders/', methods=['GET'], endpoint='user_orders')
+@user.route('/user/orders/', methods=['GET'], endpoint='orders')
 @login_required
 def user_orders():
     """
@@ -67,11 +67,11 @@ def user_orders():
                            orders=orders_for_render, pagination=pagination, title="Orders")
 
 
-@user.route('/book/order/<int:book_id>', methods=['GET'], endpoint='user_order_book')
+@user.route('/user/book/order/<int:book_id>', methods=['GET'], endpoint='order_book')
 @login_required
 def user_order_book(book_id):
     """
     Order book by some user
     """
     OrderService.add_order(current_user.id, book_id)
-    return redirect(url_for('user_orders'))
+    return redirect(url_for('user.orders'))
