@@ -18,3 +18,4 @@ flask-bootstrap
 email_validator
 flask-paginate
 flask-restful
+Flask-Testing

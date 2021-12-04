@@ -1,10 +1,11 @@
 Library
 Vision
 “Library” is web-application which allows librarians to record information about books, authors, users and the book
-orders. For library users app allows see info about books and authors and order and return book to library.
+orders. For library users app allows see info about books and authors and order  book.
 Application should provide:
 • Storing book orders, users, books and authors in a database;
 • Display list of books;
+• Updating the list of books (adding, editing, removing);
 • Display list of authors;
 • Updating the list of authors (adding, editing, removing);
 • Filtering by different criteria for books;
@@ -21,10 +22,7 @@ The list displays the following columns:
 • User username;
 • Book name;
 • Add date – date of order creation;
-
-
-
-
+   
 2. Authors
 2.1 Display list of authors
 This mode is intended for viewing and editing the authors list

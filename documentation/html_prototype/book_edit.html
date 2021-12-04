@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Edit Book | Project Library</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/style.css" rel="stylesheet">
+    <link rel="shortcut icon" href="/static/img/favicon.ico">
+</head>
+<body>
+    <nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
+        <div class="container topnav">
+          <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand topnav" href="/">Library</a>
+          </div>
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <ul class="nav navbar-nav navbar-right">
+                  <li><a href="/">Home</a></li>
+
+
+                        <li><a href="/admin/dashboard">Dashboard</a></li>
+                        <li><a href="/admin/books/">Books</a></li>
+                        <li><a href="/admin/orders/">Orders</a></li>
+                        <li><a href="/admin/authors/">Authors</a></li>
+
+                      <li><a href="/logout">Logout</a></li>
+                      <li><a><i class="fa fa-user"></i>  Hi, Lubart!</a></li>
+
+              </ul>
+          </div>
+        </div>
+    </nav>
+    <div class="wrapper">
+
+<div class="content-section">
+ <div class="outer">
+    <div class="middle">
+      <div class="inner">
+        <div class="center">
+                <h1>Edit Book</h1>
+
+<form action="" method="post"
+  class="form" role="form">
+  <input id="csrf_token" name="csrf_token" type="hidden" value="IjE5MDFkNzE2OTcwODBkNjVmOTgxMTIyYzUxMzNhYmM2ODE0ZmYzYjMi.YasLug.dUkaoqdxkMOIvqz2BaYfj_tnUnU">
+
+
+
+
+
+
+
+
+<div class="form-group  required"><label class="control-label" for="name">Name</label>
+
+          <input class="form-control" id="name" name="name" required type="text" value="The Adventures of Tom Sawyer">
+
+  </div>
+
+
+
+
+
+
+
+
+
+<div class="form-group  required"><label class="control-label" for="description">Description</label>
+
+          <input class="form-control" id="description" name="description" required type="text" value="The adventures of a mischievous young boy and his friends growing up in a Mississippi River town in the nineteenth century. Who could forget the pranks, the adventures, the sheer fun of Tom Sawyer? It&#39;s something every child should experience and every child will love. From Tom&#39;s sly trickery with the whitewashed fence, when he cleverly manipulates everyone so they happily do his work for him, to his and Becky Thatcher&#39;s calamities in Bat Cave, the enjoyment just never ends. Read more...">
+
+  </div>
+
+
+
+
+
+
+
+
+
+<div class="form-group  required"><label class="control-label" for="count">Count</label>
+
+          <select class="form-control" id="count" name="count" required><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option></select>
+
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <input class="btn btn-default" id="submit" name="submit" type="submit" value="Submit">
+
+
+
+
+
+
+
+</form>
+            <h3>Add author</h3>
+
+<form action="" method="post"
+  class="form" role="form">
+  <input id="csrf_token" name="csrf_token" type="hidden" value="IjE5MDFkNzE2OTcwODBkNjVmOTgxMTIyYzUxMzNhYmM2ODE0ZmYzYjMi.YasLug.dUkaoqdxkMOIvqz2BaYfj_tnUnU">
+
+
+
+
+
+
+
+
+<div class="form-group  required"><label class="control-label" for="author">Author</label>
+
+          <select class="form-control" id="author" name="author" required><option value="Robert Stevenson">Robert Stevenson</option><option value="Jane Austen">Jane Austen</option><option value="Emily Bront?">Emily Bront?</option><option value="Charlotte Bront?">Charlotte Bront?</option><option value="Herman Melville">Herman Melville</option><option value="Nathaniel Hawthorne">Nathaniel Hawthorne</option><option value="Jonathan Swift">Jonathan Swift</option><option value="John Bunyan">John Bunyan</option><option value="Charles Dickens">Charles Dickens</option><option value="Louisa Alcott">Louisa Alcott</option><option value="J.R.R. Tolkien">J.R.R. Tolkien</option><option value="Mary Shelley">Mary Shelley</option><option value="Harriet Stowe">Harriet Stowe</option><option value="Fyodor Dostoyevsky">Fyodor Dostoyevsky</option><option value="Gustave Flaubert">Gustave Flaubert</option><option value="Bram Stoker">Bram Stoker</option><option value="Aldous Huxley">Aldous Huxley</option><option value="Leo Tolstoy">Leo Tolstoy</option><option value="Harper Lee">Harper Lee</option><option value="L. Baum">L. Baum</option><option value="Victor Hugo">Victor Hugo</option><option value="Frances Burnett">Frances Burnett</option><option value="George Orwell">George Orwell</option><option value="F. Fitzgerald">F. Fitzgerald</option><option value="Antoine Saint-Exup?ry">Antoine Saint-Exup?ry</option><option value="Jack London">Jack London</option><option value="Jules Verne">Jules Verne</option><option value="Kenneth Grahame">Kenneth Grahame</option><option value="Oscar Wilde">Oscar Wilde</option><option value="John Steinbeck">John Steinbeck</option><option value="James Cooper">James Cooper</option><option value="Thomas Hardy">Thomas Hardy</option><option value="J.K. Rowling">J.K. Rowling</option><option value="James Joyce">James Joyce</option><option value="Arthur Doyle">Arthur Doyle</option><option value="Alexandre Dumas">Alexandre Dumas</option><option value="Ernest Hemingway">Ernest Hemingway</option><option value="C.S. Lewis">C.S. Lewis</option><option value="Carlo Collodi">Carlo Collodi</option><option value="Gabriel M?rquez">Gabriel M?rquez</option><option value="Walter Scott">Walter Scott</option><option value="L.M. Montgomery">L.M. Montgomery</option><option value="Anna Sewell">Anna Sewell</option><option value="J.M. Barrie">J.M. Barrie</option><option value="William Golding">William Golding</option><option value="Joseph Conrad">Joseph Conrad</option><option value="Stendhal Stendhal">Stendhal Stendhal</option><option value="Albert Camus">Albert Camus</option><option value="D.H. Lawrence">D.H. Lawrence</option><option value="J.D. Salinger">J.D. Salinger</option><option value="Ray Bradbury">Ray Bradbury</option><option value="William Thackeray">William Thackeray</option><option value="Erich Remarque">Erich Remarque</option><option value="Margaret Mitchell">Margaret Mitchell</option><option value="Willa Cather">Willa Cather</option><option value="Ivan Turgenev">Ivan Turgenev</option><option value="Boris Pasternak">Boris Pasternak</option><option value="Upton Sinclair">Upton Sinclair</option><option value="Dan Brown">Dan Brown</option><option value="Voltaire Voltaire">Voltaire Voltaire</option><option value="E.B. White">E.B. White</option><option value="Thomas More">Thomas More</option><option value="Henry Fielding">Henry Fielding</option><option value="Rudyard Kipling">Rudyard Kipling</option><option value="William Faulkner">William Faulkner</option><option value="George Eliot">George Eliot</option><option value="Madeleine L&#39;Engle">Madeleine L&#39;Engle</option><option value="H.G. Wells">H.G. Wells</option><option value="Edith Wharton">Edith Wharton</option><option value="Alice Walker">Alice Walker</option><option value="Jack Kerouac">Jack Kerouac</option><option value="Joseph Heller">Joseph Heller</option><option value="Toni Morrison">Toni Morrison</option><option value="Virginia Woolf">Virginia Woolf</option><option value="Pearl Buck">Pearl Buck</option><option value="Daphne Maurier">Daphne Maurier</option><option value="Stephenie Meyer">Stephenie Meyer</option><option value="E.M. Forster">E.M. Forster</option><option value="Murasaki Shikibu">Murasaki Shikibu</option><option value="Lois Lowry">Lois Lowry</option><option value="Paulo Coelho">Paulo Coelho</option><option value="Daniel Defoe">Daniel Defoe</option><option value="Gary Paulsen">Gary Paulsen</option><option value="Khaled Hosseini">Khaled Hosseini</option><option value="Ken Kesey">Ken Kesey</option><option value="Henry James">Henry James</option><option value="S.E. Hinton">S.E. Hinton</option><option value="Miguel Cervantes">Miguel Cervantes</option></select>
+
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <input class="btn btn-default" id="submit" name="submit" type="submit" value="AddAuthor">
+
+
+
+
+
+
+
+</form>
+            <h3>Delete author</h3>
+
+<form action="" method="post"
+  class="form" role="form">
+  <input id="csrf_token" name="csrf_token" type="hidden" value="IjE5MDFkNzE2OTcwODBkNjVmOTgxMTIyYzUxMzNhYmM2ODE0ZmYzYjMi.YasLug.dUkaoqdxkMOIvqz2BaYfj_tnUnU">
+
+
+
+
+
+
+
+
+<div class="form-group  required"><label class="control-label" for="author">Author</label>
+
+          <select class="form-control" id="author" name="author" required><option value="Mark Twain_X">Mark Twain_X</option></select>
+
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <input class="btn btn-default" id="submit" name="submit" type="submit" value="DeleteAuthor">
+
+
+
+
+
+
+
+</form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+      <div class="push"></div>
+    </div>
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <ul class="list-inline">
+                        <li><a href="/">Home</a></li>
+                        <li class="footer-menu-divider">⋅</li>
+
+                          <li><a href="/logout">Logout</a></li>
+
+                    </ul>
+                    <p class="copyright text-muted small">Copyright © 2021. All Rights Reserved</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

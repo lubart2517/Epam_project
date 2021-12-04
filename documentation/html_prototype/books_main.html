@@ -1,43 +1,431 @@
-{% extends 'base.html' %}
-{% block content %}
-<h4>We can see book's written by some author <a href="{% url 'books_by_author' %}">Author</a></h4>
-<h4>Or given to specific user <a href="{% url 'books_by_user' %}">User</a></h4>
-<h4>And find book by id <a href="{% url 'book_detail' %}">Detail</a></h4>
-<h4>Or find unordered books <a href="{% url 'book_unordered' %}">Unordered</a></h4>
-{% ifequal user.role 1 %}
-<h4>You can add <a href="{% url 'add_book' %}">New book</a></h4>
-{% endifequal %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Books | Project Library</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/style.css" rel="stylesheet">
+    <link rel="shortcut icon" href="/static/img/favicon.ico">
+</head>
+<body>
+    <nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
+        <div class="container topnav">
+          <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand topnav" href="/">Library</a>
+          </div>
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <ul class="nav navbar-nav navbar-right">
+                  <li><a href="/">Home</a></li>
 
 
-<h1>Here we can see the list of all books for any user</h1>
+                        <li><a href="/admin/dashboard">Dashboard</a></li>
+                        <li><a href="/admin/books/">Books</a></li>
+                        <li><a href="/admin/orders/">Orders</a></li>
+                        <li><a href="/admin/authors/">Authors</a></li>
 
-<form action="{% url 'book_home' %}" method="get">
-    {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="Sort&Filter">
+                      <li><a href="/logout">Logout</a></li>
+                      <li><a><i class="fa fa-user"></i>  Hi, Lubart!</a></li>
+
+              </ul>
+          </div>
+        </div>
+    </nav>
+    <div class="wrapper">
+
+<script src="/static/js/confirm.js"></script>
+<div class="content-section">
+  <div class="outer">
+    <div class="middle">
+      <div class="inner">
+        <br/>
+
+        <br/>
+        <h1 style="text-align:center;">Books</h1>
+
+          <hr class="intro-divider">
+          <div class="center">
+
+<form action="" method="post"
+  class="form" role="form">
+  <input id="csrf_token" name="csrf_token" type="hidden" value="IjE5MDFkNzE2OTcwODBkNjVmOTgxMTIyYzUxMzNhYmM2ODE0ZmYzYjMi.YasLGA.hi6JIp5HK1djWPHXdbQIfFINn1E">
+
+
+
+
+
+
+<div class="form-group "><label class="control-label" for="sort">sort</label>
+
+          <select class="form-control" id="sort" name="sort"><option value="1">Name_asc</option><option value="2">Name_desc</option><option value="3">Count_asc</option><option value="4">Count_desc</option></select>
+
+  </div>
+
+
+
+
+
+
+
+<div class="form-group "><label class="control-label" for="filter">filter</label>
+
+          <select class="form-control" id="filter" name="filter"><option value="1">Author_id=</option><option value="2">Count=</option><option value="3">Name_contains</option><option value="4">Desc_contains</option></select>
+
+  </div>
+
+
+
+
+
+
+
+<div class="form-group "><label class="control-label" for="find">find</label>
+
+          <input class="form-control" id="find" name="find" type="text" value="">
+
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <input class="btn btn-default" id="submit" name="submit" type="submit" value="Sort&amp;Filter">
+
+
+
+
+
+
+
 </form>
+            <div class="pagination-page-info">displaying <b>1 - 10</b> books in total <b>137</b></div>
+            <nav aria-label="..."><ul class="pagination  "><li class="page-item disabled"><span class="page-link"> &laquo; </span></li><li class="page-item active"><a class="page-link">1 <span class="sr-only">(current)</span></a></li><li class="page-item"><a class="page-link" href="/admin/books/?page=2">2</a></li><li class="page-item"><a class="page-link" href="/admin/books/?page=3">3</a></li><li class="page-item"><a class="page-link" href="/admin/books/?page=4">4</a></li><li class="page-item"><a class="page-link" href="/admin/books/?page=5">5</a></li><li class="page-item disabled"><span class="page-link">...</span></li><li class="page-item"><a class="page-link" href="/admin/books/?page=13">13</a></li><li class="page-item"><a class="page-link" href="/admin/books/?page=14">14</a></li><li class="page-item"><a class="page-link" href="/admin/books/?page=2" aria-label="Next"><span aria-hidden="true">&raquo;</span><span class="sr-only">Next</span></a></li></ul></nav>
+            <table class="table table-striped table-bordered">
+              <thead>
+                <tr>
+                  <th width="2%"></th>
+                  <th width="10%"> Name </th>
+                  <th width="60%"> Description </th>
+                  <th width="5%"> Count </th>
+                  <th width="5%"> Authors </th>
+                  <th width="5%"> Edit </th>
+                  <th width="5%"> Delete </th>
+                </tr>
+              </thead>
+              <tbody>
 
-{% for book in page_obj %}
-	<li>
-	<a href="{% url 'book_detail_with_id' book.id %}">{{ book.name }}</a>
-	{{ book.description }} Count = {{ book.count }}</li>
-{% endfor %}
-<div class="pagination">
-    <span class="step-links">
-        {% if page_obj.has_previous %}
-            <a href="?page=1">&laquo; first</a>
-            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
-        {% endif %}
+                <tr>
+                  <td>1</td>
+                  <td> The Adventures of Tom Sawyer </td>
+                  <td> The adventures of a mischievous young boy and his friends growing up in a Mississippi River town in the nineteenth century. Who could forget the pranks, the adventures, the sheer fun of Tom Sawyer? It&#39;s something every child should experience and every child will love. From Tom&#39;s sly trickery with the whitewashed fence, when he cleverly manipulates everyone so they happily do his work for him, to his and Becky Thatcher&#39;s calamities in Bat Cave, the enjoyment just never ends. Read more... </td>
+                    <td> 4 </td>
+                  <td>
 
-        <span class="current">
-            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-        </span>
 
-        {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}">next</a>
-            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
-        {% endif %}
-    </span>
+                        Mark
+                        Twain_X
+
+
+                  </td>
+                  <td>
+                    <a href="/admin/book/edit/3">
+                      <i class="fa fa-pencil"></i> Edit
+                    </a>
+                  </td>
+                  <td>
+                    <button type="submit"
+                            class="ui button"
+                            onClick="confirmOperation('/admin/book/delete/',
+                            3, 'Please confirm delete book')">DELETE</button>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>2</td>
+                  <td> Treasure Island </td>
+                  <td> While going through the possessions of a deceased guest who owed them money, the mistress of the inn and her son find a treasure map that leads to a pirate fortune as well as great danger. </td>
+                    <td> 4 </td>
+                  <td>
+
+
+                        Robert
+                        Stevenson
+
+                        Harriet
+                        Stowe
+
+
+                  </td>
+                  <td>
+                    <a href="/admin/book/edit/4">
+                      <i class="fa fa-pencil"></i> Edit
+                    </a>
+                  </td>
+                  <td>
+                    <button type="submit"
+                            class="ui button"
+                            onClick="confirmOperation('/admin/book/delete/',
+                            4, 'Please confirm delete book')">DELETE</button>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>3</td>
+                  <td> Pride and Prejudice </td>
+                  <td> In early nineteenth-century England, a spirited young woman copes with the suit of a snobbish gentleman, as well as the romantic entanglements of her four sisters. </td>
+                    <td> 4 </td>
+                  <td>
+
+
+                        Jane
+                        Austen
+
+
+                  </td>
+                  <td>
+                    <a href="/admin/book/edit/5">
+                      <i class="fa fa-pencil"></i> Edit
+                    </a>
+                  </td>
+                  <td>
+                    <button type="submit"
+                            class="ui button"
+                            onClick="confirmOperation('/admin/book/delete/',
+                            5, 'Please confirm delete book')">DELETE</button>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>4</td>
+                  <td> Wuthering Heights </td>
+                  <td> The passionate love of Catherine Earnshaw and Heathcliff mirrors the powerful moods of the Yorkshire moors. </td>
+                    <td> 2 </td>
+                  <td>
+
+
+                        Emily
+                        Bront?
+
+
+                  </td>
+                  <td>
+                    <a href="/admin/book/edit/6">
+                      <i class="fa fa-pencil"></i> Edit
+                    </a>
+                  </td>
+                  <td>
+                    <button type="submit"
+                            class="ui button"
+                            onClick="confirmOperation('/admin/book/delete/',
+                            6, 'Please confirm delete book')">DELETE</button>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>5</td>
+                  <td> Jane Eyre  </td>
+                  <td> In early nineteenth-century England, an orphaned young woman accepts employment as a governess and soon finds herself in love with her employer who has a terrible secret. Charlotte Bronte&#39;s novel about the passionate love between Jane Eyre, a young girl alone in the world, and the rich, brilliant, domineering Rochester has enthralled every kind of reader, from the most critical and cultivated to the youngest and most unabashedly romantic, ever since its publication in 1847. It lives as one of the great triumphs of storytelling and as a moving affirmation of the prerogatives of the heart in the face of disappointment and misfortune. Read more... </td>
+                    <td> 5 </td>
+                  <td>
+
+
+                        Charlotte
+                        Bront?
+
+
+                  </td>
+                  <td>
+                    <a href="/admin/book/edit/7">
+                      <i class="fa fa-pencil"></i> Edit
+                    </a>
+                  </td>
+                  <td>
+                    <button type="submit"
+                            class="ui button"
+                            onClick="confirmOperation('/admin/book/delete/',
+                            7, 'Please confirm delete book')">DELETE</button>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>6</td>
+                  <td> Moby Dick </td>
+                  <td> A young seaman joins the crew of the fanatical Captain Ahab in pursuit of the white whale Moby Dick. </td>
+                    <td> 7 </td>
+                  <td>
+
+
+                        Herman
+                        Melville
+
+
+                  </td>
+                  <td>
+                    <a href="/admin/book/edit/8">
+                      <i class="fa fa-pencil"></i> Edit
+                    </a>
+                  </td>
+                  <td>
+                    <button type="submit"
+                            class="ui button"
+                            onClick="confirmOperation('/admin/book/delete/',
+                            8, 'Please confirm delete book')">DELETE</button>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>7</td>
+                  <td> The Scarlet Letter_X </td>
+                  <td> &#34;&#34;&#34;Set in 17th-century Puritan New England, this story of illicit passion, guilt and punishment revolves around the beautiful and mysterious Hester Prynne. She is condemned to wear a scarlet letter as a sign of her adultery, and it has a strange and disturbing effect upon those around her - neighbours, husband, lover and child.&#34;&#34; &#34;&#34;The student will find a helpful introduction and a full section of resource notes encouraging active and imaginative study methods.&#34;&#34;--BOOK JACKET. Read more...&#34; </td>
+                    <td> 2 </td>
+                  <td>
+
+
+                        Nathaniel
+                        Hawthorne
+
+                        Aldous
+                        Huxley
+
+
+                  </td>
+                  <td>
+                    <a href="/admin/book/edit/9">
+                      <i class="fa fa-pencil"></i> Edit
+                    </a>
+                  </td>
+                  <td>
+                    <button type="submit"
+                            class="ui button"
+                            onClick="confirmOperation('/admin/book/delete/',
+                            9, 'Please confirm delete book')">DELETE</button>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>8</td>
+                  <td> A Christmas Carol </td>
+                  <td> An abridgement of Dickens&#39;s beloved tale of a miser who learns the true meaning of Christmas when three ghostly visitors review his past and foretell his future. </td>
+                    <td> 9 </td>
+                  <td>
+
+
+                        Charles
+                        Dickens
+
+
+                  </td>
+                  <td>
+                    <a href="/admin/book/edit/12">
+                      <i class="fa fa-pencil"></i> Edit
+                    </a>
+                  </td>
+                  <td>
+                    <button type="submit"
+                            class="ui button"
+                            onClick="confirmOperation('/admin/book/delete/',
+                            12, 'Please confirm delete book')">DELETE</button>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>9</td>
+                  <td> Gulliver&#39;s Travels </td>
+                  <td> On four voyages, an Englishman becomes shipwrecked in various lands. </td>
+                    <td> 4 </td>
+                  <td>
+
+
+                        Jonathan
+                        Swift
+
+
+                  </td>
+                  <td>
+                    <a href="/admin/book/edit/10">
+                      <i class="fa fa-pencil"></i> Edit
+                    </a>
+                  </td>
+                  <td>
+                    <button type="submit"
+                            class="ui button"
+                            onClick="confirmOperation('/admin/book/delete/',
+                            10, 'Please confirm delete book')">DELETE</button>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>10</td>
+                  <td> The Pilgrim&#39;s Progress </td>
+                  <td> &#34;Bunyan wrote the first part of &#34;&#34;The pilgrim&#39;s progress&#34;&#34; when he was in prison as a Baptist preacher. In his hands a pious tract is transformed into a work of imaginative literature which has been more widely read than any book in English except the Bible. Its influence, both indirectly on the English consciousness and directly on the literature that followed, has been immeasurable. The rich countryman&#39;s phrases that Bunyan borrowed or invented have become enshrined in the language, and many of the characters he created to people his imaginary world have won for themselves an independent and unforgettable existence. Read more...&#34; </td>
+                    <td> 4 </td>
+                  <td>
+
+
+                        John
+                        Bunyan
+
+
+                  </td>
+                  <td>
+                    <a href="/admin/book/edit/11">
+                      <i class="fa fa-pencil"></i> Edit
+                    </a>
+                  </td>
+                  <td>
+                    <button type="submit"
+                            class="ui button"
+                            onClick="confirmOperation('/admin/book/delete/',
+                            11, 'Please confirm delete book')">DELETE</button>
+                  </td>
+                </tr>
+
+              </tbody>
+            </table>
+            <nav aria-label="..."><ul class="pagination  "><li class="page-item disabled"><span class="page-link"> &laquo; </span></li><li class="page-item active"><a class="page-link">1 <span class="sr-only">(current)</span></a></li><li class="page-item"><a class="page-link" href="/admin/books/?page=2">2</a></li><li class="page-item"><a class="page-link" href="/admin/books/?page=3">3</a></li><li class="page-item"><a class="page-link" href="/admin/books/?page=4">4</a></li><li class="page-item"><a class="page-link" href="/admin/books/?page=5">5</a></li><li class="page-item disabled"><span class="page-link">...</span></li><li class="page-item"><a class="page-link" href="/admin/books/?page=13">13</a></li><li class="page-item"><a class="page-link" href="/admin/books/?page=14">14</a></li><li class="page-item"><a class="page-link" href="/admin/books/?page=2" aria-label="Next"><span aria-hidden="true">&raquo;</span><span class="sr-only">Next</span></a></li></ul></nav>
+          </div>
+          <div style="text-align: center">
+
+          <a href="/admin/book/add" class="btn btn-default btn-lg">
+            <i class="fa fa-plus"></i>
+            Add Book
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-{% endblock %}
+</div>
 
+      <div class="push"></div>
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <ul class="list-inline">
+                        <li><a href="/">Home</a></li>
+                        <li class="footer-menu-divider">⋅</li>
+
+                          <li><a href="/logout">Logout</a></li>
+
+                    </ul>
+                    <p class="copyright text-muted small">Copyright © 2021. All Rights Reserved</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
