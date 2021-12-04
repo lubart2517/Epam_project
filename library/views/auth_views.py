@@ -1,11 +1,12 @@
 from flask import flash, redirect, render_template, url_for, request
 from flask_login import login_required, login_user, logout_user
-from library import app, db
+from library import  db
 from ..forms.auth_forms import LoginForm, RegistrationForm
 from ..models.user_models import User
+from . import auth
 
 
-@app.route('/register', methods=['GET', 'POST'], endpoint='register')
+@auth.route('/register', methods=['GET', 'POST'], endpoint='register')
 def register():
     """
     Handle requests to the /register route
@@ -31,7 +32,7 @@ def register():
     return render_template('auth/register.html', form=form, title='Register')
 
 
-@app.route('/login', methods=['GET', 'POST'], endpoint='login')
+@auth.route('/login', methods=['GET', 'POST'], endpoint='login')
 def login():
     """
     Handle requests to the /login route
@@ -50,9 +51,9 @@ def login():
 
             # redirect to the homepage after login
             if user.role:
-                return redirect(url_for('admin_dashboard'))
+                return redirect(url_for('admin.dashboard'))
             else:
-                return redirect(url_for('homepage'))
+                return redirect(url_for('home.homepage'))
 
         # when login details are incorrect
         else:
@@ -62,7 +63,7 @@ def login():
     return render_template('auth/login.html', form=form, title='Login')
 
 
-@app.route('/logout', endpoint='logout')
+@auth.route('/logout', endpoint='logout')
 @login_required
 def logout():
     """
@@ -73,6 +74,6 @@ def logout():
     flash('You have successfully been logged out.')
 
     # redirect to the login page
-    return redirect(url_for('login'))
+    return redirect(url_for('auth.login'))
 
 

@@ -1,3 +1,4 @@
-from library import app
+from library import create_app
 if __name__ == "__main__":
+    app = create_app(config_name='development')
     app.run(debug=True)

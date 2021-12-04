@@ -8,8 +8,6 @@ Functions:
 - `init_api`: register REST API endpoints
 """
 
-from library import api
-
 from . import books_api
 from . import authors_api
 

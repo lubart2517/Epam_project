@@ -10,6 +10,7 @@ from flask_restful import Api
 MIGRATION_DIR = os.path.join('library', 'migrations')
 
 # write your code here
+db = SQLAlchemy()
 
 
 def create_app(config_name):
@@ -18,22 +19,57 @@ def create_app(config_name):
 
     Bootstrap(app)
 
-    db = SQLAlchemy(app)
+    db.init_app(app)
     api = Api(app)
     migrate = Migrate(app, db, directory=MIGRATION_DIR)
     login_manager = LoginManager()
     login_manager.init_app(app)
-    login_manager.login_view = 'login'
+    login_manager.login_view = 'auth.login'
 
     from .models.user_models import User
+    from .views import home as home_blueprint
+
+    app.register_blueprint(home_blueprint)
+
+    from.views import auth as auth_blueprint
+
+    app.register_blueprint(auth_blueprint)
+
+    from .views import auth as user_blueprint
+
+    app.register_blueprint(user_blueprint)
+
+    from .views import admin as admin_blueprint
+
+    app.register_blueprint(admin_blueprint)
 
     @login_manager.user_loader
     def load_user(user_id):
         return User.get(user_id)
-
+    from library import models, forms
     from .models import author_models, book_models, user_models, order_models
-    from .rest import init_api
-    init_api()
+
+    from .rest import books_api, authors_api
+    api.add_resource(
+        books_api.BookListApi,
+        '/api/books',
+        strict_slashes=False
+    )
+    api.add_resource(
+        books_api.BookApi,
+        '/api/book/<uuid>',
+        strict_slashes=False
+    )
+    api.add_resource(
+        authors_api.AuthorListApi,
+        '/api/authors',
+        strict_slashes=False
+    )
+    api.add_resource(
+        authors_api.AuthorApi,
+        '/api/author/<uuid>',
+        strict_slashes=False
+    )
 
     @app.errorhandler(403)
     def forbidden(error):
@@ -46,10 +82,8 @@ def create_app(config_name):
     @app.errorhandler(500)
     def internal_server_error(error):
         return render_template('errors/500.html', title='Server Error'), 500
-
+    # from .views import *
     return app
-
-from .views import *
 
 
 
