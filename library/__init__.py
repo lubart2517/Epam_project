@@ -6,7 +6,7 @@ from flask_login import LoginManager
 from config import Config, app_config
 from flask_bootstrap import Bootstrap
 from flask_restful import Api
-from .views import *
+
 MIGRATION_DIR = os.path.join('library', 'migrations')
 
 # write your code here
@@ -48,6 +48,8 @@ def create_app(config_name):
         return render_template('errors/500.html', title='Server Error'), 500
 
     return app
+
+from .views import *
 
 
 
