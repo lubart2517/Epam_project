@@ -102,15 +102,6 @@ class TestViews(TestBase):
             self.assertEqual(response.status_code, 200)
             self.assertTrue(User.is_authenticated)
 
-    def test_book_edit(self):
-        with self.client as client:
-            user = User.query.filter_by(id=1).first()
-            login_user(user, remember=True)
-            target = url_for('admin.edit_book', id=1)
-            self.assertEqual(current_user.role, 1)
-            resp =client.get(target)
-            self.assertEqual(resp.status_code, 200)
-
 
     def test_success_register(self):
         """
