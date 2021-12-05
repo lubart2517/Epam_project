@@ -1,0 +1,17 @@
+language: python
+python:
+  - "3.9"
+
+install:
+  - pip install -r requirements.txt
+
+before_script:
+  - export PYTHONPATH=/home/travis/build//epam-python-winter-2021-final-project/department_app/
+
+script:
+  - pylint library
+  - coverage run -m unittest discover library/tests
+  - coverage report
+
+after_success:
+  - coveralls
