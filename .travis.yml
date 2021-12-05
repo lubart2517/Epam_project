@@ -1,12 +1,14 @@
 language: python
 python:
   - "3.9"
-
+services:
+  - postgresql
 install:
   - pip install -r requirements.txt
 
 before_script:
-  - export PYTHONPATH=/home/travis/build//epam-python-winter-2021-final-project/department_app/
+  -  psql -c 'create database travis_ci_test;' -U postgres
+  - export PYTHONPATH=/home/travis/build/lubart2517/Epam_project/library/
 
 script:
   - pylint library
