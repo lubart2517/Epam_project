@@ -3,7 +3,7 @@ import os
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
-from config import  app_config
+from config import DevelopmentConfig
 from flask_bootstrap import Bootstrap
 from flask_restful import Api
 
@@ -12,9 +12,9 @@ MIGRATION_DIR = os.path.join('library', 'migrations')
 db = SQLAlchemy()
 
 
-def create_app(config_name):
+def create_app(config_class=DevelopmentConfig):
     app = Flask(__name__, template_folder="templates")
-    app.config.from_object(app_config[config_name])
+    app.config.from_object(config_class)
 
     Bootstrap(app)
 

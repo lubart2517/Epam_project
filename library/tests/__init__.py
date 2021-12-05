@@ -1,1 +1,1 @@
-from . import test, test2
+from . import test_init, test2

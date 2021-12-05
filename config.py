@@ -10,7 +10,7 @@ database_test = os.environ.get('POSTGRES_DATABASE_TEST')
 api_key = os.environ.get('API_KEY')
 
 
-class Config:
+class Config(object):
     """
     Base configurations
     """
@@ -25,7 +25,7 @@ class DevelopmentConfig(Config):
     """
     Development configurations
     """
-
+    SQLALCHEMY_DATABASE_URI = f'postgresql://{user}:{password}@localhost:{server}/{database}'
     SQLALCHEMY_ECHO = True
 
 
@@ -44,9 +44,5 @@ class TestingConfig(Config):
 
     TESTING = True
 
+    SQLALCHEMY_DATABASE_URI = f'postgresql://{user}:{password}@localhost:{server}/{database_test}'
 
-app_config = {
-    'development': DevelopmentConfig,
-    'production': ProductionConfig,
-    'testing': TestingConfig
-}

@@ -26,7 +26,7 @@ def register():
         flash('You have successfully registered! You may now login.')
 
         # redirect to the login page
-        return redirect(url_for('login'))
+        return redirect(url_for('auth.login'))
 
     # load registration template
     return render_template('auth/register.html', form=form, title='Register')

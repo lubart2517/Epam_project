@@ -1,21 +1,24 @@
-import os,sys,inspect
 
-import logging
-import unittest, os, sys
+import unittest, os, sys, inspect
 from flask_testing import TestCase
+
+# move to two level above for correct load library app
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
 parentdir2 = os.path.dirname(parentdir)
 sys.path.insert(0,parentdir2)
+
+
 from library import create_app, db
 from library.models.author_models import Author
 from library.models.user_models import User
+from config import TestingConfig
 
 
 class TestBase(TestCase):
 
     def create_app(self):
-        app = create_app('testing')
+        app = create_app(TestingConfig)
         return app
 
     def setUp(self):

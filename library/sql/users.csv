@@ -1,12 +1,12 @@
-Column1;Column3;Column4;Column5;Column7;Column8;Column9;;
-1;DJ;john_doe@gmail.com;pbkdf2:sha256:260000$3MTGe2pfzSDOBjkZ$5b4dfdd542101ce0d6ae64bd91c3ff4b373cd8b10ed88a2d92f44d8d07716c4d;22.11.2021 22:23;22.11.2021 22:23;0;John;Doe
-2;WS;glenn_wise@gmail.com;pbkdf2:sha256:260000$wBUnplec25TIqfjP$76cefbab9613d53a3aa471161714875212b293a434203f1adbc22029b5ccd379;22.11.2021 22:23;22.11.2021 22:23;0;Glenn;Wise
-3;DC;derec_getter@gmail.com;pbkdf2:sha256:260000$IcrXi7zQxmvuVRG3$f1be04bcfe2ffb47490211e1008bd84dc5447e5dbd0f68f5fe1a31c91c860350;22.11.2021 22:23;22.11.2021 22:23;0;Derec;Getter
-4;Dl;john_lennon@gmail.com;pbkdf2:sha256:260000$B3H42gR0Q00HOdgN$c2a59c61951ab91c9ea2bc2bfc274afc73360f3db747b78a3f22d041fbd28a2a;22.11.2021 22:23;22.11.2021 22:23;0;John;Lennon
-5;DG;johan_getsby@yahoo.com;pbkdf2:sha256:260000$opb6DIc6b9WAJwix$f159bfb3232c50a2b8bdb029a3464628e6a02aa5b1618dbc8e95c2fe9e1aee21;22.11.2021 22:23;22.11.2021 22:23;0;Johan;Getsby
-6;KP;kate_perry@yahoo.com;pbkdf2:sha256:260000$CsHPQ9VpLFz23Qms$634971429463a7c8aec4c46a2374c46a87fbfd216d4e073f7477cb37326e1691;22.11.2021 22:23;22.11.2021 22:23;0;Kate;Perry
-7;MK;mary_kay@yahoo.com;pbkdf2:sha256:260000$74xjigW6SMK8eFmw$271f11038e86d24b06c10044bd5106bcb989df87b26eb3aefd2f66f693a480b8;22.11.2021 22:23;22.11.2021 22:23;0;Mary;Kay
-8;GR;gloria_roy@gmail.com;pbkdf2:sha256:260000$Vs6HV5GUHFESb8MA$e51d15c94f14ed108b9dacb2737c9204d3d286503e0b8d484ceadb5190879c45;22.11.2021 22:23;22.11.2021 22:23;0;Gloria;Roy
-9;AS;anny_smith@gmail.com;pbkdf2:sha256:260000$Jf95zim9ypbufNmJ$d44d2b50f6d4d8d225761e0729981ace27613933397702b9dcfe66fd1efbe2ef;22.11.2021 22:23;22.11.2021 22:23;0;Anny;Smith
-10;JD;julia_desmond@gmail.com;pbkdf2:sha256:260000$rn14F3SuSxUVIi9J$fc6a64786913b7b66591081c8d3238cc9e93f84e8e67b3f12bfccab663c88aa6;22.11.2021 22:23;22.11.2021 22:23;0;Julia;Desmond
-11;SR;susie_roy@gmail.com;pbkdf2:sha256:260000$FNYFnVljCW0HDCcd$40655c0d647553e040f16e208a6c7b72da2e292a4299b8d19607dccdd1270a08;22.11.2021 22:23;22.11.2021 22:23;0;Susie;Roy
+ID;Name;Lastname;Username;Email;Role;Hash;Column7;Column8
+1;John;Doe;DJ;john_doe@gmail.com;0;pbkdf2:sha256:260000$3MTGe2pfzSDOBjkZ$5b4dfdd542101ce0d6ae64bd91c3ff4b373cd8b10ed88a2d92f44d8d07716c4d;22.11.2021 22:23;22.11.2021 22:23
+2;Glenn;Wise;WS;glenn_wise@gmail.com;0;pbkdf2:sha256:260000$wBUnplec25TIqfjP$76cefbab9613d53a3aa471161714875212b293a434203f1adbc22029b5ccd379;22.11.2021 22:23;22.11.2021 22:23
+3;Derec;Getter;DC;derec_getter@gmail.com;0;pbkdf2:sha256:260000$IcrXi7zQxmvuVRG3$f1be04bcfe2ffb47490211e1008bd84dc5447e5dbd0f68f5fe1a31c91c860350;22.11.2021 22:23;22.11.2021 22:23
+4;John;Lennon;Dl;john_lennon@gmail.com;0;pbkdf2:sha256:260000$B3H42gR0Q00HOdgN$c2a59c61951ab91c9ea2bc2bfc274afc73360f3db747b78a3f22d041fbd28a2a;22.11.2021 22:23;22.11.2021 22:23
+5;Johan;Getsby;DG;johan_getsby@yahoo.com;0;pbkdf2:sha256:260000$opb6DIc6b9WAJwix$f159bfb3232c50a2b8bdb029a3464628e6a02aa5b1618dbc8e95c2fe9e1aee21;22.11.2021 22:23;22.11.2021 22:23
+6;Kate;Perry;KP;kate_perry@yahoo.com;0;pbkdf2:sha256:260000$CsHPQ9VpLFz23Qms$634971429463a7c8aec4c46a2374c46a87fbfd216d4e073f7477cb37326e1691;22.11.2021 22:23;22.11.2021 22:23
+7;Mary;Kay;MK;mary_kay@yahoo.com;0;pbkdf2:sha256:260000$74xjigW6SMK8eFmw$271f11038e86d24b06c10044bd5106bcb989df87b26eb3aefd2f66f693a480b8;22.11.2021 22:23;22.11.2021 22:23
+8;Gloria;Roy;GR;gloria_roy@gmail.com;0;pbkdf2:sha256:260000$Vs6HV5GUHFESb8MA$e51d15c94f14ed108b9dacb2737c9204d3d286503e0b8d484ceadb5190879c45;22.11.2021 22:23;22.11.2021 22:23
+9;Anny;Smith;AS;anny_smith@gmail.com;0;pbkdf2:sha256:260000$Jf95zim9ypbufNmJ$d44d2b50f6d4d8d225761e0729981ace27613933397702b9dcfe66fd1efbe2ef;22.11.2021 22:23;22.11.2021 22:23
+10;Julia;Desmond;JD;julia_desmond@gmail.com;0;pbkdf2:sha256:260000$rn14F3SuSxUVIi9J$fc6a64786913b7b66591081c8d3238cc9e93f84e8e67b3f12bfccab663c88aa6;22.11.2021 22:23;22.11.2021 22:23
+11;Susie;Roy;SR;susie_roy@gmail.com;0;pbkdf2:sha256:260000$FNYFnVljCW0HDCcd$40655c0d647553e040f16e208a6c7b72da2e292a4299b8d19607dccdd1270a08;22.11.2021 22:23;22.11.2021 22:23

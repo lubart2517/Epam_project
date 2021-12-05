@@ -50,7 +50,8 @@ with open('users.csv', 'r') as f:
 
 #  load Orders into db
 with open('orders.csv', 'r') as f:
-    cur.copy_from(f, 'Order', sep=',', null='')
+    next(f)
+    cur.copy_from(f, 'Order', sep=';', null='')
     f.seek(0)  # return to start of the file
     lines = len(list(csv.reader(f)))  # count number of records in the file
     cur.execute(f'ALTER SEQUENCE "Order_id_seq" RESTART WITH {lines};')  # set correct next id value in the database
