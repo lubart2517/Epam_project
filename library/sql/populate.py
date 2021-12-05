@@ -15,7 +15,7 @@ conn = psycopg2.connect(f"host=localhost dbname={database} user={user} password=
 cur = conn.cursor()
 #  load Authors into db
 
-with open('authors.csv', 'r') as f:
+with open('authors.csv', 'r', encoding='utf-8') as f:
     next(f)  # Skip the header row.
     cur.copy_from(f, 'Author', sep=';', null='')  # copy all records from csv file to database
     f.seek(0)  # return to start of the file
@@ -25,7 +25,7 @@ with open('authors.csv', 'r') as f:
 
 
 #  load Books into db
-with open('books.csv', 'r') as f:
+with open('books.csv', 'r', encoding = "cp1252") as f:
     next(f)  # Skip the header row.
     cur.copy_from(f, 'Book', sep='&', null='')  # copy all records from csv file to database
     f.seek(0)  # return to start of the file
@@ -34,13 +34,13 @@ with open('books.csv', 'r') as f:
     conn.commit()
 
 #  load info about book's authors into db
-with open('Book_authors.csv', 'r') as f:
+with open('Book_authors.csv', 'r', encoding='utf-8') as f:
     next(f)  # Skip the header row.
     cur.copy_from(f, 'book_authors', sep='&', null='')  # copy all records from csv file to database
     conn.commit()
 
 #  load Users into db
-with open('users.csv', 'r') as f:
+with open('users.csv', 'r', encoding='utf-8') as f:
     next(f)  # Skip the header row.
     cur.copy_from(f, 'users', sep=';', null='')
     f.seek(0)  # return to start of the file
@@ -49,7 +49,7 @@ with open('users.csv', 'r') as f:
     conn.commit()
 
 #  load Orders into db
-with open('orders.csv', 'r') as f:
+with open('orders.csv', 'r', encoding='utf-8') as f:
     next(f)
     cur.copy_from(f, 'Order', sep=';', null='')
     f.seek(0)  # return to start of the file
