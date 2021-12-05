@@ -6,6 +6,7 @@ user = os.environ.get('POSTGRES_USER')
 password = os.environ.get('POSTGRES_PASSWORD')
 server = os.environ.get('POSTGRES_SERVER')
 database = os.environ.get('POSTGRES_DATABASE')
+database_test = os.environ.get('POSTGRES_DATABASE_TEST')
 api_key = os.environ.get('API_KEY')
 
 

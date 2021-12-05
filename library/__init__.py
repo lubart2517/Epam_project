@@ -3,19 +3,18 @@ import os
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
-from config import Config, app_config
+from config import  app_config
 from flask_bootstrap import Bootstrap
 from flask_restful import Api
 
 MIGRATION_DIR = os.path.join('library', 'migrations')
 
-# write your code here
 db = SQLAlchemy()
 
 
 def create_app(config_name):
     app = Flask(__name__, template_folder="templates")
-    app.config.from_object(Config)
+    app.config.from_object(app_config[config_name])
 
     Bootstrap(app)
 
@@ -31,15 +30,11 @@ def create_app(config_name):
 
     app.register_blueprint(home_blueprint)
 
-    from.views import auth as auth_blueprint
+    from.views import auth as auth_blueprint, user as user_blueprint, admin as admin_blueprint
 
     app.register_blueprint(auth_blueprint)
 
-    from .views import user as user_blueprint
-
     app.register_blueprint(user_blueprint)
-
-    from .views import admin as admin_blueprint
 
     app.register_blueprint(admin_blueprint)
 

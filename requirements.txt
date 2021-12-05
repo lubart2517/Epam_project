@@ -19,3 +19,4 @@ email_validator
 flask-paginate
 flask-restful
 Flask-Testing
+nose2
