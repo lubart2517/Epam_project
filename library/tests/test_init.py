@@ -12,6 +12,8 @@ sys.path.insert(0,parentdir2)
 from library import create_app, db
 from library.models.author_models import Author
 from library.models.user_models import User
+from library.models.book_models import Book
+from library.models.order_models import Order
 from config import TestingConfig
 
 
@@ -40,9 +42,18 @@ class TestBase(TestCase):
         # create test non-admin user
         user = User(first_name='John', last_name='Lennon',username="user", email='789@gmail.com',
                      password="admin2016")
+        # create test book
+        book = Book(name="IT", description="The IT Department", count=5, authors=[Author.query.first()])
+
+        # save book to database
+        db.session.add(book)
         db.session.add(admin)
         db.session.add(user)
         db.session.commit()
+        order = Order(user_id=User.query.first().id, book_id=Book.query.first().id)
+
+        # save department to database
+        db.session.add(order)
 
     def tearDown(self):
         """
@@ -52,13 +63,7 @@ class TestBase(TestCase):
         db.session.remove()
         db.drop_all()
 
-class TestModels(TestBase):
 
-    def test_user_model(self):
-        """
-        Test number of records in Employee table
-        """
-        self.assertEqual(User.query.count(), 2)
 if __name__ == '__main__':
     unittest.main()
 

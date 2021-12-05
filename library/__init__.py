@@ -6,7 +6,6 @@ from flask_login import LoginManager
 from config import DevelopmentConfig
 from flask_bootstrap import Bootstrap
 from flask_restful import Api
-
 MIGRATION_DIR = os.path.join('library', 'migrations')
 
 db = SQLAlchemy()
@@ -17,7 +16,6 @@ def create_app(config_class=DevelopmentConfig):
     app.config.from_object(config_class)
 
     Bootstrap(app)
-
     db.init_app(app)
     api = Api(app)
     migrate = Migrate(app, db, directory=MIGRATION_DIR)
