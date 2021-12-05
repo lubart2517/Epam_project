@@ -18,27 +18,27 @@
                   <span class="icon-bar"></span>
                   <span class="icon-bar"></span>
               </button>
-              <a class="navbar-brand topnav" href="{{ url_for('homepage') }}">Library</a>
+              <a class="navbar-brand topnav" href="{{ url_for('home.homepage') }}">Library</a>
           </div>
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
               <ul class="nav navbar-nav navbar-right">
-                  <li><a href="{{ url_for('homepage') }}">Home</a></li>
+                  <li><a href="{{ url_for('home.homepage') }}">Home</a></li>
                   {% if current_user.is_authenticated %}
-                      {% if current_user.role %}
-                        <li><a href="{{ url_for('admin_dashboard') }}">Dashboard</a></li>
-                        <li><a href="{{ url_for('admin_books') }}">Books</a></li>
-                        <li><a href="{{ url_for('admin_orders') }}">Orders</a></li>
-                        <li><a href="{{ url_for('admin_authors') }}">Authors</a></li>
+                      {% if current_user.role == 1 %}
+                        <li><a href="{{ url_for('admin.dashboard') }}">Dashboard</a></li>
+                        <li><a href="{{ url_for('admin.books') }}">Books</a></li>
+                        <li><a href="{{ url_for('admin.orders') }}">Orders</a></li>
+                        <li><a href="{{ url_for('admin.authors') }}">Authors</a></li>
                       {% else %}
-                        <li><a href="{{ url_for('user_books') }}">Books</a></li>
-                        <li><a href="{{ url_for('user_orders') }}">Orders</a></li>
-                        <li><a href="{{ url_for('user_authors') }}">Authors</a></li>
+                        <li><a href="{{ url_for('user.books') }}">Books</a></li>
+                        <li><a href="{{ url_for('user.orders') }}">Orders</a></li>
+                        <li><a href="{{ url_for('user.authors') }}">Authors</a></li>
                       {% endif %}
-                      <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                      <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
                       <li><a><i class="fa fa-user"></i>  Hi, {{ current_user.username }}!</a></li>
                   {% else %}
-                      <li><a href="{{ url_for('register') }}">Register</a></li>
-                      <li><a href="{{ url_for('login') }}">Login</a></li>
+                      <li><a href="{{ url_for('auth.register') }}">Register</a></li>
+                      <li><a href="{{ url_for('auth.login') }}">Login</a></li>
                   {% endif %}
               </ul>
           </div>
@@ -54,14 +54,14 @@
             <div class="row">
                 <div class="col-lg-12">
                     <ul class="list-inline">
-                        <li><a href="{{ url_for('homepage') }}">Home</a></li>
+                        <li><a href="{{ url_for('home.homepage') }}">Home</a></li>
                         <li class="footer-menu-divider">⋅</li>
                         {% if current_user.is_authenticated %}
-                          <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                          <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
                         {% else %}
-                          <li><a href="{{ url_for('register') }}">Register</a></li>
+                          <li><a href="{{ url_for('auth.register') }}">Register</a></li>
                           <li class="footer-menu-divider">⋅</li>
-                          <li><a href="{{ url_for('login') }}">Login</a></li>
+                          <li><a href="{{ url_for('auth.login') }}">Login</a></li>
                         {% endif %}
                     </ul>
                     <p class="copyright text-muted small">Copyright © 2021. All Rights Reserved</p>

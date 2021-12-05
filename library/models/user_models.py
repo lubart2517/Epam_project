@@ -59,7 +59,7 @@ class User(db.Model, UserMixin):
     def get(id):
         return db.session.query(User).filter_by(id=id).first()
 
-    def __init__(self, first_name, last_name, username, email, password):
+    def __init__(self, first_name, last_name, username, email, password, role=0):
 
         # user real name
         self.first_name = first_name
@@ -75,3 +75,6 @@ class User(db.Model, UserMixin):
 
         # field for storing hash of user password
         self.password_hash = generate_password_hash(password)
+
+        if role:
+            self.role = role

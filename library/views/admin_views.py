@@ -3,10 +3,11 @@ from flask_login import current_user, login_required
 from flask_paginate import Pagination, get_page_parameter, get_page_args
 from ..forms.model_forms import BookForm, BookFormAddAuthor, BookFormDeleteAuthor, AuthorForm
 from ..forms.query_forms import BooksQueryForm
-from library import app, db
+from library import db
 from ..service.book_service import BookService
 from ..service.author_service import AuthorService
 from ..service.orders_service import OrderService
+from . import admin
 
 
 def check_admin():
@@ -19,7 +20,16 @@ def check_admin():
 # Books Views
 
 
-@app.route('/admin/books/', methods=['GET', 'POST'], endpoint='admin_books')
+@admin.route('/dashboard/', endpoint='dashboard')
+@login_required
+def admin_dashboard():
+    # prevent non-admins from accessing the page
+    check_admin()
+
+    return render_template('home/admin_dashboard.html', title="Dashboard")
+
+
+@admin.route('/admin/books/', methods=['GET', 'POST'], endpoint='books')
 @login_required
 def admin_books():
     """
@@ -46,7 +56,7 @@ def admin_books():
                            books=books_for_render, pagination=pagination, form=form, title="Books")
 
 
-@app.route('/admin/book/add', methods=['GET', 'POST'], endpoint='admin_add_book')
+@admin.route('/admin/book/add', methods=['GET', 'POST'], endpoint='add_book')
 @login_required
 def add_book():
     """
@@ -54,7 +64,7 @@ def add_book():
     """
     check_admin()
 
-    form = BookForm()
+    form = BookForm(author_choices=AuthorService.get_authors())
     if form.validate_on_submit():
         try:
             BookService.add_book(name=form.name.data,
@@ -65,7 +75,7 @@ def add_book():
             flash('Error: book name already exists.')
 
         # redirect to books page
-        return redirect(url_for('admin_books'))
+        return redirect(url_for('admin.books'))
 
     # load book template
     return render_template('admin/book_add.html', action="Add",
@@ -73,7 +83,7 @@ def add_book():
                            title="Add Book")
 
 
-@app.route('/admin/book/edit/<int:id>', methods=['GET', 'POST'], endpoint='admin_edit_book')
+@admin.route('/admin/book/edit/<int:id>', methods=['GET', 'POST'], endpoint='edit_book')
 @login_required
 def edit_book(id):
     """
@@ -94,14 +104,14 @@ def edit_book(id):
         BookService.add_author(id, add_author_form.author.data)
         flash('You have successfully added author to the book.')
         # redirect to the books page
-        return redirect(url_for('admin_books'))
+        return redirect(url_for('admin.books'))
 
     #  if admin deletes author
     if delete_author_form.validate_on_submit():
         BookService.delete_author(id, delete_author_form.author.data)
         flash('You have successfully deleted author from the book.')
         # redirect to the books page
-        return redirect(url_for('admin_books'))
+        return redirect(url_for('admin.books'))
 
     #  if admin changes book name, description or count
     if form.validate_on_submit():
@@ -110,7 +120,7 @@ def edit_book(id):
         flash('You have successfully edited the book.')
 
         # redirect to the books page
-        return redirect(url_for('admin_books'))
+        return redirect(url_for('admin.books'))
 
     else:
         form.description.data = book.description
@@ -123,7 +133,7 @@ def edit_book(id):
                                book=book, title="Edit Book", delete_author_form=delete_author_form)
 
 
-@app.route('/admin/book/delete/<int:id>', methods=['GET', 'POST'], endpoint='admin_delete_book')
+@admin.route('/admin/book/delete/<int:id>', methods=['GET', 'POST'], endpoint='delete_book')
 @login_required
 def delete_book(id):
     """
@@ -136,10 +146,10 @@ def delete_book(id):
     flash('You have successfully deleted the book.')
 
     # redirect to the books page
-    return redirect(url_for('admin_books'))
+    return redirect(url_for('admin.books'))
 
 
-@app.route('/admin/authors/', methods=['GET', 'POST'], endpoint='admin_authors')
+@admin.route('/admin/authors/', methods=['GET', 'POST'], endpoint='authors')
 @login_required
 def admin_authors():
     """
@@ -155,7 +165,7 @@ def admin_authors():
                            authors=authors_for_render, pagination=pagination, title="Authors")
 
 
-@app.route('/admin/author/add', methods=['GET', 'POST'], endpoint='admin_add_author')
+@admin.route('/admin/author/add', methods=['GET', 'POST'], endpoint='add_author')
 @login_required
 def add_author():
     """
@@ -174,14 +184,14 @@ def add_author():
             flash('Error: author name already exists.')
 
         # redirect to authors page
-        return redirect(url_for('admin_authors'))
+        return redirect(url_for('admin.authors'))
 
     # load author template
     return render_template('admin/author.html', action="Add",
                            add=True, form=form)
 
 
-@app.route('/admin/author/edit/<int:id>', methods=['GET', 'POST'], endpoint='admin_edit_author')
+@admin.route('/admin/author/edit/<int:id>', methods=['GET', 'POST'], endpoint='edit_author')
 @login_required
 def edit_author(id):
     """
@@ -200,14 +210,14 @@ def edit_author(id):
             flash('Error: author name already exists.')
 
         # redirect to authors page
-        return redirect(url_for('admin_authors'))
+        return redirect(url_for('admin.authors'))
 
     # load author template
     return render_template('admin/author.html', action="Edit",
                            add=False, form=form)
 
 
-@app.route('/admin/author/delete/<int:id>', methods=['GET', 'POST'], endpoint='admin_delete_author')
+@admin.route('/admin/author/delete/<int:id>', methods=['GET', 'POST'], endpoint='delete_author')
 @login_required
 def delete_author(id):
     """
@@ -220,10 +230,10 @@ def delete_author(id):
     flash('You have successfully deleted the author.')
 
     # redirect to the books page
-    return redirect(url_for('admin_authors'))
+    return redirect(url_for('admin.authors'))
 
 
-@app.route('/admin/orders/', methods=['GET', 'POST'], endpoint='admin_orders')
+@admin.route('/admin/orders/', methods=['GET', 'POST'], endpoint='orders')
 @login_required
 def admin_orders():
     """
@@ -239,7 +249,7 @@ def admin_orders():
                            orders=orders_for_render, pagination=pagination, title="Orders")
 
 
-@app.route('/admin/order/close/<int:id>', methods=['GET', 'POST'], endpoint='admin_close_order')
+@admin.route('/admin/order/close/<int:id>', methods=['GET', 'POST'], endpoint='close_order')
 @login_required
 def close_order(id):
     """
@@ -252,30 +262,4 @@ def close_order(id):
     flash('You have successfully closed the order.')
 
     # redirect to the books page
-    return redirect(url_for('admin_orders'))
-
-
-@app.route('/admin/order/add', methods=['GET', 'POST'], endpoint='admin_add_order')
-@login_required
-def add_order():
-    """
-    Add an order to the database
-    """
-    check_admin()
-
-    form = AuthorForm()
-    if form.validate_on_submit():
-        try:
-            AuthorService.add_author(name=form.name.data,
-                       middle_name=form.middle_name.data, last_name=form.last_name.data)
-            flash('You have successfully added a new order.')
-        except ValueError:
-            # in case author name already exists
-            flash('Error: author name already exists.')
-
-        # redirect to authors page
-        return redirect(url_for('admin_authors'))
-
-    # load author template
-    return render_template('admin/author.html', action="Add",
-                           add=True, form=form)
+    return redirect(url_for('admin.orders'))

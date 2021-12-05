@@ -46,7 +46,7 @@
                     {% endif %}
                   </td>
                   <td>
-                    <a href="{{ url_for('admin_edit_book', id=book.id) }}">
+                    <a href="{{ url_for('admin.edit_book', id=book.id) }}">
                       <i class="fa fa-pencil"></i> Edit
                     </a>
                   </td>
@@ -68,7 +68,7 @@
             <h3> No books have been added. </h3>
             <hr class="intro-divider">
         {% endif %}
-          <a href="{{ url_for('admin_add_book') }}" class="btn btn-default btn-lg">
+          <a href="{{ url_for('admin.add_book') }}" class="btn btn-default btn-lg">
             <i class="fa fa-plus"></i>
             Add Book
           </a>
