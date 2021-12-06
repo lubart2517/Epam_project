@@ -1,13 +1,5 @@
-
-import unittest, os, sys, inspect
+import unittest
 from flask_testing import TestCase
-
-# move to two level above for correct load library app
-currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-parentdir = os.path.dirname(currentdir)
-parentdir2 = os.path.dirname(parentdir)
-sys.path.insert(0,parentdir2)
-
 
 from library import create_app, db
 from library.models.author_models import Author
@@ -18,7 +10,9 @@ from config import TestingConfig
 
 
 class TestBase(TestCase):
-
+    """
+    Base class for all tests
+    """
     def create_app(self):
         app = create_app(TestingConfig)
         return app
@@ -52,7 +46,7 @@ class TestBase(TestCase):
         db.session.commit()
         order = Order(user_id=User.query.first().id, book_id=Book.query.first().id)
 
-        # save department to database
+        # save order to database
         db.session.add(order)
 
     def tearDown(self):

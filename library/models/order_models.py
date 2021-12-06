@@ -3,6 +3,7 @@ import datetime
 from ..service.book_service import BookService
 from ..service.user_service import UserService
 
+
 class Order(db.Model):
     """
         This class represents an Order. \n
@@ -13,7 +14,7 @@ class Order(db.Model):
         param book: Describes book in this order
         type book: Book instance
         param created_at: Describes when user placed this order
-        type created_at: int default=10
+        type created_at: date
     """
 
     #: Name of the database table storing books
@@ -58,9 +59,11 @@ class Order(db.Model):
         return f'Order({self.user_id}, {self.book_id})'
 
     def get_bookname(self):
+        """ Returns name of this order book"""
         return BookService.get_book_by_id(self.book_id).name
 
     def get_username(self):
+        """ Returns first and last name of this order user"""
         user = UserService.get_user_by_id(self.user_id)
         return f"{user.first_name} {user.last_name}"
 

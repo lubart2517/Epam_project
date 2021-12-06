@@ -6,7 +6,9 @@ from library.tests.test_init import TestBase
 
 
 class TestModels(TestBase):
-
+    """
+    This class checks records added bt initial script
+    """
     def test_author_model(self):
         """
         Test number of records in Author table

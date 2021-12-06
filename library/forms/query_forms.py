@@ -1,6 +1,5 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, SelectField
-from wtforms.validators import DataRequired
 
 
 CHOICES_SORT = (
@@ -17,6 +16,7 @@ CHOICES_FILTER = (
     ("4", "Desc_contains"),
 )
 
+
 class BooksQueryForm(FlaskForm):
     """
     Form for admin to sort and find books
@@ -25,3 +25,4 @@ class BooksQueryForm(FlaskForm):
     filter = SelectField('filter', choices=CHOICES_FILTER)
     find = StringField('find')
     submit = SubmitField('Sort&Filter')
+

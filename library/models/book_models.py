@@ -44,7 +44,7 @@ class Book(db.Model):
     authors = db.relationship('Author', secondary=book_authors, backref=db.backref('Book', lazy='dynamic'))
 
     def __init__(self, name, description, count, authors=None):
-        #: Name of the author
+        #: Name of the book
         self.name = name
 
         #: Description of the book

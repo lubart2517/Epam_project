@@ -9,7 +9,9 @@ from library import db
 
 
 class TestViews(TestBase):
-
+    """
+    Class for testing view functions
+    """
     def test_homepage_view(self):
         """
         Test that homepage is accessible without login
