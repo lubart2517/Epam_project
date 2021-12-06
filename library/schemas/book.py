@@ -1,3 +1,4 @@
+# pylint: disable=no-member
 """
 Book schema used to serialize/deserialize books, this module
 defines the following classes:

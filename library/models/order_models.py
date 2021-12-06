@@ -1,3 +1,4 @@
+# pylint: disable=no-member
 from library import db
 import datetime
 from ..service.book_service import BookService

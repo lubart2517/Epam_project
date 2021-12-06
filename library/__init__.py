@@ -1,3 +1,4 @@
+# pylint: disable=wrong-import-position, protected-access, cyclic-import
 from flask import Flask, render_template, abort
 import os
 from flask_sqlalchemy import SQLAlchemy
@@ -75,7 +76,6 @@ def create_app(config_class=DevelopmentConfig):
     @app.errorhandler(500)
     def internal_server_error(error):
         return render_template('errors/500.html', title='Server Error'), 500
-    # from .views import *
     return app
 
 
