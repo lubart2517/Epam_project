@@ -11,6 +11,7 @@ before_script:
   - psql -c "CREATE USER foo WITH PASSWORD 'bar';" -U postgres
 
 script:
+  - pylint library
   - coverage run -m unittest discover library/tests
   - coverage report
 
