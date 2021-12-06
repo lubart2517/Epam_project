@@ -5,7 +5,7 @@ from ..forms.query_forms import BooksQueryForm
 from ..service.book_service import BookService
 from ..service.author_service import AuthorService
 from ..service.orders_service import OrderService
-from . import user
+from .blueprint import user
 
 # Books Views
 

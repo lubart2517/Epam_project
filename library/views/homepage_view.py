@@ -3,7 +3,7 @@ Web application homepage views used, this module defines the following classes:
 - `HomepageView`, class that defines homepage view
 """
 from flask import render_template
-from . import home
+from .blueprint import home
 
 
 @home.route('/', endpoint='homepage')

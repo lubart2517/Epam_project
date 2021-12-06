@@ -7,11 +7,7 @@ Modules:
 """
 
 
-from flask import Blueprint
-user = Blueprint('user', __name__)
-admin = Blueprint('admin', __name__)
-home = Blueprint('home', __name__)
-auth = Blueprint('auth', __name__)
+
 from . import auth_views
 from . import homepage_view
 from . import admin_views

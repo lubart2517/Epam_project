@@ -7,7 +7,7 @@ from library import db
 from ..service.book_service import BookService
 from ..service.author_service import AuthorService
 from ..service.orders_service import OrderService
-from . import admin
+from .blueprint import admin
 
 
 def check_admin():
