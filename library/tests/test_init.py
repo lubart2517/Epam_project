@@ -1,3 +1,5 @@
+# pylint: disable=no-member
+""""""
 import unittest
 from flask_testing import TestCase
 
