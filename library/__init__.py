@@ -25,11 +25,11 @@ def create_app(config_class=DevelopmentConfig):
     login_manager.login_view = 'auth.login'
 
     from .models.user_models import User
-    from .views import home as home_blueprint
+    from .views.blueprint import home as home_blueprint
 
     app.register_blueprint(home_blueprint)
 
-    from.views import auth as auth_blueprint, user as user_blueprint, admin as admin_blueprint
+    from.views.blueprint import auth as auth_blueprint, user as user_blueprint, admin as admin_blueprint
 
     app.register_blueprint(auth_blueprint)
 
