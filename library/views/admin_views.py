@@ -83,7 +83,7 @@ def add_book():
                            title="Add Book")
 
 
-@admin.route('/admin/book/edit/<int:_id>', methods=['GET', 'POST'], endpoint='edit_book')
+@admin.route('/admin/book/edit/<int:id>', methods=['GET', 'POST'], endpoint='edit_book')
 @login_required
 def edit_book(id):
     """
@@ -93,7 +93,7 @@ def edit_book(id):
     """
     check_admin()
 
-    book = BookService.get_book_by_id(id)
+    book = BookService.get_book_byid(id)
     form = BookForm(obj=book)
     del form.author
     add_author_form = BookFormAddAuthor(author_choices=BookService.get_free_authors(id))
