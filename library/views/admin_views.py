@@ -83,7 +83,7 @@ def add_book():
                            title="Add Book")
 
 
-@admin.route('/admin/book/edit/<int:id>', methods=['GET', 'POST'], endpoint='edit_book')
+@admin.route('/admin/book/edit/<int:_id>', methods=['GET', 'POST'], endpoint='edit_book')
 @login_required
 def edit_book(id):
     """
