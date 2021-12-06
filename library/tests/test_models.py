@@ -1,18 +1,8 @@
-import os,sys,inspect
-
-# move to two level above for correct load library app
-'''
-currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-parentdir = os.path.dirname(currentdir)
-parentdir2 = os.path.dirname(parentdir)
-sys.path.insert(0,parentdir2)
-'''
 from library.models.author_models import Author
 from library.models.book_models import Book
 from library.models.order_models import Order
 from library.models.user_models import User
 from library.tests.test_init import TestBase
-from library import db
 
 
 class TestModels(TestBase):
