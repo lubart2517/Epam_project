@@ -1,6 +1,11 @@
 from flask import abort, url_for
+from flask_login import current_user, login_user
+from library.models.author_models import Author
+from library.models.book_models import Book
+from library.models.order_models import Order
 from library.models.user_models import User
 from library.tests.test_init import TestBase
+from library import db
 
 
 class TestViews(TestBase):
@@ -143,11 +148,9 @@ class TestViews(TestBase):
 class TestErrorPages(TestBase):
 
     def test_403_forbidden(self):
-        """test if response equal to 403 for forbidden urls"""
         # create route to abort the request with the 403 Error
         @self.app.route('/403')
         def forbidden_error():
-            """abort with 403 code"""
             abort(403)
 
         response = self.client.get('/403')
@@ -155,17 +158,14 @@ class TestErrorPages(TestBase):
         self.assertTrue("403 Error" in response.get_data(as_text=True))
 
     def test_404_not_found(self):
-        """test if response equal to 404 for non existing urls"""
         response = self.client.get('/nothinghere')
         self.assertEqual(response.status_code, 404)
         self.assertTrue("404 Error" in response.get_data(as_text=True))
 
     def test_500_internal_server_error(self):
-        """test if response equal to 500 for fserver errors"""
         # create route to abort the request with the 500 Error
         @self.app.route('/500')
         def internal_server_error():
-            """abort with 500 code"""
             abort(500)
 
         response = self.client.get('/500')
