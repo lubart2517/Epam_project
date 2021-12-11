@@ -1,4 +1,4 @@
-# pylint: disable=wrong-import-position, protected-access, cyclic-import
+# pylint: disable=wrong-import-position, protected-access, cyclic-import,
 """This module initialize Flask app"""
 import os
 from flask import Flask, render_template
@@ -8,9 +8,7 @@ from flask_login import LoginManager
 from flask_bootstrap import Bootstrap
 from flask_restful import Api
 from config import DevelopmentConfig
-from .models.user_models import User
-from .views.blueprint import home as home_blueprint
-from.views.blueprint import auth as auth_blueprint, user as user_blueprint, admin as admin_blueprint
+
 
 MIGRATION_DIR = os.path.join('library', 'migrations')
 
@@ -24,6 +22,9 @@ def create_app(config_class=DevelopmentConfig):
     Bootstrap(app)
     db.init_app(app)
     api = Api(app)
+    from .models.user_models import User
+    from .views.blueprint import home as home_blueprint
+    from .views.blueprint import auth as auth_blueprint, user as user_blueprint, admin as admin_blueprint
     # migrate = Migrate(app, db, directory=MIGRATION_DIR)
     login_manager = LoginManager()
     login_manager.init_app(app)
