@@ -1,3 +1,4 @@
+"""This module manage all views with admin access"""
 from flask import abort, flash, redirect, render_template, url_for, request
 from flask_login import current_user, login_required
 from flask_paginate import Pagination, get_page_args
@@ -68,7 +69,7 @@ def add_book():
     if form.validate_on_submit():
         try:
             BookService.add_book(name=form.name.data,
-                       description=form.description.data, count=form.count.data, author=form.author.data)
+            description=form.description.data, count=form.count.data, author=form.author.data)
             flash('You have successfully added a new book.')
         except ValueError:
             # in case book name already exists
@@ -83,39 +84,39 @@ def add_book():
                            title="Add Book")
 
 
-@admin.route('/admin/book/edit/<int:id>', methods=['GET', 'POST'], endpoint='edit_book')
+@admin.route('/admin/book/edit/<int:book_id>', methods=['GET', 'POST'], endpoint='edit_book')
 @login_required
-def edit_book(id):
+def edit_book(book_id):
     """
-    Edit a book with given id
+    Edit a book with given book_id
     Admin can change bokk name, count, description and add or delte authors from book authors
-     :param id: ID of the book
+     :param book_id: book_id of the book
     """
     check_admin()
 
-    book = BookService.get_book_by_id(id)
+    book = BookService.get_book_by_id(book_id)
     form = BookForm(obj=book)
     del form.author
-    add_author_form = BookFormAddAuthor(author_choices=BookService.get_free_authors(id))
-    delete_author_form = BookFormDeleteAuthor(author_choices=BookService.get_authors(id))
+    add_author_form = BookFormAddAuthor(author_choices=BookService.get_free_authors(book_id))
+    delete_author_form = BookFormDeleteAuthor(author_choices=BookService.get_authors(book_id))
 
     #  if admin adds author
     if add_author_form.validate_on_submit():
-        BookService.add_author(id, add_author_form.author.data)
+        BookService.add_author(book_id, add_author_form.author.data)
         flash('You have successfully added author to the book.')
         # redirect to the books page
         return redirect(url_for('admin.books'))
 
     #  if admin deletes author
     if delete_author_form.validate_on_submit():
-        BookService.delete_author(id, delete_author_form.author.data)
+        BookService.delete_author(book_id, delete_author_form.author.data)
         flash('You have successfully deleted author from the book.')
         # redirect to the books page
         return redirect(url_for('admin.books'))
 
     #  if admin changes book name, description or count
     if form.validate_on_submit():
-        BookService.update(id, form.name.data, form.description.data, form.count.data)
+        BookService.update(book_id, form.name.data, form.description.data, form.count.data)
         db.session.commit()
         flash('You have successfully edited the book.')
 
@@ -126,23 +127,23 @@ def edit_book(id):
         form.description.data = book.description
         form.name.data = book.name
         form.count.data = book.count
-        add_author_form.author.data = BookService.get_free_authors(id)[0]
-        delete_author_form.author.data = BookService.get_authors(id)[0]
+        add_author_form.author.data = BookService.get_free_authors(book_id)[0]
+        delete_author_form.author.data = BookService.get_authors(book_id)[0]
         return render_template('admin/book_edit.html', action="Edit",
                                add_book=add_book, form=form,add_author_form=add_author_form,
                                book=book, title="Edit Book", delete_author_form=delete_author_form)
 
 
-@admin.route('/admin/book/delete/<int:id>', methods=['GET', 'POST'], endpoint='delete_book')
+@admin.route('/admin/book/delete/<int:book_id>', methods=['GET', 'POST'], endpoint='delete_book')
 @login_required
-def delete_book(id):
+def delete_book(book_id):
     """
     Delete a book from the database
-    :param id: ID of the book
+    :param book_id: ID of the book
     """
     check_admin()
 
-    BookService.delete_book(id)
+    BookService.delete_book(book_id)
     flash('You have successfully deleted the book.')
 
     # redirect to the books page
@@ -191,18 +192,18 @@ def add_author():
                            add=True, form=form)
 
 
-@admin.route('/admin/author/edit/<int:id>', methods=['GET', 'POST'], endpoint='edit_author')
+@admin.route('/admin/author/edit/<int:author_id>', methods=['GET', 'POST'], endpoint='edit_author')
 @login_required
-def edit_author(id):
+def edit_author(author_id):
     """
     Edit author in the database
     """
     check_admin()
-    author = AuthorService.get_author_by_id(id)
+    author = AuthorService.get_author_by_id(author_id)
     form = AuthorForm(obj=author)
     if form.validate_on_submit():
         try:
-            AuthorService.update(id=id, name=form.name.data,
+            AuthorService.update(author_id=author_id, name=form.name.data,
                        middle_name=form.middle_name.data, last_name=form.last_name.data)
             flash('You have successfully edited author.')
         except ValueError:
@@ -217,16 +218,16 @@ def edit_author(id):
                            add=False, form=form)
 
 
-@admin.route('/admin/author/delete/<int:id>', methods=['GET', 'POST'], endpoint='delete_author')
+@admin.route('/admin/author/delete/<int:author_id>', methods=['GET', 'POST'], endpoint='delete_author')
 @login_required
-def delete_author(id):
+def delete_author(author_id):
     """
     Delete a author from the database
-    :param id: ID of the author
+    :param author_id: ID of the author
     """
     check_admin()
 
-    AuthorService.delete_author(id)
+    AuthorService.delete_author(author_id)
     flash('You have successfully deleted the author.')
 
     # redirect to the books page
@@ -249,16 +250,16 @@ def admin_orders():
                            orders=orders_for_render, pagination=pagination, title="Orders")
 
 
-@admin.route('/admin/order/close/<int:id>', methods=['GET', 'POST'], endpoint='close_order')
+@admin.route('/admin/order/close/<int:order_id>', methods=['GET', 'POST'], endpoint='close_order')
 @login_required
-def close_order(id):
+def close_order(order_id):
     """
-    Delete a author from the database
-    :param id: ID of the author
+    DClose order with this id
+    :param order_id: ID of the order
     """
     check_admin()
 
-    OrderService.close_order(id)
+    OrderService.close_order(order_id)
     flash('You have successfully closed the order.')
 
     # redirect to the books page
