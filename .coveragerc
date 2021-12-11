@@ -1,0 +1,4 @@
+[run]
+source = library/
+[report]
+omit = */migrations/*
