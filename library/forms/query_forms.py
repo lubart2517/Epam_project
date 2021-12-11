@@ -25,4 +25,3 @@ class BooksQueryForm(FlaskForm):
     filter = SelectField('filter', choices=CHOICES_FILTER)
     find = StringField('find')
     submit = SubmitField('Sort&Filter')
-

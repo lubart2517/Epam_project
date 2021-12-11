@@ -5,9 +5,6 @@ Modules:
 - `employee_view.py`: defines employee views
 - `homepage_view.py`: defines homepage views
 """
-
-
-
 from . import auth_views
 from . import homepage_view
 from . import admin_views

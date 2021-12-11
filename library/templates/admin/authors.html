@@ -40,7 +40,7 @@
                   {% endif %}
                     <td> {{ author.last_name }} </td>
                   <td>
-                    <a href="{{ url_for('admin.edit_author', id=author.id) }}">
+                    <a href="{{ url_for('admin.edit_author', author_id=author.id) }}">
                       <i class="fa fa-pencil"></i> Edit
                     </a>
                   </td>

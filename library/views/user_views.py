@@ -23,15 +23,15 @@ def user_books():
 
         query_filter = request.form.get('filter')
         if query_filter:
-            to_find = request.form.get('find')
-            if to_find:
-                books = BookService.filter(query_filter, to_find)
+            books_to_find = request.form.get('find')
+            if books_to_find:
+                books = BookService.filter(query_filter, books_to_find)
         query_sort = request.form.get('sort')
         books = BookService.sort(books, query_sort)
     else:
         books = BookService.get_books()
-    i = (page - 1) * per_page
-    books_for_render = books[i:i+per_page]
+    index = (page - 1) * per_page
+    books_for_render = books[index:index+per_page]
     pagination = Pagination(page=page, total=len(books), record_name='books', offset=offset)
     return render_template('user/books.html',
                            books=books_for_render, pagination=pagination, form=form, title="Books")

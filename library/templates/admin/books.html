@@ -12,12 +12,12 @@
         {{ utils.flashed_messages() }}
         <br/>
         <h1 style="text-align:center;">Books</h1>
-        {% if books %}
           <hr class="intro-divider">
           <div class="center">
             {{ wtf.quick_form(form) }}
             {{ pagination.info }}
             {{ pagination.links }}
+            {% if books %}
             <table class="table table-striped table-bordered">
               <thead>
                 <tr>
@@ -46,7 +46,7 @@
                     {% endif %}
                   </td>
                   <td>
-                    <a href="{{ url_for('admin.edit_book', id=book.id) }}">
+                    <a href="{{ url_for('admin.edit_book', book_id=book.id) }}">
                       <i class="fa fa-pencil"></i> Edit
                     </a>
                   </td>
@@ -63,11 +63,11 @@
             {{ pagination.links }}
           </div>
           <div style="text-align: center">
-        {% else %}
-          <div style="text-align: center">
-            <h3> No books have been added. </h3>
-            <hr class="intro-divider">
-        {% endif %}
+            {% else %}
+              <div style="text-align: center">
+                <h3> No books have been added. </h3>
+                <hr class="intro-divider">
+            {% endif %}
           <a href="{{ url_for('admin.add_book') }}" class="btn btn-default btn-lg">
             <i class="fa fa-plus"></i>
             Add Book

@@ -1,6 +1,6 @@
 # pylint: disable=no-member
-from library import db
 import uuid
+from library import db
 
 
 class Author(db.Model):

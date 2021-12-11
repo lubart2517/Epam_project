@@ -1,6 +1,6 @@
 """
-Web application homepage views used, this module defines the following classes:
-- `HomepageView`, class that defines homepage view
+Web application homepage views used, this module defines the following functions:
+- `homepage`, that defines homepage view
 """
 from flask import render_template
 from .blueprint import home
@@ -14,7 +14,3 @@ def homepage():
     """
     title = 'Welcome to the library'
     return render_template('start.html', title=title)
-
-
-
-

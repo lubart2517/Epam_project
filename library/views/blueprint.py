@@ -1,3 +1,4 @@
+"""This module defines app blueprints"""
 from flask import Blueprint
 user = Blueprint('user', __name__)
 admin = Blueprint('admin', __name__)

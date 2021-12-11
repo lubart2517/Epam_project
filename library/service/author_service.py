@@ -98,16 +98,16 @@ class AuthorService:
         return author
 
     @classmethod
-    def delete_author(cls, id):
+    def delete_author(cls, author_id):
         """
         Deletes the author with given ID from database, raises
         ValueError if such author is not found
-        :param id: ID of the author to be deleted
+        :param author_id: ID of the author to be deleted
         :raise ValueError: in case of author with given ID being absent
         in the database
         :return: None
         """
-        author = cls.get_author_by_id(id)
+        author = cls.get_author_by_id(author_id)
         db.session.delete(author)
         db.session.commit()
 
@@ -121,17 +121,17 @@ class AuthorService:
         in the database
         :return: None
         """
-        author = cls.get_author_by_uuid(id)
+        author = cls.get_author_by_uuid(uuid)
         db.session.delete(author)
         db.session.commit()
 
     @classmethod
-    def update(cls, id, name, middle_name, last_name):
+    def update(cls, author_id, name, middle_name, last_name):
         """
         Update author with given id
         :return: None
         """
-        author = cls.get_author_by_id(id)
+        author = cls.get_author_by_id(author_id)
         author.name = name
         author.middle_name = middle_name
         author.last_name = last_name
