@@ -1,10 +1,11 @@
+# pylint: disable=no-else-return
 """This module manage all views with admin access"""
 from flask import abort, flash, redirect, render_template, url_for, request
 from flask_login import current_user, login_required
 from flask_paginate import Pagination, get_page_args
+from library import db
 from ..forms.model_forms import BookForm, BookFormAddAuthor, BookFormDeleteAuthor, AuthorForm
 from ..forms.query_forms import BooksQueryForm
-from library import db
 from ..service.book_service import BookService
 from ..service.author_service import AuthorService
 from ..service.orders_service import OrderService

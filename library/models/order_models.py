@@ -1,6 +1,7 @@
 # pylint: disable=no-member
-from library import db
 import datetime
+from library import db
+
 from ..service.book_service import BookService
 from ..service.user_service import UserService
 
@@ -67,4 +68,3 @@ class Order(db.Model):
         """ Returns first and last name of this order user"""
         user = UserService.get_user_by_id(self.user_id)
         return f"{user.first_name} {user.last_name}"
-

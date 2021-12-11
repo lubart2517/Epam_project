@@ -10,5 +10,3 @@ Functions:
 
 from . import books_api
 from . import authors_api
-
-
