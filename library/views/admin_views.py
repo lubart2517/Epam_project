@@ -24,7 +24,9 @@ def check_admin():
 @admin.route('/dashboard/', endpoint='dashboard')
 @login_required
 def admin_dashboard():
+    """ admin start page"""
     # prevent non-admins from accessing the page
+
     check_admin()
 
     return render_template('home/admin_dashboard.html', title="Dashboard")
