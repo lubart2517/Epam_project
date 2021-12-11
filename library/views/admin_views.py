@@ -220,7 +220,7 @@ def edit_author(author_id):
     return render_template('admin/author.html', action="Edit",
                            add=False, form=form)
 
-  
+
 @admin.route('/admin/author/delete/<int:author_id>', methods=['GET', 'POST'], endpoint='delete_author')
 @login_required
 def delete_author(author_id):
