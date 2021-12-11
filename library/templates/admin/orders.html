@@ -42,7 +42,7 @@
                     {% if order.closed %}
                     Closed
                     {% else %}
-                    <a href="{{ url_for('admin.close_order', id=order.id) }}">
+                    <a href="{{ url_for('admin.close_order', order_id=order.id) }}">
                       <i class="fa fa-pencil"></i> Close
                     </a>
                     {% endif %}
