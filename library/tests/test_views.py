@@ -1,11 +1,7 @@
+"""This module contains tests for all views functions in project"""
 from flask import abort, url_for
-from flask_login import current_user, login_user
-from library.models.author_models import Author
-from library.models.book_models import Book
-from library.models.order_models import Order
 from library.models.user_models import User
 from library.tests.test_init import TestBase
-from library import db
 
 
 class TestViews(TestBase):
@@ -36,7 +32,6 @@ class TestViews(TestBase):
         response = self.client.get(target_url)
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, redirect_url)
-
 
     def test_admin_dashboard_view(self):
         """
@@ -96,7 +91,6 @@ class TestViews(TestBase):
             self.assertEqual(response.status_code, 200)
             self.assertTrue(User.is_authenticated)
 
-
     def test_success_register(self):
         """
         Testing the possibility of user register
@@ -148,6 +142,7 @@ class TestViews(TestBase):
 class TestErrorPages(TestBase):
 
     def test_403_forbidden(self):
+        """Check error 403 page"""
         # create route to abort the request with the 403 Error
         @self.app.route('/403')
         def forbidden_error():
@@ -158,11 +153,13 @@ class TestErrorPages(TestBase):
         self.assertTrue("403 Error" in response.get_data(as_text=True))
 
     def test_404_not_found(self):
+        """Check error 404 page"""
         response = self.client.get('/nothinghere')
         self.assertEqual(response.status_code, 404)
         self.assertTrue("404 Error" in response.get_data(as_text=True))
 
     def test_500_internal_server_error(self):
+        """Check error 500 page"""
         # create route to abort the request with the 500 Error
         @self.app.route('/500')
         def internal_server_error():
