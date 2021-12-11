@@ -1,12 +1,11 @@
 """
-This package contains modules defining department and employee REST APIs and
-functions to initialize respective API endpoints:
+This package contains modules defining book and author REST APIs a
 Modules:
-- `department_api.py`: defines model representing departments
-- `employee_api.py`: defines model representing employees
-Functions:
-- `init_api`: register REST API endpoints
+- `books_api.py`: defines model representing books
+- `author_api.py`: defines model representing authors
+
 """
 
 from . import books_api
 from . import authors_api
+
