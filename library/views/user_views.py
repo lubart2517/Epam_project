@@ -5,7 +5,7 @@ from ..forms.query_forms import BooksQueryForm
 from ..service.book_service import BookService
 from ..service.author_service import AuthorService
 from ..service.orders_service import OrderService
-from . import user
+from .blueprint import user
 
 # Books Views
 
@@ -23,9 +23,9 @@ def user_books():
 
         query_filter = request.form.get('filter')
         if query_filter:
-            to_find = request.form.get('find')
-            if to_find:
-                books = BookService.filter(query_filter, to_find)
+            books_to_find = request.form.get('find')
+            if books_to_find:
+                books = BookService.filter(query_filter, books_to_find)
         query_sort = request.form.get('sort')
         books = BookService.sort(books, query_sort)
     else:

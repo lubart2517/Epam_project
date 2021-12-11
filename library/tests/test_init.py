@@ -1,3 +1,4 @@
+""" This module initialize Base class for all tests"""
 import unittest
 from flask_testing import TestCase
 
@@ -14,6 +15,7 @@ class TestBase(TestCase):
     Base class for all tests
     """
     def create_app(self):
+        """ Creates test Flask app"""
         app = create_app(TestingConfig)
         return app
 
@@ -60,4 +62,3 @@ class TestBase(TestCase):
 
 if __name__ == '__main__':
     unittest.main()
-

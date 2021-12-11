@@ -1,6 +1,7 @@
 # pylint: disable=no-member
-from library import db
 import uuid
+from library import db
+
 
 book_authors = db.Table(
     'book_authors',
@@ -68,4 +69,3 @@ class Book(db.Model):
         :return: class, id
         """
         return f'{self.name}'
-

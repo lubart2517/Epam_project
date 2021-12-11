@@ -1,9 +1,10 @@
+# pylint: disable=no-else-return
 from flask import flash, redirect, render_template, url_for
 from flask_login import login_required, login_user, logout_user
 from library import  db
 from ..forms.auth_forms import LoginForm, RegistrationForm
 from ..models.user_models import User
-from . import auth
+from .blueprint import auth
 
 
 @auth.route('/register', methods=['GET', 'POST'], endpoint='register')
@@ -75,5 +76,3 @@ def logout():
 
     # redirect to the login page
     return redirect(url_for('auth.login'))
-
-

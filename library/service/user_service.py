@@ -55,7 +55,7 @@ class UserService:
         return user
 
     @classmethod
-    def update_user_from_json(cls, schema, id, user_json):
+    def update_user_from_json(cls, schema, user_id, user_json):
         """
         Deserializes user and updates user with given ID using
         latter, raises ValueError if user with given ID is not found
@@ -66,7 +66,7 @@ class UserService:
         in the database
         :return: user that was updated
         """
-        user = cls.get_user_by_id(id)
+        user = cls.get_user_by_id(user_id)
         if user is None:
             raise ValueError('Invalid user id')
         user = schema.load(
@@ -77,24 +77,24 @@ class UserService:
         return user
 
     @classmethod
-    def delete_user(cls, id):
+    def delete_user(cls, user_id):
         """
         Deletes the user with given ID from database, raises
         ValueError if such user is not found
-        :param id: ID of the user to be deleted
+        :param user_id: ID of the user to be deleted
         :raise ValueError: in case of user with given ID being absent
         in the database
         :return: None
         """
-        user = cls.get_user_by_id(id)
+        user = cls.get_user_by_id(user_id)
         db.session.delete(user)
         db.session.commit()
 
     @classmethod
-    def update(cls, id, first_name, last_name, username, email, password):
+    def update(cls, user_id, first_name, last_name, username, email, password):
         """
         Update user with given id
-        :param id: user id
+        :param user_id: user id
         :param first_name: user first_name
         :param last_name: user last_name
         :param username: user username
@@ -102,7 +102,7 @@ class UserService:
         :param password: user password
         :return: user that was added
         """
-        user = cls.get_user_by_id(id)
+        user = cls.get_user_by_id(user_id)
         user.first_name = first_name
         user.last_name = last_name
         user.username = username

@@ -115,82 +115,82 @@ class BookService:
         return book
 
     @classmethod
-    def delete_book(cls, id):
+    def delete_book(cls, book_id):
         """
         Deletes the book with given ID from database, raises
         ValueError if such book is not found
-        :param id: ID of the book to be deleted
+        :param book_id: ID of the book to be deleted
         :raise ValueError: in case of book with given ID being absent
         in the database
         :return: None
         """
-        book = cls.get_book_by_id(id)
+        book = cls.get_book_by_id(book_id)
         db.session.delete(book)
         db.session.commit()
 
     @classmethod
-    def add_author(cls, id, author):
+    def add_author(cls, book_id, author):
         """
         Add author to the list of book authors
-        :param id: ID of the book
+        :param book_id: ID of the book
         :param author: Author's name and lastname
         :raise ValueError: in case of book with given ID being absent
         in the database
         :return: None
         """
-        book = cls.get_book_by_id(id)
+        book = cls.get_book_by_id(book_id)
         author = db.session.query(Author).filter_by(name=author.split()[0], last_name=author.split()[1]).first()
         book.authors.append(author)
         db.session.commit()
 
     @classmethod
-    def delete_author(cls, id, author):
+    def delete_author(cls, book_id, author):
         """
         Delete author from the list of book authors
-        :param id: ID of the book
+        :param book_id: ID of the book
         :param author: Author's name and lastname
         :raise ValueError: in case of book with given ID being absent
         in the database
         :return: None
         """
-        book = cls.get_book_by_id(id)
+        book = cls.get_book_by_id(book_id)
         author = db.session.query(Author).filter_by(name=author.split()[0], last_name=author.split()[1]).first()
         book.authors.remove(author)
         db.session.commit()
 
     @classmethod
-    def get_free_authors(cls, id):
+    def get_free_authors(cls, book_id):
         """
         Return list of authors available for adding to the book authors
-        :param id: ID of the book
+        :param book_id: ID of the book
         :raise ValueError: in case of book with given ID being absent
         in the database
         :return: None
         """
-        book = cls.get_book_by_id(id)
+        book = cls.get_book_by_id(book_id)
         free_authors = [x for x in db.session.query(Author) if x.id not in [y.id for y in book.authors]]
         return free_authors
 
     @classmethod
-    def get_authors(cls, id):
+    def get_authors(cls, book_id):
         """
         Return list of authors of the book
-        :param id: ID of the book
+        :param book_id: ID of the book
         :raise ValueError: in case of book with given ID being absent
         in the database
         :return: None
         """
-        book = cls.get_book_by_id(id)
+        book = cls.get_book_by_id(book_id)
         authors = [x for x in db.session.query(Author) if x.id in [y.id for y in book.authors]]
         return authors
 
     @classmethod
-    def update(cls, id, name, description, count):
+    def update(cls, book_id, name, description, count):
         """
         Update book with given id
         :return: None
         """
-        book = cls.get_book_by_id(id)
+        book = cls.get_book_by_id(book_id)
         book.name = name
         book.description = description
         book.count = count
