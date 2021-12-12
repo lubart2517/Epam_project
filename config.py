@@ -43,7 +43,7 @@ class TestingConfig(Config):
     """
     Testing configurations
     """
-
+    SECRET_KEY = os.urandom(32)
     TESTING = True
     DEBUG = False
     SQLALCHEMY_DATABASE_URI = f'postgresql://{user}:{password}@localhost:{server}/{database_test}'
