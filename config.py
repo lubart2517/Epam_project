@@ -20,7 +20,7 @@ class Config(object):
     SQLALCHEMY_DATABASE_URI = f'postgresql://{user}:{password}@localhost:{server}/{database}'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     api_key = api_key
-    SESSION_COOKIE_NAME = "my_session"
+    # SESSION_COOKIE_NAME = "my_session"
 
 
 class DevelopmentConfig(Config):
