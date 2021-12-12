@@ -8,6 +8,7 @@ server = os.environ.get('POSTGRES_SERVER')
 database = os.environ.get('POSTGRES_DATABASE')
 database_test = os.environ.get('POSTGRES_DATABASE_TEST')
 api_key = os.environ.get('API_KEY')
+secret_key = os.environ.get('SECRET_KEY')
 
 
 class Config(object):
@@ -15,10 +16,11 @@ class Config(object):
     Base configurations
     """
     DEBUG = True
-    SECRET_KEY = os.urandom(32)
+    SECRET_KEY = secret_key
     SQLALCHEMY_DATABASE_URI = f'postgresql://{user}:{password}@localhost:{server}/{database}'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     api_key = api_key
+    SESSION_COOKIE_NAME = "my_session"
 
 
 class DevelopmentConfig(Config):
