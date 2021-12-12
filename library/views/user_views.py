@@ -3,6 +3,7 @@ from flask_login import login_required, current_user
 from flask_paginate import Pagination, get_page_args
 from ..forms.query_forms import BooksQueryForm
 from ..service.book_service import BookService
+from ..rest.books_rest_service import BookRestService
 from ..service.author_service import AuthorService
 from ..service.orders_service import OrderService
 from .blueprint import user
@@ -18,7 +19,8 @@ def user_books():
     """
     form = BooksQueryForm()
     page, per_page, offset = get_page_args()
-    books = BookService.get_books()
+    books = BookRestService.get_books()
+    #return books
     if form.validate_on_submit():
 
         query_filter = request.form.get('filter')

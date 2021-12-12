@@ -8,7 +8,7 @@ defines the following classes:
 
 from marshmallow import validates_schema, ValidationError, fields
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
-
+from .author import AuthorSchema
 from ..models.book_models import Book
 
 
@@ -27,8 +27,6 @@ class BookSchema(SQLAlchemyAutoSchema):
         load_instance = True
         include_fk = True
         #: fields to provide only on serialization
-        dump_only = ('authors',)
+        # dump_only = ('authors',)
 
-    authors = fields.Nested(
-        'AuthorSchema', many=True
-    )
+    authors = fields.List(fields.Nested(AuthorSchema))

@@ -1,6 +1,8 @@
 # pylint: disable=wrong-import-position, protected-access, cyclic-import, import-outside-toplevel
 """This module initialize Flask app"""
 import os
+import sys
+import logging
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 # from flask_migrate import Migrate
@@ -19,13 +21,31 @@ def create_app(config_class=DevelopmentConfig):
     """Creates main flask application"""
     app = Flask(__name__, template_folder="templates")
     app.config.from_object(config_class)
+
+    # logging
+    formatter = logging.Formatter('%(asctime)s %(levelname)s %(name)s: %(message)s')
+
+    file_handler = logging.FileHandler(filename='app.log', mode='w')
+    file_handler.setFormatter(formatter)
+    file_handler.setLevel(logging.DEBUG)
+
+    console_handler = logging.StreamHandler(sys.stdout)
+    console_handler.setFormatter(formatter)
+    console_handler.setLevel(logging.DEBUG)
+
+    # pylint: disable=no-member
+    logger = app.logger
+    logger.handlers.clear()
+    app.logger.addHandler(file_handler)
+    app.logger.addHandler(console_handler)
+    app.logger.setLevel(logging.DEBUG)
+
     Bootstrap(app)
     db.init_app(app)
     api = Api(app)
     from .models.user_models import User
     from .views.blueprint import home as home_blueprint
     from .views.blueprint import auth as auth_blueprint, user as user_blueprint, admin as admin_blueprint
-    # migrate = Migrate(app, db, directory=MIGRATION_DIR)
     login_manager = LoginManager()
     login_manager.init_app(app)
     login_manager.login_view = 'auth.login'
@@ -37,14 +57,12 @@ def create_app(config_class=DevelopmentConfig):
     @login_manager.user_loader
     def load_user(user_id):
         return User.get(user_id)
-    # from library import models, forms
-    # from .models import author_models, book_models, user_models, order_models
 
     from .rest import books_api, authors_api
     api.add_resource(
         books_api.BookListApi,
-        '/api/books',
-        strict_slashes=False
+        '/api/books/',
+        strict_slashes=False, endpoint='api_books'
     )
     api.add_resource(
         books_api.BookApi,
