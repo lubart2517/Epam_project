@@ -3,7 +3,7 @@
 """
 
 import requests
-from flask import url_for, redirect, request, jsonify
+from flask import url_for, request
 import pandas as pd
 
 

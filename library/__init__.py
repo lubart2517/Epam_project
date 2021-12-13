@@ -39,6 +39,11 @@ def create_app(config_class=DevelopmentConfig):
     app.logger.addHandler(file_handler)
     app.logger.addHandler(console_handler)
     app.logger.setLevel(logging.DEBUG)
+    werkzeug_logger = logging.getLogger('werkzeug')
+    werkzeug_logger.handlers.clear()
+    werkzeug_logger.addHandler(file_handler)
+    werkzeug_logger.addHandler(console_handler)
+    werkzeug_logger.setLevel(logging.DEBUG)
 
     Bootstrap(app)
     db.init_app(app)

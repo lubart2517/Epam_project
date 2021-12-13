@@ -1,6 +1,6 @@
 # pylint: disable=no-else-return
 """This module manage all views with admin access"""
-from flask import abort, flash, redirect, render_template, url_for, request
+from flask import abort, flash, redirect, render_template, url_for, request, session
 from flask_login import current_user, login_required
 from flask_paginate import Pagination, get_page_args
 from library import db
@@ -27,7 +27,6 @@ def check_admin():
 def admin_dashboard():
     """ admin start page"""
     # prevent non-admins from accessing the page
-
     check_admin()
 
     return render_template('home/admin_dashboard.html', title="Dashboard")
@@ -37,22 +36,22 @@ def admin_dashboard():
 @login_required
 def admin_books():
     """
-    List all books
+    List all books and sort & filter if necessary
     """
     check_admin()
     form = BooksQueryForm()
     page, per_page, offset = get_page_args()
     books = BookService.get_books()
     if form.validate_on_submit():
-        query_filter = request.form.get('filter')
-        if query_filter:
-            to_find = request.form.get('find')
-            if to_find:
-                books = BookService.filter(query_filter, to_find)
-        query_sort = request.form.get('sort')
-        books = BookService.sort(books, query_sort)
-    else:
-        books = BookService.get_books()
+        session['filter'] = request.form.get('filter')
+        session['sort'] = request.form.get('sort')
+        session['to_find'] = request.form.get('find')
+        return redirect(url_for('admin.books'))
+    to_find = session['to_find']
+    if to_find:
+        books = BookService.filter(session['filter'], to_find)
+    query_sort = session['sort']
+    books = BookService.sort(books, query_sort)
     i = (page - 1) * per_page
     books_for_render = books[i:i+per_page]
     pagination = Pagination(page=page, total=len(books), record_name='books', offset=offset)
@@ -92,7 +91,7 @@ def add_book():
 def edit_book(book_id):
     """
     Edit a book with given book_id
-    Admin can change bokk name, count, description and add or delte authors from book authors
+    Admin can change book name, count, description and add or delete authors from book authors
      :param book_id: book_id of the book
     """
     check_admin()
@@ -257,7 +256,7 @@ def admin_orders():
 @login_required
 def close_order(order_id):
     """
-    DClose order with this id
+    Close order with this id
     :param order_id: ID of the order
     """
     check_admin()
