@@ -75,13 +75,18 @@ def create_app(config_class=DevelopmentConfig):
         strict_slashes=False
     )
     api.add_resource(
-        authors_api.AuthorListApi,
-        '/api/authors',
+        books_api.BooksQueryApi,
+        '/api/books/<name>',
         strict_slashes=False
     )
     api.add_resource(
         authors_api.AuthorApi,
         '/api/author/<uuid>',
+        strict_slashes=False
+    )
+    api.add_resource(
+        authors_api.AuthorListApi,
+        '/api/authors',
         strict_slashes=False
     )
 
