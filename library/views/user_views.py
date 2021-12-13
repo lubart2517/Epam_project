@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, jsonify
 from flask_login import login_required, current_user
 from flask_paginate import Pagination, get_page_args
 from ..forms.query_forms import BooksQueryForm
@@ -20,23 +20,23 @@ def user_books():
     form = BooksQueryForm()
     page, per_page, offset = get_page_args()
     books = BookRestService.get_books()
-    #return books
+    # return jsonify(books.to_json())
     if form.validate_on_submit():
 
         query_filter = request.form.get('filter')
         if query_filter:
             books_to_find = request.form.get('find')
             if books_to_find:
-                books = BookService.filter(query_filter, books_to_find)
+                books = BookRestService.filter(books, query_filter, books_to_find)
         query_sort = request.form.get('sort')
-        books = BookService.sort(books, query_sort)
+        books = BookRestService.sort(books, query_sort)
     else:
-        books = BookService.get_books()
+        books = BookRestService.get_books()
     index = (page - 1) * per_page
-    books_for_render = books[index:index+per_page]
+    books_for_render = books.iloc[index:index+per_page]
     pagination = Pagination(page=page, total=len(books), record_name='books', offset=offset)
     return render_template('user/books.html',
-                           books=books_for_render, pagination=pagination, form=form, title="Books")
+                           books=books_for_render.itertuples(), pagination=pagination, form=form, title="Books")
 
 
 @user.route('/user/authors/', methods=['GET', 'POST'], endpoint='authors')

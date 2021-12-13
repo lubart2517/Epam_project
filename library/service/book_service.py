@@ -204,7 +204,7 @@ class BookService:
         :return: filtered query of books
         """
         if query_filter == '1':
-            books = Book.query.filter(Book.authors.any(id=int(to_find))).all()
+            books = Book.query.filter(Book.authors.any(Author.name.contains(to_find))).all()
         elif query_filter == '2':
             books = Book.query.filter(Book.count == int(to_find)).all()
         elif query_filter == '3':
