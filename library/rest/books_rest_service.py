@@ -1,13 +1,9 @@
 """ Books REST service, this module defines the following classes:
 - `BookRestService`, which provides methods for operations with books by api
 """
+
 import requests
-from marshmallow import EXCLUDE
-from sqlalchemy.orm import scoped_session, sessionmaker
 from flask import url_for, redirect, request, jsonify
-from ..schemas.book import BookSchema
-from ..models.book_models import Book
-from library import db
 import pandas as pd
 
 
@@ -16,6 +12,7 @@ def filter_fn(row, word):
         if word in x['name']:
             return True
     return False
+
 
 class BookRestService:
     """
@@ -31,16 +28,18 @@ class BookRestService:
             data = pd.json_normalize(pd.read_json(url))
         else:
             data = pd.json_normalize(requests.get(request.host_url + url_for('api_books')).json())
-            # data = pd.json_normalize(pd.read_json(request.host_url + url_for('api_books')))
         return data
-        #return jsonify(all_json)
 
     @classmethod
     def filter(cls, dataframe, query_filter, to_find):
         """
         Sort books according to
         filter parameter
-        :return: filtered query of books
+        :param dataframe: Pandas dataframe with books
+        :param query_filter: str, according to this param function filters book properly,
+        relation between this key and action defined in query_forms.CHOICES_FILTER variable
+        :param to_find: String with values function needs to filter by
+        :return: filtered dataframe of books
         """
         if query_filter == '1':
             # books = dataframe[dataframe['authors']['name'].contains(f'{to_find}')]
@@ -56,10 +55,13 @@ class BookRestService:
         return books
 
     @staticmethod
-    def sort(books, query_sort):
+    def sort(books , query_sort):
         """
-        Sort list with books according to
+        Sort dataframe with books according to
         sort parameter
+        :param books: Pandas dataframe with books
+        :param query_sort: str, according to this param function sorts book properly,
+        relation between this key and action defined in query_forms.CHOICES_SORT variable
         :return: sorted list of books
         """
         if query_sort == '1':
