@@ -49,7 +49,7 @@ class AuthorListApi(AuthorApiBase):
         tuple of error messages and status code 400 in case of validation error
         """
         try:
-            author = self.service.add_author_from_json(self.schema, request.json)
+            author = self.service.add_author_from_json(self.schema(), request.json)
         except ValidationError as error:
             return error.messages, 400
         return self.schema().dump(author), 201

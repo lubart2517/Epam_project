@@ -99,12 +99,12 @@ class BookApi(BookApiBase):
         """
         try:
             book = self.service.update_book_from_json(
-                self.schema, uuid, request.json
+                self.schema(), uuid, request.json
             )
         except ValidationError as error:
             return error.messages, 400
-        except ValueError:
-            return self.NOT_FOUND_MESSAGE, 404
+        #except ValueError:
+            #return self.NOT_FOUND_MESSAGE, 404
         return self.schema().dump(book), 200
 
     def delete(self, uuid):
@@ -129,13 +129,15 @@ class BooksQueryApi(BookApiBase):
     """
     This class allows make rest calls with filtering for Book model
     """
-    def get(self, name):
+    def get(self, name, sort=None):
         """
         GET request handler of book list API
-        Fetches all books via service, filters them by containing name arg in book name
+        Fetches all books via service, filters them by containing name arg in book description
          and returns them in a JSON format
         with a status code 200(OK)
         :return: a tuple of all books JSON and a status code 200
         """
-        books = self.service.filter(query_filter='3', to_find=name)
+        books = self.service.filter(query_filter='4', to_find=name)
+        if sort:
+            books = self.service.sort(books, query_sort=sort)
         return self.schema().dump(obj=books, many=True), 200

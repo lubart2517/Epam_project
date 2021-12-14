@@ -27,8 +27,8 @@ class TestBase(TestCase):
         db.create_all()
 
         # create test author
-        author = Author(name="admin", last_name="admin2016", middle_name='True')
-
+        author = Author(name="admin", last_name="admin2016", middle_name='True',
+                        uuid="8d3fe6dd-d750-47be-91b5-c926c31ac7ff")
 
         # save author to database
         db.session.add(author)
@@ -39,7 +39,8 @@ class TestBase(TestCase):
         user = User(first_name='John', last_name='Lennon',username="user", email='789@gmail.com',
                      password="admin2016")
         # create test book
-        book = Book(name="IT", description="The IT Department", count=5, authors=[Author.query.first()])
+        book = Book(name="IT", description="The IT Department", count=5, authors=[Author.query.first()],
+                    book_uuid='92a69ce8-13b4-4fe0-a4cc-d519e8fb7933')
 
         # save book to database
         db.session.add(book)

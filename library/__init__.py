@@ -72,22 +72,23 @@ def create_app(config_class=DevelopmentConfig):
     api.add_resource(
         books_api.BookApi,
         '/api/book/<uuid>',
-        strict_slashes=False
+        strict_slashes=False, endpoint='api_book_uuid'
     )
     api.add_resource(
         books_api.BooksQueryApi,
         '/api/books/<name>',
-        strict_slashes=False
+        '/api/books/<name>/<sort>',
+        strict_slashes=False, endpoint='api_book_filter'
     )
     api.add_resource(
         authors_api.AuthorApi,
         '/api/author/<uuid>',
-        strict_slashes=False
+        strict_slashes=False, endpoint='api_author_uuid'
     )
     api.add_resource(
         authors_api.AuthorListApi,
         '/api/authors',
-        strict_slashes=False
+        strict_slashes=False, endpoint='api_authors'
     )
 
     @app.errorhandler(403)
