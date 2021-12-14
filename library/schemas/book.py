@@ -8,9 +8,10 @@ defines the following classes:
 
 from marshmallow import validates_schema, ValidationError, fields
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
+from library import db
+
 from .author import AuthorSchema
 from ..models.book_models import Book
-from library import db
 
 
 class Nested(fields.Nested):

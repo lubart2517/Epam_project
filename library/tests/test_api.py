@@ -1,6 +1,6 @@
 """This module contains tests of correct CRUD operations with db by API"""
-import pandas as pd
 import json
+import pandas as pd
 from flask import abort, url_for, request
 from library.models.user_models import User
 from library.tests.test_init import TestBase
@@ -97,3 +97,10 @@ class TestApi(TestBase):
         author = pd.json_normalize(response.get_json())
         self.assertEqual(author['last_name'][0], "Derec")
         self.assertEqual(author['name'][0], 'John')
+
+    def test_author_del_uuid(self):
+        """
+        Test that author_api accessible and deletes author with given uuid from db
+        """
+        response = self.client.delete(url_for('api_author_uuid', uuid='8d3fe6dd-d750-47be-91b5-c926c31ac7ff'))
+        self.assertEqual(response.status_code, 204)
