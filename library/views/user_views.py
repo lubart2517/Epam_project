@@ -1,8 +1,8 @@
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, jsonify, session
 from flask_login import login_required, current_user
 from flask_paginate import Pagination, get_page_args
 from ..forms.query_forms import BooksQueryForm
-from ..service.book_service import BookService
+from ..rest.books_rest_service import BookRestService
 from ..service.author_service import AuthorService
 from ..service.orders_service import OrderService
 from .blueprint import user
@@ -14,27 +14,26 @@ from .blueprint import user
 @login_required
 def user_books():
     """
-    List all books
+    List all books and sort & filter if necessary
     """
-    form = BooksQueryForm()
+    form = BooksQueryForm(sort=session['sort'], filter=session['filter'], find=session['to_find'])
     page, per_page, offset = get_page_args()
-    books = BookService.get_books()
+    books = BookRestService.get_books()
     if form.validate_on_submit():
-
-        query_filter = request.form.get('filter')
-        if query_filter:
-            books_to_find = request.form.get('find')
-            if books_to_find:
-                books = BookService.filter(query_filter, books_to_find)
-        query_sort = request.form.get('sort')
-        books = BookService.sort(books, query_sort)
-    else:
-        books = BookService.get_books()
+        session['filter'] = request.form.get('filter')
+        session['sort'] = request.form.get('sort')
+        session['to_find'] = request.form.get('find')
+        return redirect(url_for('user.books'))
+    to_find = session['to_find']
+    if to_find:
+        books = BookRestService.filter(books, session['filter'], to_find)
+    query_sort = session['sort']
+    books = BookRestService.sort(books, query_sort)
     index = (page - 1) * per_page
-    books_for_render = books[index:index+per_page]
+    books_for_render = books.iloc[index:index+per_page]
     pagination = Pagination(page=page, total=len(books), record_name='books', offset=offset)
     return render_template('user/books.html',
-                           books=books_for_render, pagination=pagination, form=form, title="Books")
+                           books=books_for_render.itertuples(), pagination=pagination, form=form, title="Books")
 
 
 @user.route('/user/authors/', methods=['GET', 'POST'], endpoint='authors')

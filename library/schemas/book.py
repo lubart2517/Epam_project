@@ -8,8 +8,20 @@ defines the following classes:
 
 from marshmallow import validates_schema, ValidationError, fields
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
+from library import db
 
+from .author import AuthorSchema
 from ..models.book_models import Book
+
+
+class Nested(fields.Nested):
+    """Nested field that inherits the session from its parent."""
+
+    def _deserialize(self, *args, **kwargs):
+        if hasattr(self.schema, "session"):
+            self.schema.session = db.session  # overwrite session here
+            self.schema.transient = self.root.transient
+        return super()._deserialize(*args, **kwargs)
 
 
 class BookSchema(SQLAlchemyAutoSchema):
@@ -27,8 +39,6 @@ class BookSchema(SQLAlchemyAutoSchema):
         load_instance = True
         include_fk = True
         #: fields to provide only on serialization
-        dump_only = ('authors',)
+        # dump_only = ('authors',)
 
-    authors = fields.Nested(
-        'AuthorSchema', many=True
-    )
+    authors = fields.List(Nested(AuthorSchema))

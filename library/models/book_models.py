@@ -45,7 +45,7 @@ class Book(db.Model):
     #: Authors of the book
     authors = db.relationship('Author', secondary=book_authors, backref=db.backref('Book', lazy='dynamic'))
 
-    def __init__(self, name, description, count, authors=None):
+    def __init__(self, name, description, count, authors=None, book_uuid=None):
         #: Name of the book
         self.name = name
 
@@ -55,13 +55,16 @@ class Book(db.Model):
         #: Initial amount  of the book in the library
         self.count = count
 
-        #: UUID of the book
-        self.uuid = str(uuid.uuid4())
-
         if authors is None:
             authors = []
             #: Authors of the book
         self.authors = authors
+
+        #: UUID of the book
+        if book_uuid:
+            self.uuid = book_uuid
+        else:
+            self.uuid = str(uuid.uuid4())
 
     def __repr__(self):
         """

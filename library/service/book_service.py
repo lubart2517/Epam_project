@@ -3,7 +3,7 @@ Book service used to make database queries, this module defines the
 following classes:
 - `BookService`, book service
 """
-
+from flask import current_app
 from library import db
 from ..models.book_models import Book
 from ..models.author_models import Author
@@ -108,7 +108,7 @@ class BookService:
         if book is None:
             raise ValueError('Invalid book uuid')
         book = schema.load(
-            book_json, session=db.session, instance=book
+            data=book_json, session=db.session , instance=book
         )
         db.session.add(book)
         db.session.commit()
@@ -204,7 +204,7 @@ class BookService:
         :return: filtered query of books
         """
         if query_filter == '1':
-            books = Book.query.filter(Book.authors.any(id=int(to_find))).all()
+            books = Book.query.filter(Book.authors.any(Author.name.contains(to_find))).all()
         elif query_filter == '2':
             books = Book.query.filter(Book.count == int(to_find)).all()
         elif query_filter == '3':

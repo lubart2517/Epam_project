@@ -3,3 +3,5 @@ sudo systemctl status gunicorn.service
 sudo systemctl daemon-reload
 sudo systemctl start gunicorn.service
 sudo systemctl restart gunicorn.service
+chown -R user:user /var/log/gunicorn/
+coverage run -m unittest discover library/tests

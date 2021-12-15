@@ -10,7 +10,7 @@ CHOICES_SORT = (
 )
 
 CHOICES_FILTER = (
-    ("1", "Author_id="),
+    ("1", "Author_name_contains="),
     ("2", "Count="),
     ("3", "Name_contains"),
     ("4", "Desc_contains"),

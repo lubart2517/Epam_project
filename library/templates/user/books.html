@@ -39,8 +39,8 @@
                   <td>
                     {% if book.authors %}
                       {% for author in book.authors %}
-                        {{ author.name }}
-                        {{ author.last_name }}
+                        {{ author['name'] }}
+                        {{ author['last_name'] }}
                       {% endfor %}
                     {% endif %}
                   </td>

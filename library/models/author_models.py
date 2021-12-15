@@ -34,18 +34,21 @@ class Author(db.Model):
     #: UUID of the author
     uuid = db.Column(db.String(36), unique=True)
 
-    def __init__(self, name, last_name, middle_name):
+    def __init__(self, name, last_name, middle_name, uuid=None):
         #: Name of the author
         self.name = name
 
         # Last name of the author
         self.last_name = last_name
 
-        #: UUID of the author
-        self.uuid = str(uuid.uuid4())
-
         # Middle name of the author
         self.middle_name = middle_name
+
+        #: UUID of the author
+        if uuid:
+            self.uuid = uuid
+        else:
+            self.uuid = str(uuid.uuid4())
 
     def __repr__(self):
         """

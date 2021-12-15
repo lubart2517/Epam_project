@@ -1,5 +1,5 @@
 # pylint: disable=no-else-return
-from flask import flash, redirect, render_template, url_for
+from flask import flash, redirect, render_template, url_for, session
 from flask_login import login_required, login_user, logout_user
 from library import  db
 from ..forms.auth_forms import LoginForm, RegistrationForm
@@ -51,6 +51,9 @@ def login():
             login_user(user)
 
             # redirect to the homepage after login
+            session['sort'] = 'Name_asc'
+            session['filter'] = 'Name_contains'
+            session['to_find'] = ''
             if user.role:
                 return redirect(url_for('admin.dashboard'))
             else:
