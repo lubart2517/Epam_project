@@ -16,7 +16,7 @@ def user_books():
     """
     List all books and sort & filter if necessary
     """
-    form = BooksQueryForm()
+    form = BooksQueryForm(sort=session['sort'], filter=session['filter'], find=session['to_find'])
     page, per_page, offset = get_page_args()
     books = BookRestService.get_books()
     if form.validate_on_submit():
