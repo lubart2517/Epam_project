@@ -3,6 +3,7 @@ Book service used to make database queries, this module defines the
 following classes:
 - `BookService`, book service
 """
+from sqlalchemy import func
 from flask import current_app
 from library import db
 from ..models.book_models import Book
@@ -21,6 +22,15 @@ class BookService:
         """
 
         return Book.query.all()
+
+    @staticmethod
+    def get_available_books():
+        """
+        Fetches all of the books from database
+        :return: list of all books
+        """
+
+        return Book.query.filter(Book.available < 0).all()
 
     @staticmethod
     def get_book_by_uuid(uuid):

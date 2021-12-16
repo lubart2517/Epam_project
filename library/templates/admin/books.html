@@ -24,10 +24,11 @@
                   <th width="2%"></th>
                   <th width="10%"> Name </th>
                   <th width="60%"> Description </th>
-                  <th width="5%"> Count </th>
-                  <th width="5%"> Authors </th>
-                  <th width="5%"> Edit </th>
-                  <th width="5%"> Delete </th>
+                  <th width="4%"> Count </th>
+                  <th width="4%"> Available </th>
+                  <th width="4%"> Authors </th>
+                  <th width="4%"> Edit </th>
+                  <th width="4%"> Delete </th>
                 </tr>
               </thead>
               <tbody>
@@ -36,7 +37,8 @@
                   <td>{{ loop.index + pagination.skip }}</td>
                   <td> {{ book.name }} </td>
                   <td> {{ book.description }} </td>
-                    <td> {{ book.count }} </td>
+                  <td> {{ book.count }} </td>
+                  <td> {{ book.available }} </td>
                   <td>
                     {% if book.authors %}
                       {% for author in book.authors %}

@@ -71,7 +71,6 @@ localhost:5000/api/author/<uuid>
 localhost:5000/api/authors
 ```
 
-```
 - ### Web Application:
 ```
 localhost:5000/
@@ -96,3 +95,4 @@ localhost:5000/user/books
 localhost:5000/user/authors
 localhost:5000/user/orders
 localhost:5000/user/book/order/id
+```
