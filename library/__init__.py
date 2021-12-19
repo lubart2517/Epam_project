@@ -63,33 +63,8 @@ def create_app(config_class=DevelopmentConfig):
     def load_user(user_id):
         return User.get(user_id)
 
-    from .rest import books_api, authors_api
-    api.add_resource(
-        books_api.BookListApi,
-        '/api/books/',
-        strict_slashes=False, endpoint='api_books'
-    )
-    api.add_resource(
-        books_api.BookApi,
-        '/api/book/<uuid>',
-        strict_slashes=False, endpoint='api_book_uuid'
-    )
-    api.add_resource(
-        books_api.BooksQueryApi,
-        '/api/books/<name>',
-        '/api/books/<name>/<sort>',
-        strict_slashes=False, endpoint='api_book_filter'
-    )
-    api.add_resource(
-        authors_api.AuthorApi,
-        '/api/author/<uuid>',
-        strict_slashes=False, endpoint='api_author_uuid'
-    )
-    api.add_resource(
-        authors_api.AuthorListApi,
-        '/api/authors',
-        strict_slashes=False, endpoint='api_authors'
-    )
+    from .rest.resources import register_resources
+    register_resources(api)
 
     @app.errorhandler(403)
     def forbidden(error):

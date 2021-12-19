@@ -1,5 +1,6 @@
 # pylint: disable=no-member
 import uuid
+from sqlalchemy.ext.hybrid import hybrid_property
 from library import db
 
 
@@ -72,3 +73,9 @@ class Book(db.Model):
         :return: class, id
         """
         return f'{self.name}'
+
+    @hybrid_property
+    def available(self):
+        # pylint: disable=import-outside-toplevel
+        from .order_models import Order
+        return self.count - Order.query.filter(Order.book_id == self.id, Order.closed is False).count()

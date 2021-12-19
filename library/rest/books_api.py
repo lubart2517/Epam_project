@@ -9,7 +9,7 @@ from flask import request
 from flask_restful import Resource
 from marshmallow import ValidationError
 
-from ..schemas.book import BookSchema
+from ..schemas.book import BookSchema, BookWithAvailableCountSchema
 from ..service.book_service import BookService
 
 
@@ -140,4 +140,19 @@ class BooksQueryApi(BookApiBase):
         books = self.service.filter(query_filter='4', to_find=name)
         if sort:
             books = self.service.sort(books, query_sort=sort)
+        return self.schema().dump(obj=books, many=True), 200
+
+
+class BookListUserApi(BookApiBase):
+    """
+    book list API class
+    """
+    def get(self):
+        """
+        GET request handler of book list API for users
+        Fetches all books available books via service and returns them in a JSON format
+        with a status code 200(OK)
+        :return: a tuple of all available books JSON and a status code 200
+        """
+        books = self.service.get_available_books()
         return self.schema().dump(obj=books, many=True), 200

@@ -11,7 +11,7 @@ marshmallow-sqlalchemy==0.26.1
 marshmallow==3.14.1
 werkzeug==2.0.2
 wtforms==3.0.0
-sqlalchemy_utils==0.37.9
+sqlalchemy_utils==0.37.8
 flask_classful==0.14.2
 python-dotenv==0.19.2
 flask-bootstrap==3.3.7.1
