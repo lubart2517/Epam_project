@@ -145,8 +145,10 @@ class BooksQueryApi(BookApiBase):
 
 class BookListUserApi(BookApiBase):
     """
-    book list API class
+    book list for user API class
     """
+    schema = BookWithAvailableCountSchema
+
     def get(self):
         """
         GET request handler of book list API for users

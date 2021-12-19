@@ -130,7 +130,9 @@ def edit_book(book_id):
         form.name.data = book.name
         form.count.data = book.count
         add_author_form.author.data = BookService.get_free_authors(book_id)[0]
-        delete_author_form.author.data = BookService.get_authors(book_id)[0]
+
+        if BookService.get_authors(book_id):
+            delete_author_form.author.data = BookService.get_authors(book_id)[0]
         return render_template('admin/book_edit.html', action="Edit",
                                add_book=add_book, form=form, add_author_form=add_author_form,
                                book=book, title="Edit Book", delete_author_form=delete_author_form)

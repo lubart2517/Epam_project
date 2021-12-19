@@ -81,7 +81,7 @@ class BookService:
         :param book_json: data to deserialize the book from
         :return: book that was added
         """
-        book = schema.load(book_json, session=db.session)
+        book = schema().load(data=book_json, session=db.session)
         db.session.add(book)
         db.session.commit()
         return book
@@ -135,8 +135,12 @@ class BookService:
         :return: None
         """
         book = cls.get_book_by_id(book_id)
-        db.session.delete(book)
-        db.session.commit()
+        if book.available != book.count:
+            return 'Deleting books not fully returned to library is prohibited'
+        else:
+            db.session.delete(book)
+            db.session.commit()
+            return 'Book successfully deleted'
 
     @classmethod
     def add_author(cls, book_id, author):

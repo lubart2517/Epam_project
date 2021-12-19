@@ -39,8 +39,8 @@ class TestBase(TestCase):
         user = User(first_name='John', last_name='Lennon',username="user", email='789@gmail.com',
                      password="admin2016")
         # create test book
-        book = Book(name="IT", description="The IT Department", count=5, authors=[Author.query.first()],
-                    book_uuid='92a69ce8-13b4-4fe0-a4cc-d519e8fb7933')
+        book = Book(name="IT", description="The IT Department", count=5, authors=[Author.query.first() ],
+                    uuid='92a69ce8-13b4-4fe0-a4cc-d519e8fb7933')
 
         # save book to database
         db.session.add(book)

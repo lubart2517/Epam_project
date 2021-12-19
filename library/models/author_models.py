@@ -1,5 +1,5 @@
 # pylint: disable=no-member
-import uuid
+import uuid as new_uuid
 from library import db
 
 
@@ -48,7 +48,7 @@ class Author(db.Model):
         if uuid:
             self.uuid = uuid
         else:
-            self.uuid = str(uuid.uuid4())
+            self.uuid = str(new_uuid.uuid4())
 
     def __repr__(self):
         """
