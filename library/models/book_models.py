@@ -78,4 +78,4 @@ class Book(db.Model):
     def available(self):
         # pylint: disable=import-outside-toplevel
         from .order_models import Order
-        return self.count - Order.query.filter(Order.book_id == self.id, Order.closed is False).count()
+        return self.count - Order.query.filter(Order.book_id == self.id, Order.closed == False).count()

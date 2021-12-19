@@ -20,6 +20,16 @@ class TestApi(TestBase):
         self.assertEqual(books['count'][0], 5)
         self.assertEqual(books['name'][0], 'IT')
 
+    def test_user_books(self):
+        """
+        Test that books_api accessible and returns books from db
+        """
+        response = self.client.get(url_for('api_user_books'))
+        self.assertEqual(response.status_code, 200)
+        books = pd.json_normalize(response.get_json())
+        self.assertEqual(books['available'][0], 4)
+        self.assertEqual(books['name'][0], 'IT')
+
     def test_book_get_uuid(self):
         """
         Test that book_api accessible and returns book with given uuid from db
