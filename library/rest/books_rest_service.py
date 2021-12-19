@@ -27,7 +27,7 @@ class BookRestService:
         if url:
             data = pd.json_normalize(pd.read_json(url))
         else:
-            data = pd.json_normalize(requests.get(request.host_url + url_for('api_books')).json())
+            data = pd.json_normalize(requests.get(request.host_url + url_for('api_user_books')).json())
         return data
 
     @classmethod

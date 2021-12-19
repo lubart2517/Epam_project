@@ -40,8 +40,7 @@ def admin_books():
     check_admin()
     form = BooksQueryForm(sort=session['sort'], filter=session['filter'], find=session['to_find'])
     page, per_page, offset = get_page_args()
-    # books = BookService.get_books()
-    books = BookService.get_available_books()
+    books = BookService.get_books()
     if form.validate_on_submit():
         session['filter'] = request.form.get('filter')
         session['sort'] = request.form.get('sort')

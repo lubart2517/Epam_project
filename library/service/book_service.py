@@ -30,7 +30,7 @@ class BookService:
         :return: list of all books
         """
 
-        return Book.query.filter(Book.available < 0).all()
+        return [x for x in Book.query.all() if x.available > 0]
 
     @staticmethod
     def get_book_by_uuid(uuid):

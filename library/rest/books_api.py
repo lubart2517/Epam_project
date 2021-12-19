@@ -154,5 +154,5 @@ class BookListUserApi(BookApiBase):
         with a status code 200(OK)
         :return: a tuple of all books JSON and a status code 200
         """
-        books = self.service.get_books()
+        books = self.service.get_available_books()
         return self.schema().dump(obj=books, many=True), 200
