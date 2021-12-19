@@ -3,7 +3,7 @@ from .import books_api, authors_api
 
 
 def register_resources(api):
-    """This function resceives one arg api from library init ang register all
+    """This function receives one arg api from library init ang register all
     resources defined in the function into api"""
     api.add_resource(
         books_api.BookListApi,

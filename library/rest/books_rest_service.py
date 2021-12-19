@@ -42,7 +42,6 @@ class BookRestService:
         :return: filtered dataframe of books
         """
         if query_filter == '1':
-            # books = dataframe[dataframe['authors']['name'].contains(f'{to_find}')]
             books = dataframe[dataframe.iloc[:, 1:].apply(filter_fn, args=(to_find, ), axis=1)]
         elif query_filter == '2':
             books = dataframe[dataframe['count'] == int(to_find)]

@@ -11,6 +11,7 @@ from ..service.author_service import AuthorService
 from ..service.orders_service import OrderService
 from .blueprint import admin
 
+
 def check_admin():
     """
     Prevent non-admins from accessing the page
@@ -69,8 +70,8 @@ def add_book():
     form = BookForm(author_choices=AuthorService.get_authors())
     if form.validate_on_submit():
         try:
-            BookService.add_book(name=form.name.data,
-            description=form.description.data, count=form.count.data, author=form.author.data)
+            BookService.add_book(name=form.name.data, description=form.description.data,
+                                 count=form.count.data, author=form.author.data)
             flash('You have successfully added a new book.')
         except ValueError:
             # in case book name already exists
@@ -131,7 +132,7 @@ def edit_book(book_id):
         add_author_form.author.data = BookService.get_free_authors(book_id)[0]
         delete_author_form.author.data = BookService.get_authors(book_id)[0]
         return render_template('admin/book_edit.html', action="Edit",
-                               add_book=add_book, form=form,add_author_form=add_author_form,
+                               add_book=add_book, form=form, add_author_form=add_author_form,
                                book=book, title="Edit Book", delete_author_form=delete_author_form)
 
 
@@ -179,7 +180,7 @@ def add_author():
     if form.validate_on_submit():
         try:
             AuthorService.add_author(name=form.name.data,
-                       middle_name=form.middle_name.data, last_name=form.last_name.data)
+                                     middle_name=form.middle_name.data, last_name=form.last_name.data)
             flash('You have successfully added a new author.')
         except ValueError:
             # in case author name already exists
@@ -205,7 +206,7 @@ def edit_author(author_id):
     if form.validate_on_submit():
         try:
             AuthorService.update(author_id=author_id, name=form.name.data,
-                       middle_name=form.middle_name.data, last_name=form.last_name.data)
+                                 middle_name=form.middle_name.data, last_name=form.last_name.data)
             flash('You have successfully edited author.')
         except ValueError:
             # in case author name already exists

@@ -149,10 +149,10 @@ class BookListUserApi(BookApiBase):
     """
     def get(self):
         """
-        GET request handler of book list API
-        Fetches all books via service and returns them in a JSON format
+        GET request handler of book list API for users
+        Fetches all books available books via service and returns them in a JSON format
         with a status code 200(OK)
-        :return: a tuple of all books JSON and a status code 200
+        :return: a tuple of all available books JSON and a status code 200
         """
         books = self.service.get_available_books()
         return self.schema().dump(obj=books, many=True), 200
