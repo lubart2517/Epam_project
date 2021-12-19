@@ -1,5 +1,5 @@
 # pylint: disable=no-member
-import uuid
+import uuid as new_uuid
 from sqlalchemy.ext.hybrid import hybrid_property
 from library import db
 
@@ -46,7 +46,7 @@ class Book(db.Model):
     #: Authors of the book
     authors = db.relationship('Author', secondary=book_authors, backref=db.backref('Book', lazy='dynamic'))
 
-    def __init__(self, name, description, count, authors=None, book_uuid=None):
+    def __init__(self, name, description, count, authors=None, uuid=None):
         #: Name of the book
         self.name = name
 
@@ -62,10 +62,10 @@ class Book(db.Model):
         self.authors = authors
 
         #: UUID of the book
-        if book_uuid:
-            self.uuid = book_uuid
+        if uuid:
+            self.uuid = uuid
         else:
-            self.uuid = str(uuid.uuid4())
+            self.uuid = str(new_uuid.uuid4())
 
     def __repr__(self):
         """
@@ -76,6 +76,6 @@ class Book(db.Model):
 
     @hybrid_property
     def available(self):
-        # pylint: disable=import-outside-toplevel
+        # pylint: disable=import-outside-toplevel, singleton-comparison
         from .order_models import Order
         return self.count - Order.query.filter(Order.book_id == self.id, Order.closed == False).count()

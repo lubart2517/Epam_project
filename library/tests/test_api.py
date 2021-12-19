@@ -30,6 +30,34 @@ class TestApi(TestBase):
         self.assertEqual(books['available'][0], 4)
         self.assertEqual(books['name'][0], 'IT')
 
+    def test_book_add(self):
+        """
+        Test that book_api accessible and returns book with given uuid from db
+        """
+        book = { "count": 6, "description": "The great Don Quixote", "authors": [
+        ], "uuid": "92a69ce8-13b4-4fe0-a4cc-d519e8fb8544", "name": "Don Quixote Great" }
+        response = self.client.post(url_for('api_books'),
+                                    data=json.dumps(book),
+                                    content_type='application/json')
+        self.assertEqual(response.status_code, 201)
+        book_returned = pd.json_normalize(response.get_json())
+        self.assertEqual(book_returned['description'][0], "The great Don Quixote")
+        self.assertEqual(book_returned['name'][0], 'Don Quixote Great')
+
+    def test_book_update(self):
+        """
+        Test that book_api accessible and returns book with given uuid from db
+        """
+        book = { "count": 6, "description": "The great Don Quixote", "authors": [
+        ], "uuid": "92a69ce8-13b4-4fe0-a4cc-d519e8fb7933", "name": "Don Quixote Great" }
+        response = self.client.put(url_for('api_book_uuid', uuid="92a69ce8-13b4-4fe0-a4cc-d519e8fb7933"),
+                                    data=json.dumps(book),
+                                    content_type='application/json')
+        self.assertEqual(response.status_code, 200)
+        book_returned = pd.json_normalize(response.get_json())
+        self.assertEqual(book_returned['description'][0], "The great Don Quixote")
+        self.assertEqual(book_returned['name'][0], 'Don Quixote Great')
+
     def test_book_get_uuid(self):
         """
         Test that book_api accessible and returns book with given uuid from db
