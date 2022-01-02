@@ -32,7 +32,7 @@ class TestApi(TestBase):
 
     def test_book_add(self):
         """
-        Test that book_api accessible and returns book with given uuid from db
+        Test that book_add_api accessible and add and returns book with given uuid from db
         """
         book = { "count": 6, "description": "The great Don Quixote", "authors": [
         ], "uuid": "92a69ce8-13b4-4fe0-a4cc-d519e8fb8544", "name": "Don Quixote Great" }
