@@ -81,3 +81,58 @@ class TestServices(TestBase):
         author = AuthorService.add_author(name="Miguel", middle_name='De', last_name="Servantes")
         BookService.add_author(1, author.name + ' ' + author.last_name)
         self.assertEqual(BookService.get_book_by_id(1).authors[1].id, 2)
+
+    def test_book_delete_author(self):
+        """
+        Test that we can delete author from the book authors list
+        """
+        BookService.delete_author(1, "admin admin2016")
+        self.assertEqual(BookService.get_book_by_id(1).authors, [])
+
+    def test_get_authors(self):
+        """
+        Test that author service accessible and returns authors from db
+        """
+        author = AuthorService.get_authors()[0]
+        self.assertEqual(author.name, "admin")
+        self.assertEqual(author.last_name, 'admin2016')
+
+    def test_get_author_by_uuid(self):
+        """
+        Test that author by_uuid service accessible and returns author from db with given uuid
+        """
+        author = AuthorService.get_author_by_uuid("8d3fe6dd-d750-47be-91b5-c926c31ac7ff")
+        self.assertEqual(author.name, "admin")
+        self.assertEqual(author.last_name, 'admin2016')
+
+    def test_get_author_by_id(self):
+        """
+        Test that author by_id service accessible and returns author from db with given id
+        """
+        author = AuthorService.get_author_by_id(1)
+        self.assertEqual(author.name, "admin")
+        self.assertEqual(author.last_name, 'admin2016')
+
+    def test_get_author_by_name(self):
+        """
+        Test that author by_name service accessible and returns author from db with given name
+        """
+        author = AuthorService.get_author_by_name("admin")
+        self.assertEqual(author.name, "admin")
+        self.assertEqual(author.last_name, 'admin2016')
+
+    def test_author_add(self):
+        """
+        Test that author add service accessible and add and returns author from db with given parameters
+        """
+        author = AuthorService.add_author(name='Henry', middle_name="The", last_name="Collins")
+        self.assertEqual(author.name, "Henry")
+        self.assertEqual(author.middle_name, 'The')
+
+    def test_author_delete_success(self):
+        """
+        Test that author delete service accessible
+        """
+        author = AuthorService.add_author(name='Henry', middle_name="The", last_name="Collins")
+        self.assertEqual(AuthorService.delete_author(author_id=2),
+                         'Author successfully deleted')

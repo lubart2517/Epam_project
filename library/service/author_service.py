@@ -110,6 +110,7 @@ class AuthorService:
         author = cls.get_author_by_id(author_id)
         db.session.delete(author)
         db.session.commit()
+        return 'Author successfully deleted'
 
     @classmethod
     def delete_author_by_uuid(cls, uuid):
