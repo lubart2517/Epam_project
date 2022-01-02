@@ -4,7 +4,7 @@ from flask import abort, url_for, request
 from library.tests.test_init import TestBase
 from library.service.book_service import BookService
 from library.service.author_service import AuthorService
-
+from library.service.orders_service import OrderService
 
 class TestServices(TestBase):
     """
@@ -136,3 +136,59 @@ class TestServices(TestBase):
         author = AuthorService.add_author(name='Henry', middle_name="The", last_name="Collins")
         self.assertEqual(AuthorService.delete_author(author_id=2),
                          'Author successfully deleted')
+
+    def test_get_orders(self):
+        """
+        Test that order service accessible and returns orders from db
+        """
+        order = OrderService.get_orders()[0]
+        self.assertEqual(order.user_id, 1)
+        self.assertEqual(order.book_id, 1)
+
+    def test_get_order_by_id(self):
+        """
+        Test that order by_id service accessible and returns order from db with given id
+        """
+        order = OrderService.get_order_by_id(1)
+        self.assertEqual(order.user_id, 1)
+        self.assertEqual(order.book_id, 1)
+
+    def test_get_orders_by_user(self):
+        """
+        Test that order by_user service accessible and returns orders from db with given user id
+        """
+        order = OrderService.get_orders_by_user(1)[0]
+        self.assertEqual(order.user_id, 1)
+        self.assertEqual(order.book_id, 1)
+
+    def test_get_opened_orders_by_user(self):
+        """
+        Test that order open_by_user service accessible and returns open orders from db with given user id
+        """
+        order = OrderService.get_open_orders_by_user(1)[0]
+        self.assertEqual(order.user_id, 1)
+        self.assertEqual(order.book_id, 1)
+
+    def test_get_orders_by_book(self):
+        """
+        Test that order by_book service accessible and returns orders from db with given book id
+        """
+        order = OrderService.get_orders_by_book(1)[0]
+        self.assertEqual(order.user_id, 1)
+        self.assertEqual(order.book_id, 1)
+
+    def test_order_add(self):
+        """
+        Test that order add service accessible and add and returns order from db with given parameters
+        """
+        book = BookService.add_book(name='Harry', description="Harry the Potter", count=10, author="admin admin2016")
+        order = OrderService.add_order(1, 2)
+        self.assertEqual(order.user_id, 1)
+        self.assertEqual(order.book_id, 2)
+
+    def test_order_close(self):
+        """
+        Test that order close service accessible
+        """
+        order = OrderService.close_order(1)
+        self.assertEqual(order.closed, True)

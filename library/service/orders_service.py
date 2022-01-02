@@ -87,7 +87,7 @@ class OrderService:
         :return: list of all opened orders by some user
         """
         return db.session.query(Order).filter_by(
-            closed=True, user_id=user_id).all()
+            closed=False, user_id=user_id).all()
 
     @staticmethod
     def add_order_from_json(schema, order_json):
