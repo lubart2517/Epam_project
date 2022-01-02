@@ -67,6 +67,15 @@ class OrderService:
         return db.session.query(Order).filter_by(
             closed=True).all()
 
+    @staticmethod
+    def get_outstanding_orders():
+        """
+        Fetches all of the opened orders  from database ordered more than one month ago
+        :return: list of all outstanding orders
+        """
+        return db.session.query(Order).filter_by(closed=False).\
+            filter(Order.planed_end_at < datetime.datetime.now()).all()
+
     @classmethod
     def close_order(cls, order_id):
         """
@@ -103,14 +112,15 @@ class OrderService:
         return order
 
     @staticmethod
-    def add_order(user_id, book_id):
+    def add_order(user_id, book_id, planed_end_at=None):
         """
         Adds order to the database
         :param user_id: order user_id
         :param book_id: order book_id
+        :param planed_end_at: order planed_end_at
         :return: order that was added
         """
-        order = Order( user_id, book_id)
+        order = Order( user_id, book_id, planed_end_at)
         db.session.add(order)
         db.session.commit()
         return order

@@ -1,3 +1,4 @@
+import datetime
 import json
 import pandas as pd
 from flask import abort, url_for, request
@@ -144,6 +145,16 @@ class TestServices(TestBase):
         order = OrderService.get_orders()[0]
         self.assertEqual(order.user_id, 1)
         self.assertEqual(order.book_id, 1)
+
+    def test_get_outstanding_orders(self):
+        """
+        Test that order outstanding service accessible and returns outstanding orders from db
+        """
+        book = BookService.add_book(name='Harry', description="Harry the Potter", count=10, author="admin admin2016")
+        order_add = OrderService.add_order(1, 2, datetime.datetime.now() - datetime.timedelta(days=1))
+        order = OrderService.get_outstanding_orders()[0]
+        self.assertEqual(order.user_id, 1)
+        self.assertEqual(order.book_id, 2)
 
     def test_get_order_by_id(self):
         """

@@ -254,6 +254,22 @@ def admin_orders():
                            orders=orders_for_render, pagination=pagination, title="Orders")
 
 
+@admin.route('/admin/outstanding_orders/', methods=['GET', 'POST'], endpoint='out_orders')
+@login_required
+def admin_outstanding_orders():
+    """
+    List all outstanding orders
+    """
+    check_admin()
+    page, per_page, offset = get_page_args()
+    orders = OrderService.get_outstanding_orders()
+    i = (page - 1) * per_page
+    orders_for_render = orders[i:i+per_page]
+    pagination = Pagination(page=page, total=len(orders), record_name='orders', offset=offset)
+    return render_template('admin/orders.html',
+                           orders=orders_for_render, pagination=pagination, title="Orders")
+
+
 @admin.route('/admin/order/close/<int:order_id>', methods=['GET', 'POST'], endpoint='close_order')
 @login_required
 def close_order(order_id):

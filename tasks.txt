@@ -1,2 +1,0 @@
-1. Add calculating amount of free books in base and show it to user
-
