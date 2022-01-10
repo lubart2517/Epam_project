@@ -6,11 +6,24 @@ Authors REST API, this module defines the following classes:
 """
 
 from flask import request
-from flask_restful import Resource
+from flask_restful import Resource, abort
 from marshmallow import ValidationError
+from library import auth
 
 from ..schemas.author import AuthorSchema
 from ..service.author_service import AuthorService
+from ..service.user_service import UserService
+
+
+def authenticate(func):
+    def wrapper(*args, **kwargs):
+        user = UserService.get_user_by_username(request.authorization.username)
+        if user:
+            if user.check_password(request.authorization.password):
+                return func(*args, **kwargs)
+
+        return abort(403)
+    return wrapper
 
 
 class AuthorApiBase(Resource):
@@ -22,6 +35,7 @@ class AuthorApiBase(Resource):
 
     #: author database service
     service = AuthorService
+    method_decorators = [authenticate]
 
 
 class AuthorListApi(AuthorApiBase):
@@ -29,6 +43,7 @@ class AuthorListApi(AuthorApiBase):
     author list API class
     """
     def get(self):
+
         """
         GET request handler of author list API
         Fetches all authors via service and returns them in a JSON format

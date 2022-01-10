@@ -26,3 +26,4 @@ pylint-plugin-utils==0.6
 coverage==5.5
 coveralls==3.1.0
 pandas
+flask_httpauth

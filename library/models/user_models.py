@@ -1,10 +1,10 @@
 # pylint: disable=no-member
 import datetime
+from itsdangerous import (TimedJSONWebSignatureSerializer as Serializer, BadSignature, SignatureExpired)
 from werkzeug.security import generate_password_hash,  check_password_hash
 from flask_login import UserMixin
 from library import db
-
-
+from config import secret_key
 
 
 class User(db.Model, UserMixin):
