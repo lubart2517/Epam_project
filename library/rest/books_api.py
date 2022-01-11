@@ -11,6 +11,7 @@ from marshmallow import ValidationError
 
 from ..schemas.book import BookSchema, BookWithAvailableCountSchema
 from ..service.book_service import BookService
+from ..rest.decorators import authenticate, is_admin
 
 
 class BookApiBase(Resource):
@@ -28,6 +29,8 @@ class BookListApi(BookApiBase):
     """
     book list API class
     """
+
+    @authenticate
     def get(self):
         """
         GET request handler of book list API
@@ -38,6 +41,7 @@ class BookListApi(BookApiBase):
         books = self.service.get_books()
         return self.schema().dump(obj=books, many=True), 200
 
+    @is_admin
     def post(self):
         """
         POST request handler of book list API
@@ -65,6 +69,7 @@ class BookApi(BookApiBase):
     #: message to be returned in case of book being successfully deleted
     NO_CONTENT_MESSAGE = 'Book deleted successfully'
 
+    @authenticate
     def get(self, uuid: str):
         """
         GET request handler of book API
@@ -82,6 +87,7 @@ class BookApi(BookApiBase):
             return self.NOT_FOUND_MESSAGE, 404
         return self.schema().dump(book), 200
 
+    @is_admin
     def put(self, uuid):
         """
         PUT request handler of book API
@@ -107,6 +113,7 @@ class BookApi(BookApiBase):
             #return self.NOT_FOUND_MESSAGE, 404
         return self.schema().dump(book), 200
 
+    @is_admin
     def delete(self, uuid):
         """
         DELETE request handler of book API
@@ -129,6 +136,8 @@ class BooksQueryApi(BookApiBase):
     """
     This class allows make rest calls with filtering for Book model
     """
+
+    @authenticate
     def get(self, name, sort=None):
         """
         GET request handler of book list API
@@ -149,6 +158,7 @@ class BookListUserApi(BookApiBase):
     """
     schema = BookWithAvailableCountSchema
 
+    @authenticate
     def get(self):
         """
         GET request handler of book list API for users

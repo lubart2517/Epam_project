@@ -27,7 +27,7 @@ def create_app(config_class=DevelopmentConfig):
     # logging
     formatter = logging.Formatter('%(asctime)s %(levelname)s %(name)s: %(message)s')
 
-    file_handler = logging.FileHandler(filename='app.log', mode='w')
+    file_handler = logging.FileHandler(filename='app.log', mode='w+')
     file_handler.setFormatter(formatter)
     file_handler.setLevel(logging.DEBUG)
 

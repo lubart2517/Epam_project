@@ -1,5 +1,5 @@
 """ This module initialize Base class for all tests"""
-import unittest, base64
+import unittest
 from requests.auth import _basic_auth_str
 from flask_testing import TestCase
 from flask.testing import FlaskClient
@@ -15,7 +15,7 @@ from config import TestingConfig
 class CustomClient(FlaskClient):
     def open(self, *args, **kwargs):
         headers = kwargs.setdefault("headers", {})
-        headers.setdefault('Authorization', _basic_auth_str('user', "admin2016"))
+        headers.setdefault('Authorization', _basic_auth_str('admin', "admin2016"))
         return super().open(*args, **kwargs)
 
 

@@ -6,24 +6,12 @@ Authors REST API, this module defines the following classes:
 """
 
 from flask import request
-from flask_restful import Resource, abort
+from flask_restful import Resource
 from marshmallow import ValidationError
-from library import auth
 
 from ..schemas.author import AuthorSchema
 from ..service.author_service import AuthorService
-from ..service.user_service import UserService
-
-
-def authenticate(func):
-    def wrapper(*args, **kwargs):
-        user = UserService.get_user_by_username(request.authorization.username)
-        if user:
-            if user.check_password(request.authorization.password):
-                return func(*args, **kwargs)
-
-        return abort(403)
-    return wrapper
+from ..rest.decorators import authenticate, is_admin
 
 
 class AuthorApiBase(Resource):
@@ -35,13 +23,13 @@ class AuthorApiBase(Resource):
 
     #: author database service
     service = AuthorService
-    method_decorators = [authenticate]
 
 
 class AuthorListApi(AuthorApiBase):
     """
     author list API class
     """
+    @authenticate
     def get(self):
 
         """
@@ -53,6 +41,7 @@ class AuthorListApi(AuthorApiBase):
         authors = self.service.get_authors()
         return self.schema().dump(obj=authors, many=True), 200
 
+    @is_admin
     def post(self):
         """
         POST request handler of author list API
@@ -80,6 +69,7 @@ class AuthorApi(AuthorApiBase):
     #: message to be returned in case of author being successfully deleted
     NO_CONTENT_MESSAGE = 'Author deleted successfully'
 
+    @authenticate
     def get(self, uuid: str):
         """
         GET request handler of author API
@@ -97,6 +87,7 @@ class AuthorApi(AuthorApiBase):
             return self.NOT_FOUND_MESSAGE, 404
         return self.schema().dump(author), 200
 
+    @is_admin
     def put(self, uuid):
         """
         PUT request handler of author API
@@ -122,6 +113,7 @@ class AuthorApi(AuthorApiBase):
             return self.NOT_FOUND_MESSAGE, 404
         return self.schema().dump(author), 200
 
+    @is_admin
     def delete(self, uuid):
         """
         DELETE request handler of author API
