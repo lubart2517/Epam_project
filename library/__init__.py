@@ -9,12 +9,14 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_bootstrap import Bootstrap
 from flask_restful import Api
+from flask_httpauth import HTTPBasicAuth
 from config import DevelopmentConfig
 
 
 MIGRATION_DIR = os.path.join('library', 'migrations')
 
 db = SQLAlchemy()
+auth = HTTPBasicAuth()
 
 
 def create_app(config_class=DevelopmentConfig):
@@ -25,7 +27,7 @@ def create_app(config_class=DevelopmentConfig):
     # logging
     formatter = logging.Formatter('%(asctime)s %(levelname)s %(name)s: %(message)s')
 
-    file_handler = logging.FileHandler(filename='app.log', mode='w')
+    file_handler = logging.FileHandler(filename='app.log', mode='w+')
     file_handler.setFormatter(formatter)
     file_handler.setLevel(logging.DEBUG)
 

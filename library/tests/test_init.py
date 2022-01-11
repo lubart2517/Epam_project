@@ -1,6 +1,8 @@
 """ This module initialize Base class for all tests"""
 import unittest
+from requests.auth import _basic_auth_str
 from flask_testing import TestCase
+from flask.testing import FlaskClient
 
 from library import create_app, db
 from library.models.author_models import Author
@@ -10,6 +12,13 @@ from library.models.order_models import Order
 from config import TestingConfig
 
 
+class CustomClient(FlaskClient):
+    def open(self, *args, **kwargs):
+        headers = kwargs.setdefault("headers", {})
+        headers.setdefault('Authorization', _basic_auth_str('admin', "admin2016"))
+        return super().open(*args, **kwargs)
+
+
 class TestBase(TestCase):
     """
     Base class for all tests
@@ -17,6 +26,7 @@ class TestBase(TestCase):
     def create_app(self):
         """ Creates test Flask app"""
         app = create_app(TestingConfig)
+        app.test_client_class = CustomClient
         return app
 
     def setUp(self):

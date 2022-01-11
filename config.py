@@ -9,6 +9,8 @@ database = os.environ.get('POSTGRES_DATABASE')
 database_test = os.environ.get('POSTGRES_DATABASE_TEST')
 api_key = os.environ.get('API_KEY')
 secret_key = os.environ.get('SECRET_KEY')
+user_username = os.environ.get('USER_USERNAME')
+user_password = os.environ.get('USER_PASSWORD')
 
 
 class Config(object):

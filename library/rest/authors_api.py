@@ -11,6 +11,7 @@ from marshmallow import ValidationError
 
 from ..schemas.author import AuthorSchema
 from ..service.author_service import AuthorService
+from ..rest.decorators import authenticate, is_admin
 
 
 class AuthorApiBase(Resource):
@@ -28,7 +29,9 @@ class AuthorListApi(AuthorApiBase):
     """
     author list API class
     """
+    @authenticate
     def get(self):
+
         """
         GET request handler of author list API
         Fetches all authors via service and returns them in a JSON format
@@ -38,6 +41,7 @@ class AuthorListApi(AuthorApiBase):
         authors = self.service.get_authors()
         return self.schema().dump(obj=authors, many=True), 200
 
+    @is_admin
     def post(self):
         """
         POST request handler of author list API
@@ -65,6 +69,7 @@ class AuthorApi(AuthorApiBase):
     #: message to be returned in case of author being successfully deleted
     NO_CONTENT_MESSAGE = 'Author deleted successfully'
 
+    @authenticate
     def get(self, uuid: str):
         """
         GET request handler of author API
@@ -82,6 +87,7 @@ class AuthorApi(AuthorApiBase):
             return self.NOT_FOUND_MESSAGE, 404
         return self.schema().dump(author), 200
 
+    @is_admin
     def put(self, uuid):
         """
         PUT request handler of author API
@@ -107,6 +113,7 @@ class AuthorApi(AuthorApiBase):
             return self.NOT_FOUND_MESSAGE, 404
         return self.schema().dump(author), 200
 
+    @is_admin
     def delete(self, uuid):
         """
         DELETE request handler of author API

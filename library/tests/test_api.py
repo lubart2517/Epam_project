@@ -1,8 +1,7 @@
 """This module contains tests of correct CRUD operations with db by API"""
 import json
 import pandas as pd
-from flask import abort, url_for, request
-from library.models.user_models import User
+from flask import url_for
 from library.tests.test_init import TestBase
 
 
